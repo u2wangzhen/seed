@@ -2,16 +2,21 @@ package com.u2.model;
 
 public class Seed {
 
-	private String id;
+	private Long id;
 	private String key;
 	private String value;
-	private String fid;
+	private Long fid;
 	
-	
-	public String getId() {
+	public Seed(){}
+	public Seed(String key, String value) {
+		// TODO Auto-generated constructor stub
+		this.value=value;
+		this.key=key;
+	}
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getKey() {
@@ -26,10 +31,10 @@ public class Seed {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public String getFid() {
+	public Long getFid() {
 		return fid;
 	}
-	public void setFid(String fid) {
+	public void setFid(Long fid) {
 		this.fid = fid;
 	}
 	
