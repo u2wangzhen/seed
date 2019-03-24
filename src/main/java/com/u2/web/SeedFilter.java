@@ -27,40 +27,45 @@ public class SeedFilter  implements Filter{
 		String url=request.getRequestURI();
 		//parseUrl(url);
 		///String key = url.substring(url.lastIndexOf("/")+1, url.length());
-		url=url.substring(1);
-		String[] s = url.split("/");
-		String type="index";
-		String key=null;
-		if(s.length==3){
-			key=s[1];
-			type=s[2];
-		}
-		if(s.length==2){
-			key=s[1];
-		}
-		Class<?> actionClass;
-		if(key!=null){
-			 actionClass = actionMapping.getActionClass(key);
+		if(url.endsWith(".js")||url.endsWith(".css")){
+			fc.doFilter(request, response);
 		}else{
-			actionClass=IndexAction.class;
+			url=url.substring(1);
+			String[] s = url.split("/");
+			String type="index";
+			String key=null;
+			if(s.length==3){
+				key=s[1];
+				type=s[2];
+			}
+			if(s.length==2){
+				key=s[1];
+			}
+			Class<?> actionClass;
+			if(key!=null){
+				 actionClass = actionMapping.getActionClass(key);
+			}else{
+				actionClass=IndexAction.class;
+			}
+			
+			
+			try {
+				SeedAction act = (SeedAction) actionClass.newInstance();
+				act.setRequest(request);
+				act.setResponse(response);
+				act.setRoot(s[0]);
+				act.setKey(key);
+				act.setType(type);
+				act.exec();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		
-		try {
-			SeedAction act = (SeedAction) actionClass.newInstance();
-			act.setRequest(request);
-			act.setResponse(response);
-			act.setRoot(s[0]);
-			act.setKey(key);
-			act.setType(type);
-			act.exec();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	
