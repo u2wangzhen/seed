@@ -18,6 +18,8 @@ public class ActionMapping{
 	private void init() {
 		// TODO Auto-generated method stub
 		//map.put("test", UserAction.class);
+		///map.put("index", IndexAction.class);
 		map.put("user", UserAction.class);
+		map.put("sysconf", SysAction.class);
 	}
 }

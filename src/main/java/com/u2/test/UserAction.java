@@ -4,16 +4,15 @@ import com.u2.web.SeedAction;
 
 public class UserAction extends SeedAction{
 
-	@Override
-	protected String route() {
+	
+	public String index() {
 		// TODO Auto-generated method stub
-		return "/index.jsp";
+		return "/user/index.jsp";
 	}
 
-	@Override
-	protected String select() {
+	public String getUser() {
 		// TODO Auto-generated method stub
-		return null;
+		return "{data:1}";
 	}
 
 }

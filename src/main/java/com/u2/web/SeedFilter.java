@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SeedFilter  implements Filter{
 
 	private ActionMapping actionMapping;
+	
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
@@ -24,16 +25,34 @@ public class SeedFilter  implements Filter{
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)res;
 		String url=request.getRequestURI();
+		//parseUrl(url);
+		///String key = url.substring(url.lastIndexOf("/")+1, url.length());
+		url=url.substring(1);
+		String[] s = url.split("/");
+		String type="index";
+		String key=null;
+		if(s.length==3){
+			key=s[1];
+			type=s[2];
+		}
+		if(s.length==2){
+			key=s[1];
+		}
+		Class<?> actionClass;
+		if(key!=null){
+			 actionClass = actionMapping.getActionClass(key);
+		}else{
+			actionClass=IndexAction.class;
+		}
 		
-		String key = url.substring(url.lastIndexOf("/")+1, url.length());
-		
-		Class<SeedAction> actionClass = (Class<SeedAction>) actionMapping.getActionClass(key);
 		
 		try {
-			SeedAction act = actionClass.newInstance();
+			SeedAction act = (SeedAction) actionClass.newInstance();
 			act.setRequest(request);
 			act.setResponse(response);
+			act.setRoot(s[0]);
 			act.setKey(key);
+			act.setType(type);
 			act.exec();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -43,6 +62,8 @@ public class SeedFilter  implements Filter{
 			e.printStackTrace();
 		}
 	}
+
+	
 
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub

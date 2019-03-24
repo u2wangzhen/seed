@@ -17,9 +17,28 @@ public abstract class SeedAction {
 	protected String routeStr;
 	
 	protected String key;
+	protected String root;
+	protected String method;
 	
 	void setKey(String key) {
 		this.key = key;
+	}
+
+	void setRoot(String root) {
+		this.root = root;
+	}
+	void setMethod(String method) {
+		this.method = method;
+	}
+	
+	void setType(String type) {
+		try{
+			this.type = ActionType.valueOf(type);
+		}catch(Exception e){
+			this.type=ActionType.other;
+			this.method=type;
+		}
+		
 	}
 
 	protected Map<String,String[]> param;
@@ -27,7 +46,7 @@ public abstract class SeedAction {
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
 	
-	protected ActionType type=ActionType.route;
+	protected ActionType type;
 	
 	String getReturnJsonStr() {
 		return returnJsonStr;
@@ -35,17 +54,13 @@ public abstract class SeedAction {
 	void setRequest(HttpServletRequest request) {
 		this.request = request;
 		this.param=request.getParameterMap();
-		String[] t=param.get("type");
-		if(t!=null){
-			type=ActionType.valueOf(t[0]);
-		}
-		
 	}
 	void setResponse(HttpServletResponse response) {
 		this.response = response;
 	}
 
 	void exec(){
+		
 		switch (type) {
 		case add:
 			returnJsonStr=new AddHandler(param,key).exec();
@@ -56,11 +71,13 @@ public abstract class SeedAction {
 		case delete:
 			returnJsonStr=new DeleteHandler(param, key).exec();
 			break;
-		case select:
-			returnJsonStr=select();
-			break;
 		default:
-			routeStr=route();
+			String str = execMethod();
+			if(str.endsWith(".jsp")){
+				routeStr=str;
+			}else{
+				returnJsonStr=str;
+			}
 			break;
 		}
 		if(returnJsonStr!=null&&!"".equals(returnJsonStr)){
@@ -69,6 +86,18 @@ public abstract class SeedAction {
 			new Route(routeStr,request,response).render();
 		}
 	}
+	private String execMethod() {
+		// TODO Auto-generated method stub
+		String str;
+			try {
+				str=(String) this.getClass().getMethod(method, null).invoke(this, null);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				str="index.jsp";
+			} 
+		return str;
+	}
+
 	private void outJson() {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -84,8 +113,5 @@ public abstract class SeedAction {
 			e.printStackTrace();
 		}
 	}
-	protected abstract String route();
-	
-	protected abstract String select();
-	
+
 }

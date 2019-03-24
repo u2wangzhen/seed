@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.druid.pool.DruidPooledConnection;
+import com.u2.db.manager.TransactionManager;
 import com.u2.model.Fruit;
 import com.u2.model.Seed;
 
@@ -17,15 +18,14 @@ public class BaseDao {
 		return seedDataBaseHandler;
 	}
 
-	public synchronized boolean insertSeed(Seed seed) throws SQLException{
+	public synchronized boolean insertSeed(Seed seed,int l) throws SQLException{
 		
-		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		DruidPooledConnection c = TransactionManager.get().getConn();
 		
 		Statement s = c.createStatement();
 		
-		boolean i = s.execute("INSERT INTO T_SEED_32 (S_KEY,S_VALUE,S_FID) VALUES ('"+seed.getKey()+"','"+seed.getValue()+"',"+seed.getFid()+")");
+		boolean i = s.execute("INSERT INTO T_SEED_"+l+" (S_KEY,S_VALUE,S_FID) VALUES ('"+seed.getKey()+"','"+seed.getValue()+"',"+seed.getFid()+")");
 		s.close();
-		c.close();
 		return i;
 	}
 	
@@ -43,15 +43,31 @@ public class BaseDao {
 			if(list==null){list=new ArrayList<Fruit>();}
 			list.add(f);
 		}
+		rs.close();
+		s.close();
+		c.close();
 		return list;
 	}
 	
-	public List<Seed> selectSeeds(Long fid) throws SQLException {
+	public List<Seed> selectSeeds(Long fid,int t) throws SQLException {
 		// TODO Auto-generated method stub
 		List<Seed> list=null;
 		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
 		Statement s = c.createStatement();
-		ResultSet rs = s.executeQuery("select * from T_SEED_32 where s_fid="+fid);
+		list=select(s,fid,t);
+		/*list.addAll(select(s, fid, 32));
+		list.addAll(select(s, fid, 64));
+		list.addAll(select(s, fid, 128));
+		list.addAll(select(s, fid, 256));*/
+		s.close();
+		c.close();
+		return list;
+	}
+	
+	private List<Seed> select(Statement s, Long fid, int i) throws SQLException {
+		// TODO Auto-generated method stub
+		List<Seed> list=null;
+		ResultSet rs = s.executeQuery("select * from T_SEED_"+i+" where s_fid="+fid);
 		while(rs.next()){
 			long id = rs.getLong(1);
 			String key = rs.getString(2);
@@ -64,14 +80,12 @@ public class BaseDao {
 			if(list==null){list=new ArrayList<Seed>();}
 			list.add(seed);
 		}
-		s.close();
-		c.close();
+		rs.close();
 		return list;
 	}
-	
 	public synchronized boolean insertFruit(Fruit fruit) throws SQLException{
 		
-		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		DruidPooledConnection c = TransactionManager.get().getConn();
 		
 		Statement s = c.createStatement();
 		
@@ -81,8 +95,9 @@ public class BaseDao {
 		while(r.next()){
 			long id=r.getLong(1);fruit.setId(id);
 		}
+		r.close();
 		s.close();
-		c.close();
+		//c.close();
 		return i;
 	}
 	/*public static void main(String[] args) throws SQLException {
@@ -98,27 +113,25 @@ public class BaseDao {
 		SeedDataBaseHandler.me().insertSeed(seed);
 		
 	}*/
-	public synchronized boolean  updateSeed(Long id,String newValue) throws SQLException {
+	public synchronized boolean  updateSeed(Long id,String newValue,int l) throws SQLException {
 		// TODO Auto-generated method stub
-		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
-		String sql="update T_SEED_32 set s_value='"+newValue+"' where id="+id;
+		String sql="update T_SEED_"+l+" set s_value='"+newValue+"' where id="+id;
 		boolean i = s.execute(sql);
 		s.close();
-		c.close();
 		return i;
 	}
 	public boolean deleteFruit(Fruit f) throws SQLException {
 		// TODO Auto-generated method stub
 		boolean i=true;
-		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql="delete from T_FRUIT where id='"+f.getId();
 		String sql2="delete from T_SEED_32 where s_fid='"+f.getId();
 		i&= s.execute(sql2);
 		i&= s.execute(sql);
 		s.close();
-		c.close();
 		return i;
 	}
 	
