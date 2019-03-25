@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,27 +22,37 @@ public class MainCache {
 	private MainCache(){
 		cache_map=new HashMap<String,Map<Long,Fruit_>>();
 		cache_list=new HashMap<String, List<Fruit_>>();
-		init();
+		all_fruit_List=new LinkedList<Fruit_>();
 	};
-	private void init() {
+	private boolean start=false;
+	private List<Fruit_> all_fruit_List;
+	private synchronized void init() {
 		// TODO Auto-generated method stub
-		try {
-			List<Fruit> fs = BaseDao.me().selectAllFruit();
-			if(fs!=null&&!fs.isEmpty()){
-				for (Fruit f : fs) {
-					Fruit_ f_ = new Fruit_(f);
-					initCacheMap(f_);
-					initList(f_);
-					initSeeds16(f_);
-				}	
+		if(!start){
+			try {
+				List<Fruit> fs = BaseDao.me().selectAllFruit();
+				if(fs!=null&&!fs.isEmpty()){
+					for (Fruit f : fs) {
+						Fruit_ f_ = new Fruit_(f);
+						all_fruit_List.add(f_);
+						cacheMapAdd(f_);
+						listAdd(f_);
+						initSeedsSys(f_);
+					}
+					for (Fruit_ f_ : all_fruit_List) {
+						initSeeds(f_);
+					}
+				}
+				start=true;		
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				start=false;
+				e.printStackTrace();
+				
 			}
-					
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
-	private void initSeeds16(Fruit_ f) throws SQLException {
+	private void initSeedsSys(Fruit_ f) throws SQLException {
 		// TODO Auto-generated method stub
 		List<Seed> list = BaseDao.me().selectSeeds(f.getId(),16);
 		if(list!=null&&!list.isEmpty()){
@@ -61,7 +72,7 @@ public class MainCache {
 			f.setSeeds(seeds);
 		}
 	}
-	private void initList(Fruit_ f) {
+	private void listAdd(Fruit_ f) {
 		// TODO Auto-generated method stub
 		List<Fruit_> list = cache_list.get(f.getKey());
 		if(list==null){list=new ArrayList<Fruit_>();
@@ -69,7 +80,7 @@ public class MainCache {
 		}
 		list.add(f);
 	}
-	private void initCacheMap(Fruit_ f) {
+	private void cacheMapAdd(Fruit_ f) {
 		// TODO Auto-generated method stub
 		Map<Long, Fruit_> map = cache_map.get(f.getKey());
 		if(map==null){
@@ -86,30 +97,37 @@ public class MainCache {
 	private Map<String,List<Fruit_>> cache_list;
 	
 	public List<Fruit_> getFruitList(String key){
-		if(cache_list==null){
+		if(!start){
 			init();
 		}
 		return cache_list.get(key);
 	}
 	
 	public Map<Long,Fruit_> getFruitMAP(String key){
-		if(cache_map==null){
+		if(!start){
 			init();
 		}
 		return cache_map.get(key);
 	}
 	
 	public Fruit_ getFruit(String key,Long id){
+		if(!start){
+			init();
+		}
 		return cache_map.get(key).get(id);
 	}
 	public void addFruit(Fruit f) throws SQLException {
 		// TODO Auto-generated method stub
+		if(!start){
+			init();
+		}
 		Fruit_ f_ = new Fruit_(f);
-		initCacheMap(f_);
-		initList(f_);
+		cacheMapAdd(f_);
+		listAdd(f_);
+		all_fruit_List.add(f_);
 		//initSeedsAll(f_);
 		if(f.getKey().equals(SeedConfig.SYS_KEY)){
-			initSeeds16(f_);
+			initSeedsSys(f_);
 		}else{
 			initSeeds(f_);
 		}

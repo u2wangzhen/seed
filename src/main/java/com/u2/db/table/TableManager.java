@@ -11,12 +11,12 @@ import com.u2.sys.SeedConfig;
 public class TableManager {
 
 	private static TableManager info=new TableManager();
-	private TableManager(){};
+	private TableManager(){initSys();};
 	public static TableManager me(){
 		return info;
 	}
 	
-	public Map<String,Map<String,Integer>> map=new HashMap<String,Map<String,Integer>>();
+	private Map<String,Map<String,Integer>> map=new HashMap<String,Map<String,Integer>>();
 	
 	public int findLength(String fkey,String skey){
 		int length=getValueLength(fkey,skey);
@@ -25,16 +25,14 @@ public class TableManager {
 	}
 	
 	public Map<String,Integer> findSeedsLength(String fkey){
+		if(map.get(fkey)==null){
+			initOther();
+		}
 		return map.get(fkey);
 	}
 	
 	private int getValueLength(String fkey, String skey) {
 		// TODO Auto-generated method stub
-		if(map.isEmpty()){
-			initSys();
-			
-		}
-		if(map.isEmpty()){return 0;}
 		if(map.get(fkey)==null){
 			initOther();
 		}

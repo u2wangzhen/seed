@@ -7,6 +7,7 @@ import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.cache.Seed_;
 import com.u2.db.data.BaseDao;
+import com.u2.db.manager.TransactionManager;
 import com.u2.db.table.TableManager;
 import com.u2.model.Fruit;
 import com.u2.model.Seed;
@@ -33,8 +34,7 @@ public class FruitHandler {
 				b &= BaseDao.me().insertSeed(seed, l);
 			}
 		}
-		MainCache.me().addFruit(f);
-
+		TransactionManager.getFruitlistlocal().add(f);
 		return b;
 	}
 
