@@ -38,6 +38,6 @@ public class AddHandler extends Handler{
 			}
 		}
 		
-		return "ok";
+		return "{\"success\":"+true+",\"message\":\"保存成功！\"}";
 	}
 }

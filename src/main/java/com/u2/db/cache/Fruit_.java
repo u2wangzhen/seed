@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import com.u2.model.Fruit;
 
 public class Fruit_ extends Fruit {
@@ -12,11 +13,19 @@ public class Fruit_ extends Fruit {
 	public Fruit_(Fruit f){
 		setId(f.getId());
 		setKey(f.getKey());
+		jsonObj=new JSONObject();
+		jsonObj.put("key", getKey());
+		jsonObj.put("id", getId());
 	}
 	private List<Seed_> seeds;
 	private Map<String,Seed_> seeds_map;
 	private Map<String,List<Fruit_>> fruits_list;
 	private Map<String,Map<Long,Fruit_>> fruits_map;
+	private JSONObject jsonObj;
+	
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
 	public Map<String, Map<Long, Fruit_>> getFruits_map() {
 		return fruits_map;
 	}
@@ -48,6 +57,8 @@ public class Fruit_ extends Fruit {
 		seeds.add(s_);
 		if(seeds_map==null){seeds_map=new HashMap<String, Seed_>();}
 		seeds_map.put(s_.getKey(), s_);
+		jsonObj.put(s_.getKey(), s_.getValue());
+		
 	}
 
 	public void addFruit(Fruit_ otherFruit) {

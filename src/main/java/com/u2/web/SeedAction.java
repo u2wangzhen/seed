@@ -93,7 +93,12 @@ public abstract class SeedAction {
 				str=(String) this.getClass().getMethod(method, null).invoke(this, null);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				str="index.jsp";
+				if(key!=null&&!"".equals(key)){
+					str="index.jsp";
+				}else{
+					str="/index.jsp";
+				}
+				
 			} 
 		return str;
 	}

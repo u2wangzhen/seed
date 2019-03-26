@@ -21,5 +21,6 @@ public class ActionMapping{
 		///map.put("index", IndexAction.class);
 		map.put("user", UserAction.class);
 		map.put("sysconf", SysAction.class);
+		map.put("main", MainAction.class);
 	}
 }
