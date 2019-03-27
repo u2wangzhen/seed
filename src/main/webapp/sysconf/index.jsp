@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <title>Basic DataGrid - jQuery EasyUI Demo</title>
 <link rel="stylesheet" type="text/css"
-	href="../js/ui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="../js/ui/themes/icon.css">
-<script type="text/javascript" src="../js/ui/jquery.min.js"></script>
-<script type="text/javascript" src="../js/ui/jquery.easyui.min.js"></script>
+	href="/seed/js/ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
+<script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
+<script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	/* $(function(){
 			

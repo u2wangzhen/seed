@@ -27,7 +27,7 @@ public class SeedFilter  implements Filter{
 		String url=request.getRequestURI();
 		//parseUrl(url);
 		///String key = url.substring(url.lastIndexOf("/")+1, url.length());
-		if(url.endsWith(".js")||url.endsWith(".css")){
+		if(url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".JPG")){
 			fc.doFilter(request, response);
 		}else{
 			url=url.substring(1);

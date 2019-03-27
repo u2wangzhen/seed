@@ -94,7 +94,7 @@ public abstract class SeedAction {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				if(key!=null&&!"".equals(key)){
-					str="index.jsp";
+					str=key+"/index.jsp";
 				}else{
 					str="/index.jsp";
 				}

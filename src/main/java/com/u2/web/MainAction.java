@@ -6,4 +6,8 @@ public class MainAction extends SeedAction{
 		
 		return "main.jsp";
 	}
+	public String home(){
+		
+		return "home.jsp";
+	}
 }
