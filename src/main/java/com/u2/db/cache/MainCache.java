@@ -29,6 +29,7 @@ public class MainCache {
 	private synchronized void init() {
 		// TODO Auto-generated method stub
 		if(!start){
+			start=true;		
 			try {
 				List<Fruit> fs = BaseDao.me().selectAllFruit();
 				if(fs!=null&&!fs.isEmpty()){
@@ -43,7 +44,6 @@ public class MainCache {
 						initSeeds(f_);
 					}
 				}
-				start=true;		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				start=false;
@@ -61,12 +61,6 @@ public class MainCache {
 				Seed_ s_=new Seed_(s);
 				s_.setFruit(f);
 				f.addSeed(s_);
-				/*if(s.getKey().endsWith("_fid")){
-					Long otherFid = Long.valueOf(s.getValue());
-					String otherKey=s.getKey().substring(0, s.getKey().indexOf("_"));
-					Fruit_ otherFruit = cache_map.get(otherKey).get(otherFid);
-					f.addFruit(otherFruit);
-				}*/
 				seeds.add(s_);
 			}
 			f.setSeeds(seeds);

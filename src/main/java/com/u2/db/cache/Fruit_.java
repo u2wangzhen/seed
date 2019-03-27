@@ -78,4 +78,9 @@ public class Fruit_ extends Fruit {
 		// TODO Auto-generated method stub
 		return seeds_map.get(key);
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getKey()+":"+getId();
+	}
 }

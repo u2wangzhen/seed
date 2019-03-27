@@ -59,6 +59,15 @@ public abstract class SeedAction {
 		this.response = response;
 	}
 
+	protected String param(String key){
+		if(param!=null&&!param.isEmpty()){
+			String[] p = param.get(key);
+			if(p!=null&&p.length>0){
+				return p[0];
+			}
+		}
+		return null;
+	}
 	void exec(){
 		
 		switch (type) {
@@ -85,7 +94,9 @@ public abstract class SeedAction {
 		}else{
 			new Route(routeStr,request,response).render();
 		}
+		
 	}
+	
 	private String execMethod() {
 		// TODO Auto-generated method stub
 		String str;
@@ -94,7 +105,7 @@ public abstract class SeedAction {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				if(key!=null&&!"".equals(key)){
-					str=key+"/index.jsp";
+					str="/"+key+"/index.jsp";
 				}else{
 					str="/index.jsp";
 				}

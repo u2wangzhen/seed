@@ -34,7 +34,7 @@ public class FruitHandler {
 				b &= BaseDao.me().insertSeed(seed, l);
 			}
 		}
-		TransactionManager.getFruitlistlocal().add(f);
+		TransactionManager.getFruitlistlocal().push(f);
 		return b;
 	}
 

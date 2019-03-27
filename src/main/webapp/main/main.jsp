@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>main</title>
 <link rel="stylesheet" type="text/css"
-	href="../js/ui/themes/material/easyui.css">
-<link rel="stylesheet" type="text/css" href="../js/ui/themes/icon.css">
-<script type="text/javascript" src="../js/ui/jquery.min.js"></script>
-<script type="text/javascript" src="../js/ui/jquery.easyui.min.js"></script>
+	href="/seed/js/ui/themes/material/easyui.css">
+<link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
+<script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
+<script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 function addTab(key,name){
 	$("#main_tab").tabs('add',{
@@ -46,7 +46,7 @@ var data = [{
     children: [{
         text: '<div onclick="addTab(\'sysconf\',\'模板注册\');">模板注册</div>'
     },{
-        text: '用户'
+        text: '<div onclick="addTab(\'user\',\'用户管理\');">用户管理</div>'
     },{
         text: '权限'
     }]
@@ -64,6 +64,7 @@ var data = [{
 	<div data-options="region:'center'">
 	<div id="main_tab" class="easyui-tabs" style="height:100%">
 		<div title="home" style="padding:10px">
+		${root }
 		 <iframe id="home_frame" src="/seed/main/home" style="width: 100%;height: 100%;"></iframe>
 		</div>
 	</div>

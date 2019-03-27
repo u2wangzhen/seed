@@ -2,9 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Basic DataGrid - jQuery EasyUI Demo</title>
-<link rel="stylesheet" type="text/css"
-	href="/seed/js/ui/themes/default/easyui.css">
+<title>sys</title>
+<link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
@@ -53,7 +52,7 @@
 	</form>
 
 	<table id="sysconfDatagrid" class="easyui-datagrid"
-		title="列表" style="width: 100%; height: 250px"
+		title="列表" style="width: 100%; height: 100%"
 		data-options="singleSelect:true,collapsible:true,url:'/seed/sysconf/getAll',method:'get'">
 		<thead>
 			<tr>
