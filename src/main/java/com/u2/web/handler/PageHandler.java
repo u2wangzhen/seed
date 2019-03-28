@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 
-public class PageHandler extends Handler {
+public class PageHandler extends SearchHandler {
 
 	public PageHandler(Map<String, String[]> param, String key) {
 		super(param, key);
@@ -22,6 +22,9 @@ public class PageHandler extends Handler {
 		int rows=Integer.valueOf(param("rows")==null?"10":param("rows"));
 		
 		List<Fruit_> list = MainCache.me().getFruitList(key);
+		if(search!=null){
+			list=filterFruit(list);
+		}
 		JSONArray array=new JSONArray();
 		int f=(page-1)*rows;
 		for(int i=f;i<(f+rows);i++){

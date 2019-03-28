@@ -2,7 +2,7 @@ package com.u2.web.handler;
 
 import java.util.Map;
 
-public abstract class Handler {
+abstract class Handler {
 
 	protected Map<String,String[]> param;
 	protected String key;

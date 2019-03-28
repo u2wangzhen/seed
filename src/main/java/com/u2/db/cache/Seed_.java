@@ -27,7 +27,7 @@ public class Seed_ extends Seed{
 		String v = getValue();
 		if(v==null&&value==null){return true;}
 		if(v==null&&value!=null){return false;}
-		if(v!=null&&value!=null){return false;}
+		if(v!=null&&value==null){return false;}
 		if(v!=null&&value!=null){
 			return v.equals(value);
 		}

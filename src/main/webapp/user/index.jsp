@@ -37,17 +37,24 @@ function openAdd(){
 }
 function openEdit(id){
 	$("#user_add_iframe").attr("src","/seed/user/toEdit?id="+id);
+	$('#dd').dialog({title:'user edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
 	var str='<a href="javascript:void(0);" onclick="openEdit(\''+row.id+'\');">edit</a>';
-	
 	return str;
+}
+function searchPage(){
+	var name=$("#name").val();
+	var age=$("#age").val();
+	$('#dg').datagrid('load', {
+	    name_l: name,age:age
+	});
 }
 </script>
 </head>
 <body>
-
+<input type="text" class="easyui-textbox" id="name" ><input type="text" class="easyui-textbox" id="age" ><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>

@@ -1,9 +1,7 @@
 package com.u2.web.handler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.u2.db.FruitHandler;
 import com.u2.db.cache.Fruit_;

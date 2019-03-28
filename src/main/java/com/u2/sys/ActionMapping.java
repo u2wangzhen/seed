@@ -1,9 +1,11 @@
-package com.u2.web;
+package com.u2.sys;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.u2.test.UserAction;
+import com.u2.web.MainAction;
+import com.u2.web.SysAction;
 
 public class ActionMapping{
 

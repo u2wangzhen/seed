@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.u2.sys.ActionMapping;
+
 public class SeedFilter  implements Filter{
 
 	private ActionMapping actionMapping;
