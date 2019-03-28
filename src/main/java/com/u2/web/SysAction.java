@@ -10,15 +10,4 @@ import com.u2.db.cache.Seed_;
 
 public class SysAction extends SeedAction{
 
-	public String getAll(){
-		String str="";
-		JSONArray array=new JSONArray();
-		List<Fruit_> list = MainCache.me().getFruitList(key);
-		//List<Map<String,String>> ll=new ArrayList<Map<String,String>>();
-		for (Fruit_ f : list) {
-			array.add(f.getJsonObj());
-		}
-		str=array.toJSONString();
-		return str;
-	}
 }

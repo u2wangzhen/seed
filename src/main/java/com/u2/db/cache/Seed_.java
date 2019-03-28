@@ -21,5 +21,22 @@ public class Seed_ extends Seed{
 	public final void setFruit(Fruit_ fruit) {
 		this.fruit = fruit;
 	}
+
+	public boolean equalsValue(String value) {
+		// TODO Auto-generated method stub
+		String v = getValue();
+		if(v==null&&value==null){return true;}
+		if(v==null&&value!=null){return false;}
+		if(v!=null&&value!=null){return false;}
+		if(v!=null&&value!=null){
+			return v.equals(value);
+		}
+		return false;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getKey()+":"+getValue();
+	}
 	
 }

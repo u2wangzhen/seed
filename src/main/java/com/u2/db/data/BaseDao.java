@@ -115,6 +115,9 @@ public class BaseDao {
 	}*/
 	public synchronized boolean  updateSeed(Long id,String newValue,int l) throws SQLException {
 		// TODO Auto-generated method stub
+		if(newValue==null){
+			newValue="";
+		}
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql="update T_SEED_"+l+" set s_value='"+newValue+"' where id="+id;

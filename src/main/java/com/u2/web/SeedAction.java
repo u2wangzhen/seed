@@ -2,13 +2,21 @@ package com.u2.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.u2.db.cache.Fruit_;
+import com.u2.db.cache.MainCache;
 import com.u2.web.handler.AddHandler;
 import com.u2.web.handler.DeleteHandler;
+import com.u2.web.handler.GetAllHandler;
+import com.u2.web.handler.GetOneHandler;
+import com.u2.web.handler.PageHandler;
 import com.u2.web.handler.UpdateHandler;
 
 public abstract class SeedAction {
@@ -80,6 +88,15 @@ public abstract class SeedAction {
 		case delete:
 			returnJsonStr=new DeleteHandler(param, key).exec();
 			break;
+		case page:
+			returnJsonStr=new PageHandler(param, key).exec();
+			break;
+		case getAll:
+			returnJsonStr=new GetAllHandler(param, key).exec();
+			break;
+		case getOne:
+			returnJsonStr=new GetOneHandler(param, key).exec();
+			break;
 		default:
 			String str = execMethod();
 			if(str.endsWith(".jsp")){
@@ -113,7 +130,7 @@ public abstract class SeedAction {
 			} 
 		return str;
 	}
-
+	
 	private void outJson() {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");

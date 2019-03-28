@@ -56,14 +56,14 @@ public class MainCache {
 		// TODO Auto-generated method stub
 		List<Seed> list = BaseDao.me().selectSeeds(f.getId(),16);
 		if(list!=null&&!list.isEmpty()){
-			List<Seed_> seeds=new ArrayList<Seed_>();
+			//List<Seed_> seeds=new ArrayList<Seed_>();
 			for (Seed s : list) {
 				Seed_ s_=new Seed_(s);
 				s_.setFruit(f);
 				f.addSeed(s_);
-				seeds.add(s_);
+				//seeds.add(s_);
 			}
-			f.setSeeds(seeds);
+			//f.setSeeds(seeds);
 		}
 	}
 	private void listAdd(Fruit_ f) {
@@ -147,7 +147,7 @@ public class MainCache {
 	private void initSeeds(Fruit_ f, List<Seed> list) {
 		// TODO Auto-generated method stub
 		if(list!=null&&!list.isEmpty()){
-			List<Seed_> seeds=new ArrayList<Seed_>();
+			//List<Seed_> seeds=new ArrayList<Seed_>();
 			for (Seed s : list) {
 				Seed_ s_=new Seed_(s);
 				s_.setFruit(f);
@@ -158,10 +158,11 @@ public class MainCache {
 					Fruit_ otherFruit = cache_map.get(otherKey).get(otherFid);
 					f.addFruit(otherFruit);
 				}
-				seeds.add(s_);
+				//seeds.add(s_);
 			}
-			f.setSeeds(seeds);
+			//f.setSeeds(seeds);
 		}
 	}
+	
 	
 }

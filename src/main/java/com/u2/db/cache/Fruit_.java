@@ -54,8 +54,8 @@ public class Fruit_ extends Fruit {
 	public void addSeed(Seed_ s_) {
 		// TODO Auto-generated method stub
 		if(seeds==null){seeds=new ArrayList<Seed_>();}
-		seeds.add(s_);
 		if(seeds_map==null){seeds_map=new HashMap<String, Seed_>();}
+		seeds.add(s_);
 		seeds_map.put(s_.getKey(), s_);
 		jsonObj.put(s_.getKey(), s_.getValue());
 		
@@ -82,5 +82,12 @@ public class Fruit_ extends Fruit {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return getKey()+":"+getId();
+	}
+	public void refSeedJsonObj(Seed_ s) {
+		// TODO Auto-generated method stub
+		
+			jsonObj.put(s.getKey(), s.getValue());
+		
+		
 	}
 }

@@ -38,16 +38,16 @@ public class FruitHandler {
 		return b;
 	}
 
-	public boolean updateSeed(Fruit f, Seed newSeed) throws SQLException {
+	public boolean updateSeed(Fruit_ f_, Seed newSeed) throws SQLException {
 		boolean b = true;
 
-		Fruit_ f_ = MainCache.me().getFruit(f.getKey(), f.getId());
+		//Fruit_ f_ = MainCache.me().getFruit(f.getKey(), f.getId());
 		Seed_ s_ = f_.getSeed(newSeed.getKey());
 		int l = TableManager.me().findLength(f_.getKey(), s_.getKey());
-		b &= BaseDao.me().updateSeed(s_.getId(), newSeed.getValue(), l);
-		if (b) {
-			s_.setValue(newSeed.getValue());
-		}
+		b = BaseDao.me().updateSeed(s_.getId(), newSeed.getValue(), l);
+		
+		TransactionManager.pushSeed(s_, newSeed.getValue());
+	
 
 		return b;
 	}

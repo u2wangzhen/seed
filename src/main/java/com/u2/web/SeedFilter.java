@@ -56,7 +56,6 @@ public class SeedFilter  implements Filter{
 				act.setRoot(s[0]);
 				act.setKey(key);
 				act.setType(type);
-				
 				act.exec();
 			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
