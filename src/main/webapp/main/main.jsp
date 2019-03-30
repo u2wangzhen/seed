@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>main</title>
+<title>seeds</title>
 <link rel="stylesheet" type="text/css"
 	href="/seed/js/ui/themes/material/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
@@ -29,7 +29,7 @@ var data = [{
     iconCls: 'icon-sum',
     state: 'open',
     children: [{
-        text: 'Option1'
+        text: '<div onclick="addTab(\'student\',\'学生\');">学生</div>'
     },{
         text: 'Option2'
     },{
@@ -43,12 +43,13 @@ var data = [{
 },{
     text: '系统',
     iconCls: 'icon-more',
+    state: 'open',
     children: [{
         text: '<div onclick="addTab(\'sysconf\',\'模板注册\');">模板注册</div>'
     },{
         text: '<div onclick="addTab(\'user\',\'用户管理\');">用户管理</div>'
     },{
-        text: '权限'
+        text: '<div onclick="addTab(\'maker\',\'生成器\');">生成器</div>'
     }]
 }];
 </script>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>user</title>
+<title>student</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,14 +13,14 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/user/page',
+		url:'/seed/student/page',
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: 'user add',
+	    title: 'student add',
 	    width: 400,
 	    height: 200,
 	    closed: true,
@@ -32,12 +32,12 @@ $(function(){
 	});
 });
 function openAdd(){
-	$("#user_add_iframe").attr("src","/seed/user/toAdd");
+	$("#student_add_iframe").attr("src","/seed/student/toAdd");
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("#user_add_iframe").attr("src","/seed/user/toEdit?id="+id);
-	$('#dd').dialog({title:'user edit'});
+	$("#student_add_iframe").attr("src","/seed/student/toEdit?id="+id);
+	$('#dd').dialog({title:'student edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -46,7 +46,7 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/user/delete',{'id':id},function(data){
+	$.post('/seed/student/delete',{'id':id},function(data){
 		/* alert(data);
 		var data = eval('(' + data + ')');
 		alert(data); */
@@ -58,15 +58,21 @@ function deleteOne(id){
 }
 function searchPage(){
 	var name=$("#name").val();
-	var age=$("#age").val();
+	var code=$("#code").val();
+
 	$('#dg').datagrid('load', {
-	    name_l: name,age:age
+		 name:name
+	    
+		 ,code:code
+	    
 	});
 }
 </script>
 </head>
 <body>
-<input type="text" class="easyui-textbox" id="name" ><input type="text" class="easyui-textbox" id="age" ><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
+<input type="text" class="easyui-textbox" id="name" >
+<input type="text" class="easyui-textbox" id="code" >
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
@@ -74,15 +80,16 @@ function searchPage(){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>
-			<th data-options="field:'name',width:100,sortable:true">姓名</th>
-			<th data-options="field:'age',width:100,sortable:true">年龄</th>
-			<th data-options="field:'password',width:100,align:'right',sortable:true">密码</th>
+					<th data-options="field:'code',width:100,sortable:true">code</th>
+					<th data-options="field:'school',width:100,sortable:true">school</th>
+					<th data-options="field:'sex',width:100,sortable:true">sex</th>
+					<th data-options="field:'name',width:100,sortable:true">name</th>
 			<th data-options="field:'c',width:200,align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="user_add_iframe" src="/seed/user/toAdd" width="100%" height="100%"></iframe>
+<iframe id="student_add_iframe" src="/seed/student/toAdd" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

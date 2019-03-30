@@ -1,5 +1,6 @@
 package com.u2.model;
 
+
 public class Seed {
 
 	private Long id;
@@ -8,9 +9,23 @@ public class Seed {
 	private Long fid;
 	
 	public Seed(){}
-	public Seed(String key, String value) {
+	public Seed(String key, String... value) {
 		// TODO Auto-generated constructor stub
-		this.value=value;
+		if(value!=null&&value.length>0){
+			if(value.length>1){
+				String str="";
+				for (int i = 0; i < value.length; i++) {
+					if(i!=0){
+						str+=",";
+					}
+					str+=value[i];
+				}
+				this.value=str;
+			}else{
+				this.value=value[0];
+			}
+		}
+		
 		this.key=key;
 	}
 	public Long getId() {

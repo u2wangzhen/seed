@@ -1,4 +1,6 @@
-package com.u2.web;
+package com.u2.web.action;
+
+import com.u2.web.SeedAction;
 
 public class MainAction extends SeedAction{
 

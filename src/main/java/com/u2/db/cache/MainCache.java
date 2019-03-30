@@ -54,17 +54,29 @@ public class MainCache {
 	}
 	private void initSeedsSys(Fruit_ f) throws SQLException {
 		// TODO Auto-generated method stub
-		List<Seed> list = BaseDao.me().selectSeeds(f.getId(),16);
-		if(list!=null&&!list.isEmpty()){
-			//List<Seed_> seeds=new ArrayList<Seed_>();
-			for (Seed s : list) {
-				Seed_ s_=new Seed_(s);
-				s_.setFruit(f);
-				f.addSeed(s_);
-				//seeds.add(s_);
+		
+		if(f.getKey().equals(SeedConfig.SYS_KEY)){
+			Map<String, Integer> map = TableManager.me().findSeedsLength(SeedConfig.SYS_KEY);
+			Collection<Integer> vs = map.values();
+			Iterator<Integer> it = vs.iterator();
+			Set<Integer> set=new HashSet<Integer>();
+			while(it.hasNext()){
+				int l=it.next();
+				if(!set.contains(l)){
+					List<Seed> list = BaseDao.me().selectSeeds(f.getId(),l);
+					if(list!=null&&!list.isEmpty()){
+						for (Seed s : list) {
+							Seed_ s_=new Seed_(s);
+							s_.setFruit(f);
+							f.addSeed(s_);
+						}
+					}
+					set.add(l);
+				}
+				
 			}
-			//f.setSeeds(seeds);
 		}
+		
 	}
 	private void listAdd(Fruit_ f) {
 		// TODO Auto-generated method stub
@@ -162,6 +174,13 @@ public class MainCache {
 			}
 			//f.setSeeds(seeds);
 		}
+	}
+	public synchronized void delFruit(Fruit_ f) {
+		// TODO Auto-generated method stub
+		all_fruit_List.remove(f);
+		cache_map.get(f.getKey()).remove(f.getId());
+		cache_list.get(f.getKey()).remove(f);
+		f=null;
 	}
 	
 	

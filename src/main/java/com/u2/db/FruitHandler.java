@@ -1,10 +1,11 @@
 package com.u2.db;
 
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.u2.db.cache.Fruit_;
-import com.u2.db.cache.MainCache;
 import com.u2.db.cache.Seed_;
 import com.u2.db.data.BaseDao;
 import com.u2.db.manager.TransactionManager;
@@ -52,15 +53,23 @@ public class FruitHandler {
 		return b;
 	}
 
-	public boolean deleteFruit(Fruit f) throws SQLException {
+	public synchronized boolean deleteFruit(Fruit_ f) throws SQLException {
 		boolean b = true;
 
-		b &= BaseDao.me().deleteFruit(f);
-		Fruit_ f_ = MainCache.me().getFruit(f.getKey(), f.getId());
-		MainCache.me().getFruitList(f.getKey()).remove(f_);
-		MainCache.me().getFruitMAP(f.getKey()).remove(f.getId());
-		f_ = null;
-
+		Set<Seed_> seeds = f.getSeeds();
+		if(seeds!=null&&!seeds.isEmpty()){
+			Set<Integer> set=new HashSet<Integer>();
+			for (Seed_ s : seeds) {
+				int l=TableManager.me().findLength(f.getKey(), s.getKey());
+				if(!set.contains(l)){
+					BaseDao.me().deleteSeed(f.getId(), l);
+					set.add(l);
+				}
+				
+			}
+			BaseDao.me().deleteFruit(f.getId());
+		}
+		TransactionManager.pushDel(f);
 		return b;
 	}
 

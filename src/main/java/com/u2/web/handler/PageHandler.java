@@ -22,21 +22,25 @@ public class PageHandler extends SearchHandler {
 		int rows=Integer.valueOf(param("rows")==null?"10":param("rows"));
 		
 		List<Fruit_> list = MainCache.me().getFruitList(key);
+		
 		if(search!=null){
 			list=filterFruit(list);
 		}
 		JSONArray array=new JSONArray();
-		int f=(page-1)*rows;
-		for(int i=f;i<(f+rows);i++){
-			if(i>=list.size()){
-				break;
+		int size=0;
+		if(list!=null&&!list.isEmpty()){
+			size=list.size();
+			int f=(page-1)*rows;
+			for(int i=f;i<(f+rows);i++){
+				if(i>=list.size()){
+					break;
+				}
+				Fruit_ fruit = list.get(i);
+				array.add(fruit.getJsonObj());
 			}
-			Fruit_ fruit = list.get(i);
-			array.add(fruit.getJsonObj());
 		}
-		
 		JSONObject obj=new JSONObject();
-		obj.put("total", list.size());
+		obj.put("total", size);
 		obj.put("rows", array);
 		return obj.toJSONString();
 	}

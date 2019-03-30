@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Stack;
 
 import com.alibaba.druid.pool.DruidPooledConnection;
+import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.cache.Seed_;
 import com.u2.db.data.DBPoolConnection;
@@ -14,6 +15,7 @@ public class TransactionManager {
 	private static ThreadLocal<TransactionManager> local=new ThreadLocal<TransactionManager>();
 	private static ThreadLocal<Stack<Fruit>> fruit_local=new ThreadLocal<Stack<Fruit>>();
 	private static ThreadLocal<Stack<SeedUpdate>> seed_local=new ThreadLocal<Stack<SeedUpdate>>();
+	private static ThreadLocal<Stack<Fruit_>> del_local=new ThreadLocal<Stack<Fruit_>>();
 	private DruidPooledConnection conn;
 	
 	private TransactionManager(){
@@ -48,6 +50,15 @@ public class TransactionManager {
 		return list;
 	}
 	
+	public static Stack<Fruit_> getDellocal(){
+		Stack<Fruit_> list = del_local.get();
+		if(list==null){
+			list=new Stack<Fruit_>();
+			del_local.set(list);
+		}
+		return list;
+	}
+	
 	public static Stack<SeedUpdate> getSeedlocal(){
 		
 		Stack<SeedUpdate> list=seed_local.get();
@@ -60,6 +71,11 @@ public class TransactionManager {
 	
 	public static void pushSeed(Seed_ s,String v){
 		getSeedlocal().push(new SeedUpdate(s,v));
+	}
+	
+	public static void pushDel(Fruit_ f) {
+		// TODO Auto-generated method stub
+		getDellocal().push(f);
 	}
 	
 	public DruidPooledConnection getConn(){
@@ -79,6 +95,14 @@ public class TransactionManager {
 			while(stack!=null&&!stack.isEmpty()){
 				stack.pop().update();
 			}
+			
+			Stack<Fruit_> dl = del_local.get();
+			while(dl!=null&&!dl.isEmpty()){
+				Fruit_ f = dl.pop();
+				MainCache.me().delFruit(f);
+				
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,4 +141,5 @@ public class TransactionManager {
 			s.getFruit().refSeedJsonObj(s);
 		}
 	}
+	
 }

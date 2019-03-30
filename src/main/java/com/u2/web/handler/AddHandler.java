@@ -1,6 +1,5 @@
 package com.u2.web.handler;
 import java.util.List;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class AddHandler extends Handler{
 		if(names!=null&&!names.isEmpty()){
 			List<Seed> seeds=new ArrayList<Seed>();
 			for (String n : names) {
-				Seed s = new Seed(n,param.get(n)[0]);
+				Seed s = new Seed(n,param.get(n));
 				seeds.add(s);
 			}
 			try {

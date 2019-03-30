@@ -2,8 +2,10 @@ package com.u2.db.cache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.alibaba.fastjson.JSONObject;
 import com.u2.model.Fruit;
@@ -17,7 +19,7 @@ public class Fruit_ extends Fruit {
 		jsonObj.put("key", getKey());
 		jsonObj.put("id", getId());
 	}
-	private List<Seed_> seeds;
+	private Set<Seed_> seeds;
 	private Map<String,Seed_> seeds_map;
 	private Map<String,List<Fruit_>> fruits_list;
 	private Map<String,Map<Long,Fruit_>> fruits_map;
@@ -38,10 +40,10 @@ public class Fruit_ extends Fruit {
 	public void setFruits_list(Map<String, List<Fruit_>> fruits_list) {
 		this.fruits_list = fruits_list;
 	}
-	public List<Seed_> getSeeds() {
+	public Set<Seed_> getSeeds() {
 		return seeds;
 	}
-	public void setSeeds(List<Seed_> seeds) {
+	public void setSeeds(Set<Seed_> seeds) {
 		this.seeds = seeds;
 	}
 	public Map<String, Seed_> getSeeds_map() {
@@ -53,7 +55,7 @@ public class Fruit_ extends Fruit {
 
 	public void addSeed(Seed_ s_) {
 		// TODO Auto-generated method stub
-		if(seeds==null){seeds=new ArrayList<Seed_>();}
+		if(seeds==null){seeds=new HashSet<Seed_>();}
 		if(seeds_map==null){seeds_map=new HashMap<String, Seed_>();}
 		seeds.add(s_);
 		seeds_map.put(s_.getKey(), s_);

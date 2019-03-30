@@ -11,7 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.u2.db.table.TableManager;
 import com.u2.sys.ActionMapping;
+import com.u2.web.action.DefaultAction;
 
 public class SeedFilter  implements Filter{
 
@@ -43,11 +45,12 @@ public class SeedFilter  implements Filter{
 			if(s.length==2){
 				key=s[1];
 			}
-			Class<?> actionClass;
+			Class<?> actionClass=null;
 			if(key!=null){
 				 actionClass = actionMapping.getActionClass(key);
-			}else{
-				actionClass=IndexAction.class;
+			}
+			if(actionClass==null){
+				actionClass=DefaultAction.class;
 			}
 			
 			
@@ -75,6 +78,7 @@ public class SeedFilter  implements Filter{
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
 		actionMapping=ActionMapping.me();
+		TableManager.me().init();
 	}
 
 }
