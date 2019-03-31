@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -145,6 +146,22 @@ public abstract class SeedAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public String toAdd(){
+		return "add.jsp";
+	}
+	public String toEdit(){
+		String id=param("id");
+		if(id!=null&&!"".equals(id)){
+			Fruit_ f = MainCache.me().getFruit(key,Long.valueOf(id));
+			JSONObject obj = f.getJsonObj();
+			Set<String> set = obj.keySet();
+			for (String seedKey : set) {
+				request.setAttribute(seedKey, obj.get(seedKey));
+			}
+		}
+		return "edit.jsp";
 	}
 
 }

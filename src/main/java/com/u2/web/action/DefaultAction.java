@@ -9,19 +9,5 @@ import com.u2.web.SeedAction;
 
 public class DefaultAction extends SeedAction{
 
-	public String toAdd(){
-		return "add.jsp";
-	}
-	public String toEdit(){
-		String id=param("id");
-		if(id!=null&&!"".equals(id)){
-			Fruit_ f = MainCache.me().getFruit(key,Long.valueOf(id));
-			JSONObject obj = f.getJsonObj();
-			Set<String> set = obj.keySet();
-			for (String seedKey : set) {
-				request.setAttribute(seedKey, obj.get(seedKey));
-			}
-		}
-		return "edit.jsp";
-	}
+	
 }

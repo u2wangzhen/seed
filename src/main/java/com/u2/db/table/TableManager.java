@@ -89,7 +89,7 @@ public class TableManager {
 		}
 
 		addSeedLength(mm, SeedConfig.SYS_FKEY, 16);
-		addSeedLength(mm, SeedConfig.SYS_SKEY, 16);
+		addSeedLength(mm, SeedConfig.SYS_SKEY, 32);
 		addSeedLength(mm, SeedConfig.SYS_VLENGTH, 8);
 
 		Map<String, Integer> mmm = map.get(SeedConfig.FTL_KEY);

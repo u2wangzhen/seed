@@ -28,6 +28,7 @@ public class SeedFilter  implements Filter{
 		// TODO Auto-generated method stub
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)res;
+		request.setCharacterEncoding("utf-8");
 		String url=request.getRequestURI();
 		//parseUrl(url);
 		///String key = url.substring(url.lastIndexOf("/")+1, url.length());

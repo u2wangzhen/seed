@@ -21,25 +21,47 @@ public class Fruit_ extends Fruit {
 	}
 	private Set<Seed_> seeds;
 	private Map<String,Seed_> seeds_map;
-	private Map<String,List<Fruit_>> fruits_list;
-	private Map<String,Map<Long,Fruit_>> fruits_map;
+	private Map<String,List<Fruit_>> fruits_list_in;
+	private Map<String,Map<Long,Fruit_>> fruits_map_in;
+	private Map<String,List<Fruit_>> fruits_list_out;
+	private Map<String,Map<Long,Fruit_>> fruits_map_out;
+	public Map<String, List<Fruit_>> getFruits_list_in() {
+		return fruits_list_in;
+	}
+
+	public void setFruits_list_in(Map<String, List<Fruit_>> fruits_list_in) {
+		this.fruits_list_in = fruits_list_in;
+	}
+
+	public Map<String, Map<Long, Fruit_>> getFruits_map_in() {
+		return fruits_map_in;
+	}
+
+	public void setFruits_map_in(Map<String, Map<Long, Fruit_>> fruits_map_in) {
+		this.fruits_map_in = fruits_map_in;
+	}
+
+	public Map<String, List<Fruit_>> getFruits_list_out() {
+		return fruits_list_out;
+	}
+
+	public void setFruits_list_out(Map<String, List<Fruit_>> fruits_list_out) {
+		this.fruits_list_out = fruits_list_out;
+	}
+
+	public Map<String, Map<Long, Fruit_>> getFruits_map_out() {
+		return fruits_map_out;
+	}
+
+	public void setFruits_map_out(Map<String, Map<Long, Fruit_>> fruits_map_out) {
+		this.fruits_map_out = fruits_map_out;
+	}
 	private JSONObject jsonObj;
 	
 	public JSONObject getJsonObj() {
 		return jsonObj;
 	}
-	public Map<String, Map<Long, Fruit_>> getFruits_map() {
-		return fruits_map;
-	}
-	public void setFruits_map(Map<String, Map<Long, Fruit_>> fruits_map) {
-		this.fruits_map = fruits_map;
-	}
-	public Map<String, List<Fruit_>> getFruits_list() {
-		return fruits_list;
-	}
-	public void setFruits_list(Map<String, List<Fruit_>> fruits_list) {
-		this.fruits_list = fruits_list;
-	}
+	
 	public Set<Seed_> getSeeds() {
 		return seeds;
 	}
@@ -65,16 +87,30 @@ public class Fruit_ extends Fruit {
 
 	public void addFruit(Fruit_ otherFruit) {
 		// TODO Auto-generated method stub
-		if(fruits_list==null){fruits_list=new HashMap<String, List<Fruit_>>();}
-		List<Fruit_> list = fruits_list.get(otherFruit.getKey());
-		if(list==null){list=new ArrayList<Fruit_>();fruits_list.put(otherFruit.getKey(), list);}
+		if(fruits_list_in==null){fruits_list_in=new HashMap<String, List<Fruit_>>();}
+		List<Fruit_> list = fruits_list_in.get(otherFruit.getKey());
+		if(list==null){list=new ArrayList<Fruit_>();fruits_list_in.put(otherFruit.getKey(), list);}
 		list.add(otherFruit);
 		
-		if(fruits_map==null){fruits_map=new HashMap<String, Map<Long,Fruit_>>();}
-		Map<Long, Fruit_> map = fruits_map.get(otherFruit.getKey());
-		if(map==null){map=new HashMap<Long, Fruit_>();fruits_map.put(otherFruit.getKey(), map);}
+		if(fruits_map_in==null){fruits_map_in=new HashMap<String, Map<Long,Fruit_>>();}
+		Map<Long, Fruit_> map = fruits_map_in.get(otherFruit.getKey());
+		if(map==null){map=new HashMap<Long, Fruit_>();fruits_map_in.put(otherFruit.getKey(), map);}
 		map.put(otherFruit.getId(), otherFruit);
 		
+		otherFruit.addOutFruit(this);
+		
+	}
+	private void addOutFruit(Fruit_ fruit_) {
+		// TODO Auto-generated method stub
+		if(fruits_list_out==null){fruits_list_out=new HashMap<String, List<Fruit_>>();}
+		List<Fruit_> list = fruits_list_out.get(fruit_.getKey());
+		if(list==null){list=new ArrayList<Fruit_>();fruits_list_out.put(fruit_.getKey(), list);}
+		list.add(fruit_);
+		
+		if(fruits_map_out==null){fruits_map_out=new HashMap<String, Map<Long,Fruit_>>();}
+		Map<Long, Fruit_> map = fruits_map_out.get(fruit_.getKey());
+		if(map==null){map=new HashMap<Long, Fruit_>();fruits_map_out.put(fruit_.getKey(), map);}
+		map.put(fruit_.getId(), fruit_);
 	}
 	public Seed_ getSeed(String key) {
 		// TODO Auto-generated method stub
