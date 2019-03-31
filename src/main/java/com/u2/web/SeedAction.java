@@ -12,12 +12,12 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
-import com.u2.web.handler.AddHandler;
-import com.u2.web.handler.DeleteHandler;
-import com.u2.web.handler.GetAllHandler;
-import com.u2.web.handler.GetOneHandler;
-import com.u2.web.handler.PageHandler;
-import com.u2.web.handler.UpdateHandler;
+import com.u2.handler.AddHandler;
+import com.u2.handler.DeleteHandler;
+import com.u2.handler.GetAllHandler;
+import com.u2.handler.GetOneHandler;
+import com.u2.handler.PageHandler;
+import com.u2.handler.UpdateHandler;
 
 public abstract class SeedAction {
 

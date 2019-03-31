@@ -1,4 +1,4 @@
-package com.u2.web.handler;
+package com.u2.handler;
 
 import java.util.Map;
 import java.util.Set;

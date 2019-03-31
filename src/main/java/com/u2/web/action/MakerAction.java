@@ -14,8 +14,8 @@ import org.beetl.core.resource.ClasspathResourceLoader;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.table.TableManager;
+import com.u2.handler.UpdateHandler;
 import com.u2.web.SeedAction;
-import com.u2.web.handler.UpdateHandler;
 
 public class MakerAction extends SeedAction{
 
