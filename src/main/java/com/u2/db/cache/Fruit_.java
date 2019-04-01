@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 import com.alibaba.fastjson.JSONObject;
 import com.u2.model.Fruit;
@@ -25,6 +26,23 @@ public class Fruit_ extends Fruit {
 	private Map<String,Map<Long,Fruit_>> fruits_map_in;
 	private Map<String,List<Fruit_>> fruits_list_out;
 	private Map<String,Map<Long,Fruit_>> fruits_map_out;
+	private int[] indexs;
+	
+	
+	@Override
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		super.setId(id);
+		if(id!=null&&id>0){
+			indexs=Cube.buildIndex(id);
+		}
+		
+	}
+
+	public int[] getIndexs() {
+		return indexs;
+	}
+
 	public Map<String, List<Fruit_>> getFruits_list_in() {
 		return fruits_list_in;
 	}
