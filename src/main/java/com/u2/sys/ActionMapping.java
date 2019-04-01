@@ -3,7 +3,6 @@ package com.u2.sys;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.u2.test.UserAction;
 import com.u2.web.action.MainAction;
 import com.u2.web.action.MakerAction;
 import com.u2.web.action.SysAction;
@@ -22,7 +21,6 @@ public class ActionMapping{
 		// TODO Auto-generated method stub
 		//map.put("test", UserAction.class);
 		map.put("maker", MakerAction.class);
-		map.put("user", UserAction.class);
 		map.put("sysconf", SysAction.class);
 		map.put("main", MainAction.class);
 	}

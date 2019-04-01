@@ -178,7 +178,7 @@ public class Cube implements CubeI {
 		Square s = null;
 		for (int i = 0; i < indexs.length; i++) {
 			if (i == 0) {
-				s = squares[indexs[0] - 1];
+				s = squares[indexs[0]];
 			} else {
 				if (s.below == null) {
 					s.below = new Square[factor];
@@ -186,7 +186,7 @@ public class Cube implements CubeI {
 						s.below[j] = new Square();
 					}
 				}
-				s = s.below[indexs[i] - 1];
+				s = s.below[indexs[i]];
 			}
 		}
 		return s;
@@ -196,10 +196,10 @@ public class Cube implements CubeI {
 		Square s = null;
 		for (int i = 0; i < indexs.length; i++) {
 			if (i == 0) {
-				s = squares[indexs[0] - 1];
+				s = squares[indexs[0]];
 			} else {
 				if (s.below != null) {
-					s = s.below[indexs[i] - 1];
+					s = s.below[indexs[i]];
 				}
 			}
 		}
@@ -255,5 +255,10 @@ public class Cube implements CubeI {
 		}
 		return null;
 	}
+	
+	/*public static void main(String[] args) {
+		int[] a = Cube.buildIndex(500L);
+		System.out.println(a);
+	}*/
 
 }

@@ -57,21 +57,21 @@ function deleteOne(id){
 	});
 }
 function searchPage(){
+	var sex=$("#sex").val();
 	var name=$("#name").val();
-	var code=$("#code").val();
 
 	$('#dg').datagrid('load', {
-		 name:name
+		 sex:sex
 	    
-		 ,code:code
+		 ,name:name
 	    
 	});
 }
 </script>
 </head>
 <body>
+<input type="text" class="easyui-textbox" id="sex" >
 <input type="text" class="easyui-textbox" id="name" >
-<input type="text" class="easyui-textbox" id="code" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
@@ -80,10 +80,11 @@ function searchPage(){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>
-					<th data-options="field:'code',width:100,sortable:true">code</th>
-					<th data-options="field:'school',width:100,sortable:true">school</th>
-					<th data-options="field:'sex',width:100,sortable:true">sex</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
+					<th data-options="field:'sex',width:100,sortable:true">sex</th>
+					<th data-options="field:'school',width:100,sortable:true">school</th>
+					<th data-options="field:'remark',width:100,sortable:true">remark</th>
+					<th data-options="field:'createTime',width:100,sortable:true">createTime</th>
 			<th data-options="field:'c',width:200,align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>

@@ -29,13 +29,8 @@ function ok() {
 <form id="student_form" action="/seed/student/add" method="post">
 <table>
 <tr>
-<th>code:</th>
-<td><input type="text" name="code"  class="easyui-textbox" value=""></td>
-</tr>
-
-<tr>
-<th>school:</th>
-<td><input type="text" name="school"  class="easyui-textbox" value=""></td>
+<th>name:</th>
+<td><input type="text" name="name"  class="easyui-textbox" value=""></td>
 </tr>
 
 <tr>
@@ -44,8 +39,18 @@ function ok() {
 </tr>
 
 <tr>
-<th>name:</th>
-<td><input type="text" name="name"  class="easyui-textbox" value=""></td>
+<th>school:</th>
+<td><input type="text" name="school"  class="easyui-textbox" value=""></td>
+</tr>
+
+<tr>
+<th>remark:</th>
+<td><input type="text" name="remark"  class="easyui-textbox" value=""></td>
+</tr>
+
+<tr>
+<th>createTime:</th>
+<td><input type="text" name="createTime"  class="easyui-textbox" value=""></td>
 </tr>
 
 

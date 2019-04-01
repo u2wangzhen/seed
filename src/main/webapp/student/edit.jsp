@@ -31,13 +31,8 @@ function ok() {
 
 <table>
 <tr>
-<th>code:</th>
-<td><input type="text" name="code"  class="easyui-textbox" value="${code}"></td>
-</tr>
-
-<tr>
-<th>school:</th>
-<td><input type="text" name="school"  class="easyui-textbox" value="${school}"></td>
+<th>name:</th>
+<td><input type="text" name="name"  class="easyui-textbox" value="${name}"></td>
 </tr>
 
 <tr>
@@ -46,8 +41,18 @@ function ok() {
 </tr>
 
 <tr>
-<th>name:</th>
-<td><input type="text" name="name"  class="easyui-textbox" value="${name}"></td>
+<th>school:</th>
+<td><input type="text" name="school"  class="easyui-textbox" value="${school}"></td>
+</tr>
+
+<tr>
+<th>remark:</th>
+<td><input type="text" name="remark"  class="easyui-textbox" value="${remark}"></td>
+</tr>
+
+<tr>
+<th>createTime:</th>
+<td><input type="text" name="createTime"  class="easyui-textbox" value="${createTime}"></td>
 </tr>
 
 <tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
