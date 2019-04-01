@@ -154,7 +154,8 @@ public abstract class SeedAction {
 	public String toEdit(){
 		String id=param("id");
 		if(id!=null&&!"".equals(id)){
-			Fruit_ f = MainCache.me().getFruit(key,Long.valueOf(id));
+			//Fruit_ f = MainCache.me().getFruit(key,Long.valueOf(id));
+			Fruit_ f = MainCache.me().getFruit(Long.valueOf(id));
 			JSONObject obj = f.getJsonObj();
 			Set<String> set = obj.keySet();
 			for (String seedKey : set) {

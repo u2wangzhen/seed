@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.u2.db.table.TableManager;
+import com.u2.db.manager.TableManager;
 import com.u2.sys.ActionMapping;
 import com.u2.web.action.DefaultAction;
 

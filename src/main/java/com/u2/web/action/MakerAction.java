@@ -13,7 +13,7 @@ import org.beetl.core.resource.ClasspathResourceLoader;
 
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
-import com.u2.db.table.TableManager;
+import com.u2.db.manager.TableManager;
 import com.u2.handler.UpdateHandler;
 import com.u2.web.SeedAction;
 
@@ -23,8 +23,8 @@ public class MakerAction extends SeedAction{
 		String id=param("id");
 		if(id!=null&&!"".equals(id)){
 			
-			Fruit_ f = MainCache.me().getFruit(key, Long.valueOf(id));
-			
+			//Fruit_ f = MainCache.me().getFruit(key, Long.valueOf(id));
+			Fruit_ f = MainCache.me().getFruit(Long.valueOf(id));
 			
 				try {
 					maker(f);

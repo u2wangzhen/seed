@@ -1,18 +1,64 @@
 package com.u2.test;
 
-import com.u2.db.cache.Cube;
-import com.u2.web.ActionType;
+
 
 public class Test {
 
 	public static void main(String[] args) {
 		
 		
-		ActionType a = ActionType.valueOf("cc");
-		System.out.println(a);
+		/*ActionType a = ActionType.valueOf("cc");
+		System.out.println(a);*/
+		final Ccc c=new Ccc();
+		int i=0;
+		while(true){
+			i++;
+			
+			new Thread(new Runnable() {
+				
+				public void run() {
+					// TODO Auto-generated method stub
+					c.see(100L);
+				}
+			}).start();;
+			
+			new Thread(new Runnable() {
+				
+				public void run() {
+					// TODO Auto-generated method stub
+					c.del(110L);
+				}
+			}).start();;
+			if(i>100){
+				break;
+			}
+		}
 		
-		/*Cube c=new Cube();
-		Square[] s = c.getFruits("");
-		s[1].next();*/
+		
 	}
 }
+ class Ccc{
+	 private Long[] ll=new Long[1];
+	 public void see(Long l){
+		 synchronized(l){
+			 ll[0]=l;
+			 System.out.println("in");
+			 try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 if(ll[0]==null){
+				 System.out.println("this is null");
+			 }
+		 }
+		
+	 }
+	 public void del(Long l){
+		 synchronized(l){
+			 System.out.println("out");
+		 ll[0]=null;
+		 }
+	 }
+ }

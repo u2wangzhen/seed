@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-import com.u2.db.FruitHandler;
 import com.u2.db.manager.TransactionManager;
 import com.u2.model.Fruit;
 import com.u2.model.Seed;

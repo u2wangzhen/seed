@@ -1,4 +1,4 @@
-package com.u2.db;
+package com.u2.handler;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -8,8 +8,8 @@ import java.util.Set;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.Seed_;
 import com.u2.db.data.BaseDao;
+import com.u2.db.manager.TableManager;
 import com.u2.db.manager.TransactionManager;
-import com.u2.db.table.TableManager;
 import com.u2.model.Fruit;
 import com.u2.model.Seed;
 

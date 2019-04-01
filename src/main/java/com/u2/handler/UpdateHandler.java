@@ -3,7 +3,6 @@ package com.u2.handler;
 import java.util.Map;
 import java.util.Set;
 
-import com.u2.db.FruitHandler;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.cache.Seed_;
@@ -24,8 +23,8 @@ public class UpdateHandler extends Handler{
 		if(id!=null&&!"".equals(id)){
 				try {
 					
-					Fruit_ f = MainCache.me().getFruit(key, Long.valueOf(id));
-					
+					//Fruit_ f = MainCache.me().getFruit(key, Long.valueOf(id));
+					Fruit_ f = MainCache.me().getFruit( Long.valueOf(id));
 					Set<Seed_> seeds = f.getSeeds();
 					
 					
