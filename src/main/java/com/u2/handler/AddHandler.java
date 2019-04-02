@@ -1,6 +1,7 @@
 package com.u2.handler;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,13 +21,26 @@ public class AddHandler extends Handler{
 		Set<String> names = param.keySet();
 		if(names!=null&&!names.isEmpty()){
 			List<Seed> seeds=new ArrayList<Seed>();
+			List<Long> other=null;
 			for (String n : names) {
-				Seed s = new Seed(n,param.get(n));
-				seeds.add(s);
+				if(n.endsWith("_fid")){
+					 String[] ss = param.get(n);
+					 for (String k : ss) {
+						if(k!=null&&!"".equals(k)){
+							if(other==null){other=new ArrayList<Long>();}
+							other.add(Long.valueOf(k));
+						}
+					}
+				}else{
+					Seed s = new Seed(n,param.get(n));
+					seeds.add(s);
+				}
+				
 			}
 			try {
 				TransactionManager.get().open();
-				FruitHandler.me().insertFruit(new Fruit(key), seeds);
+				Fruit f = new Fruit(key);
+				FruitHandler.me().insertFruit(f, seeds,other);
 				TransactionManager.get().commit();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

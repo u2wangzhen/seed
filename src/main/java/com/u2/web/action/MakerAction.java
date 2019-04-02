@@ -55,7 +55,7 @@ public class MakerAction extends SeedAction{
 		Configuration cfg = Configuration.defaultConfiguration();
 		GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
 		
-		String fkey=f.getSeeds_map().get("fkey").getValue();
+		String fkey=f.getSeeds().get("fkey").getValue();
 		File ff=new File("G:/git/seed/src/main/webapp/"+fkey);
 		if(!ff.exists()){
 			ff.mkdirs();
@@ -91,7 +91,7 @@ public class MakerAction extends SeedAction{
 	private void binding(Template t, Fruit_ f,String fkey) throws NumberFormatException, SQLException {
 		// TODO Auto-generated method stub
 		
-		String sss=f.getSeeds_map().get("sss").getValue();
+		String sss=f.getSeeds().get("sss").getValue();
 		t.binding("fkey", fkey);
 		t.binding("skeys", TableManager.me().findSeedskey(fkey));
 		if(sss!=null&&!"".equals(sss)){

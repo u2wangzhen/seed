@@ -1,5 +1,7 @@
 package com.u2.handler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,21 +25,41 @@ public class UpdateHandler extends Handler{
 		if(id!=null&&!"".equals(id)){
 				try {
 					
-					//Fruit_ f = MainCache.me().getFruit(key, Long.valueOf(id));
 					Fruit_ f = MainCache.me().getFruit( Long.valueOf(id));
-					Set<Seed_> seeds = f.getSeeds();
+					Map<String, Seed_> seeds = f.getSeeds();
 					
-					
-					if(seeds!=null&&!seeds.isEmpty()){
+					if (seeds!=null&&!seeds.isEmpty()){
 						TransactionManager.get().open();
-						for (Seed_ s : seeds) {
-							if(!s.equalsValue(param.get(s.getKey())[0])){
-								Seed newSeed=new Seed();
-								newSeed.setId(s.getId());
-								newSeed.setKey(s.getKey());
-								newSeed.setValue(param.get(s.getKey())[0]);
-								FruitHandler.me().updateSeed(f, newSeed);
+						Set<String> names = param.keySet();
+						List<Long> other=null;
+						for(String n:names){
+							if("id".equals(n)){
+								continue;
 							}
+							if(n.endsWith("_fid")){
+								 String[] ss = param.get(n);
+								 for (String k : ss) {
+									if(k!=null&&!"".equals(k)){
+										if(other==null){other=new ArrayList<Long>();}
+										other.add(Long.valueOf(k));
+									}
+								}
+							}else{
+								if(seeds.get(n)!=null){
+									if(!seeds.get(n).equalsValue(param.get(n)[0])){
+										Seed newSeed=new Seed();
+										newSeed.setId(seeds.get(n).getId());
+										newSeed.setKey(seeds.get(n).getKey());
+										newSeed.setValue(param.get(n)[0]);
+										FruitHandler.me().updateSeed(f, newSeed);
+									}
+								}
+								
+							}
+							
+						}
+						if(other!=null){
+							FruitHandler.me().updateFruit(f,other);
 						}
 						TransactionManager.get().commit();
 					}

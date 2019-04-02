@@ -12,6 +12,27 @@ import com.u2.db.TableManagerI;
 import com.u2.db.data.BaseDao;
 
 public class TableManager implements TableManagerI{
+	
+	
+	private void initFruitTemplate() {
+		// TODO Auto-generated method stub
+		map.put("user", new FruitTemplate().add(new SeedTemplate("name", 8))
+												.add(new SeedTemplate("age", 2))
+												.add(new SeedTemplate("password", 16)));
+		
+		map.put("student", new FruitTemplate()
+												.add(new SeedTemplate("name", 16,true))
+												.add(new SeedTemplate("sex", 2,true))
+												.add(new SeedTemplate("school", 64))
+												.add(new SeedTemplate("remark", 255))
+												.add(new SeedTemplate("createTime", 16)));
+		
+		
+	}
+	private void initRelation(){
+		
+		buildRelation("user","student");
+	}
 
 	private static TableManagerI tableManager = new TableManager();
 
@@ -22,9 +43,14 @@ public class TableManager implements TableManagerI{
 	}
 
 	private Map<String, FruitTemplate> map = new HashMap<String, FruitTemplate>();
+	private Map<String,Set<String>> relation_map=new HashMap<String, Set<String>>();
 	private Set<Integer> exist = new HashSet<Integer>();
 	
-	
+	private void buildRelation(String mainKey, String otherKey){
+		Set<String> set = relation_map.get(mainKey);
+		if(set==null){set=new HashSet<String>();relation_map.put(mainKey, set);}
+		set.add(otherKey);
+	}
 
 	public int findLength(String fkey, String skey) {
 		
@@ -70,29 +96,23 @@ public class TableManager implements TableManagerI{
 	public void init() {
 		try {
 			initFruitTable();
+			initRelationTable();
 			initFruitTemplate();
+			initRelation();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void initFruitTemplate() {
-		// TODO Auto-generated method stub
-		map.put("user", new FruitTemplate().add(new SeedTemplate("name", 8))
-												.add(new SeedTemplate("age", 2))
-												.add(new SeedTemplate("password", 16)));
-		
-		map.put("student", new FruitTemplate()
-												.add(new SeedTemplate("name", 16,true))
-												.add(new SeedTemplate("sex", 2,true))
-												.add(new SeedTemplate("school", 64))
-												.add(new SeedTemplate("remark", 255))
-												.add(new SeedTemplate("createTime", 16)));
-		
-		
-	}
+	
 
+	private void initRelationTable() throws SQLException {
+		// TODO Auto-generated method stub
+		if (!BaseDao.me().isExist("t_relation")) {
+			BaseDao.me().createRelationTable();
+		}
+	}
 	private void initFruitTable() throws SQLException {
 		// TODO Auto-generated method stub
 		if (!BaseDao.me().isExist("t_fruit")) {

@@ -1,4 +1,4 @@
-package com.u2.db.cache;
+/*package com.u2.db.cache;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class MainCacheDel {
 	private void initSeedsSys(Fruit_ f) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		/*if(f.getKey().equals(SeedConfig.SYS_KEY)){
+		if(f.getKey().equals(SeedConfig.SYS_KEY)){
 			Map<String, Integer> map = TableManager.me().findSeedsLength(SeedConfig.SYS_KEY);
 			Collection<Integer> vs = map.values();
 			Iterator<Integer> it = vs.iterator();
@@ -75,7 +75,7 @@ public class MainCacheDel {
 				}
 				
 			}
-		}*/
+		}
 		
 	}
 	private void listAdd(Fruit_ f) {
@@ -141,7 +141,7 @@ public class MainCacheDel {
 	private void initSeeds(Fruit_ f) throws SQLException {
 		// TODO Auto-generated method stub
 		///TableManager.me().getTablName(f.getKey(), skey);
-		/*Map<String, Integer> map = TableManager.me().findSeedsLength(f.getKey());
+		Map<String, Integer> map = TableManager.me().findSeedsLength(f.getKey());
 		Collection<Integer> vs = map.values();
 		Iterator<Integer> it = vs.iterator();
 		Set<Integer> set=new HashSet<Integer>();
@@ -152,7 +152,7 @@ public class MainCacheDel {
 				initSeeds(f,list);
 				set.add(l);
 			}
-		}*/
+		}
 		//List<Seed> list = BaseDao.me().selectSeeds(f.getId(),16);
 		
 	}
@@ -185,3 +185,4 @@ public class MainCacheDel {
 	
 	
 }
+*/

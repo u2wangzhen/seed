@@ -13,4 +13,5 @@ public interface MainCacheI {
 	public List<Fruit_> getFruitList(String key);
 	public List<Fruit_> getFruitListDesc(String key);
 	public Fruit_ getFruit(Long id);
+	public void refRelation(Fruit_ f) throws SQLException;
 }

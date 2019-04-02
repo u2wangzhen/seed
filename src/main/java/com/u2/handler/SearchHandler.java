@@ -62,7 +62,7 @@ abstract class SearchHandler extends Handler{
 			
 			for (Factor factor : fs) {
 				
-				Seed_ seed = f.getSeeds_map().get(factor.seedKey);
+				Seed_ seed = f.getSeeds().get(factor.seedKey);
 				if(seed!=null){
 					if(factor.isLike){
 						b=seed.getValue().indexOf(factor.value)>=0;

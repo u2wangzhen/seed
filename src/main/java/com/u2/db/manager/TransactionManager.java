@@ -16,6 +16,7 @@ public class TransactionManager {
 	private static ThreadLocal<Stack<Fruit>> fruit_local=new ThreadLocal<Stack<Fruit>>();
 	private static ThreadLocal<Stack<SeedUpdate>> seed_local=new ThreadLocal<Stack<SeedUpdate>>();
 	private static ThreadLocal<Stack<Fruit_>> del_local=new ThreadLocal<Stack<Fruit_>>();
+	private static ThreadLocal<Stack<Fruit_>> relation_local=new ThreadLocal<Stack<Fruit_>>();
 	private DruidPooledConnection conn;
 	
 	private TransactionManager(){
@@ -32,6 +33,8 @@ public class TransactionManager {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	public static TransactionManager get(){
 		TransactionManager t = local.get();
 		if(t==null){
@@ -39,6 +42,15 @@ public class TransactionManager {
 			local.set(t);
 		}
 		return t;
+	}
+	
+	public static Stack<Fruit_> getRelationlocal(){
+		Stack<Fruit_> list = relation_local.get();
+		if(list==null){
+			list=new Stack<Fruit_>();
+			relation_local.set(list);
+		}
+		return list;
 	}
 	
 	public static Stack<Fruit> getFruitlistlocal(){
@@ -89,6 +101,12 @@ public class TransactionManager {
 			while(list!=null&&!list.isEmpty()){
 				Fruit f = list.pop();
 				MainCache.me().addFruit(f);
+				
+			}
+			Stack<Fruit_> rl = relation_local.get();
+			while(rl!=null&&!rl.isEmpty()){
+				Fruit_ f = rl.pop();
+				MainCache.me().refRelation(f);
 				
 			}
 			Stack<SeedUpdate> stack=seed_local.get();

@@ -16,6 +16,7 @@ import com.u2.db.MainCacheI;
 import com.u2.db.data.BaseDao;
 import com.u2.db.manager.TableManager;
 import com.u2.model.Fruit;
+import com.u2.model.Relation;
 import com.u2.model.Seed;
 import com.u2.sys.SeedConfig;
 
@@ -34,14 +35,19 @@ public class MainCache implements MainCacheI {
 	public void init() {
 		try {
 			List<Fruit> fs= BaseDao.me().selectAllFruit();
-
+			Hook hook=new Hook();
 			if (fs != null && !fs.isEmpty()) {
 				for (Fruit f : fs) {
 					Fruit_ f_ = new Fruit_(f);
 					cubel.add(f_);
 					addSeeds(f_);
+					List<Relation> rs = BaseDao.me().selectRelation(f.getId());
+					if(rs!=null){
+						hook.add(f_,rs);
+					}
 				}
 			}
+			hook.free();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,16 +66,10 @@ public class MainCache implements MainCacheI {
 	private void addSeeds(Fruit_ f, List<Seed> list) {
 		// TODO Auto-generated method stub
 		if(list!=null&&!list.isEmpty()){
-			//List<Seed_> seeds=new ArrayList<Seed_>();
 			for (Seed s : list) {
 				Seed_ s_=new Seed_(s);
 				s_.setFruit(f);
 				f.addSeed(s_);
-				if(s.getKey().endsWith("_fid")){
-					Long otherFid = Long.valueOf(s.getValue());
-					Fruit_ otherFruit = cubel.get(otherFid);
-					f.addFruit(otherFruit);
-				}
 			}
 		}
 	}
@@ -84,6 +84,18 @@ public class MainCache implements MainCacheI {
 		Fruit_ f_ = new Fruit_(f);
 		cubel.add(f_);
 		addSeeds(f_);
+		buildRelation(f_);
+	}
+
+	private void buildRelation(Fruit_ f) throws SQLException {
+		// TODO Auto-generated method stub
+		List<Relation> rs = BaseDao.me().selectRelation(f.getId());
+		if(rs!=null){
+			for(Relation r:rs){
+				Fruit_ other = MainCache.me().getFruit(r.getOtherId());
+				f.addOther(other);
+			}
+		}
 	}
 
 	public List<Fruit_> getFruitList(String key) {
@@ -99,6 +111,12 @@ public class MainCache implements MainCacheI {
 	public Fruit_ getFruit(Long id) {
 		// TODO Auto-generated method stub
 		return cubel.get(id);
+	}
+
+	public void refRelation(Fruit_ f) throws SQLException {
+		// TODO Auto-generated method stub
+		f.delRelation();
+		buildRelation(f);
 	}
 
 }

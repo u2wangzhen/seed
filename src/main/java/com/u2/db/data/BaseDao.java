@@ -9,6 +9,7 @@ import java.util.List;
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.u2.db.manager.TransactionManager;
 import com.u2.model.Fruit;
+import com.u2.model.Relation;
 import com.u2.model.Seed;
 
 public class BaseDao {
@@ -29,6 +30,15 @@ public class BaseDao {
 
 		boolean i = s.execute("INSERT INTO T_SEED_" + l + " (S_KEY,S_VALUE,S_FID) VALUES ('" + seed.getKey() + "','"
 				+ seed.getValue() + "'," + seed.getFid() + ")");
+		s.close();
+		return i;
+	}
+	
+	public synchronized boolean insertRelation(Relation r) throws SQLException {
+
+		DruidPooledConnection c = TransactionManager.get().getConn();
+		Statement s = c.createStatement();
+		boolean i = s.execute("INSERT INTO T_RELATION (MAIN_ID,OTHER_ID) VALUES (" + r.getMainId() + ","+ r.getOtherId() + ")");
 		s.close();
 		return i;
 	}
@@ -54,6 +64,30 @@ public class BaseDao {
 		c.close();
 		return list;
 	}
+	
+	public List<Relation> selectRelation(Long mid) throws SQLException {
+		List<Relation> list = null;
+		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		Statement s = c.createStatement();
+		ResultSet rs = s.executeQuery("select * from T_RELATION where main_id="+mid);
+		while (rs.next()) {
+			Relation r = new Relation();
+			Long id = rs.getLong(1);
+			Long mainId = rs.getLong(2);
+			Long otherId = rs.getLong(3);
+			r.setId(id);
+			r.setMainId(mainId);
+			r.setOtherId(otherId);
+			if (list == null) {
+				list = new ArrayList<Relation>();
+			}
+			list.add(r);
+		}
+		rs.close();
+		s.close();
+		c.close();
+		return list;
+	}
 
 	public List<Seed> selectSeeds(Long fid, int t) throws SQLException {
 		// TODO Auto-generated method stub
@@ -61,10 +95,6 @@ public class BaseDao {
 		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
 		Statement s = c.createStatement();
 		list = select(s, fid, t);
-		/*
-		 * list.addAll(select(s, fid, 32)); list.addAll(select(s, fid, 64));
-		 * list.addAll(select(s, fid, 128)); list.addAll(select(s, fid, 256));
-		 */
 		s.close();
 		c.close();
 		return list;
@@ -135,12 +165,23 @@ public class BaseDao {
 		return i;
 	}
 
-	public boolean deleteFruit(long fid) throws SQLException {
+	public boolean deleteFruit(Long fid) throws SQLException {
 		// TODO Auto-generated method stub
 		boolean i = true;
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql = "delete from T_FRUIT where id=" + fid;
+		i &= s.execute(sql);
+		s.close();
+		return i;
+	}
+	
+	public boolean deleteRelation(Long mainId) throws SQLException {
+		// TODO Auto-generated method stub
+		boolean i = true;
+		DruidPooledConnection c = TransactionManager.get().getConn();
+		Statement s = c.createStatement();
+		String sql = "delete from T_RELATION where main_Id=" + mainId;
 		i &= s.execute(sql);
 		s.close();
 		return i;
@@ -208,6 +249,21 @@ public class BaseDao {
 		s.close();
 		c.close();
 
+	}
+
+	public synchronized void createRelationTable() throws SQLException {
+		// TODO Auto-generated method stub
+		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		Statement s = c.createStatement();
+		String sql = "CREATE TABLE `t_relation` (" + "`ID` bigint(11) NOT NULL AUTO_INCREMENT,"
+				+ "`main_id` bigint(20) NOT NULL,"
+				+ "`other_id` bigint(20) NOT NULL,"
+				+ "PRIMARY KEY (`ID`)"
+				+ ") ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;";
+
+		s.execute(sql);
+		s.close();
+		c.close();
 	}
 
 }

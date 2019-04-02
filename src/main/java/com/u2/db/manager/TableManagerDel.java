@@ -1,4 +1,4 @@
-package com.u2.db.manager;
+/*package com.u2.db.manager;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -145,7 +145,7 @@ public class TableManagerDel {
 		}
 
 	}
-	/*
+	
 	 * public void getTableName(String fkey,String skey,int l){ int length =
 	 * getValueLength(fkey, skey); if(l>length){ int newLength=scope(l); } }
 	 * 
@@ -161,8 +161,8 @@ public class TableManagerDel {
 	 * if(l>64&&l<=128){ return 128; }
 	 * 
 	 * return 255; }
-	 */
-	/*
+	 
+	
 	 * private void init() { // TODO Auto-generated method stub
 	 * DruidPooledConnection conn=null; try { conn =
 	 * DBPoolConnection.getInstance().getConnection(); Statement s =
@@ -179,6 +179,7 @@ public class TableManagerDel {
 	 * e.printStackTrace(); } }
 	 * 
 	 * } }
-	 */
+	 
 
 }
+*/
