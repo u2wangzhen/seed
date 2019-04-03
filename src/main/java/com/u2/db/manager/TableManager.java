@@ -26,6 +26,11 @@ public class TableManager implements TableManagerI{
 												.add(new SeedTemplate("school", 64))
 												.add(new SeedTemplate("remark", 255))
 												.add(new SeedTemplate("createTime", 16)));
+		map.put("lesson", new FruitTemplate().add(new SeedTemplate("name", 64,true))
+												.add(new SeedTemplate("subject", 8,true))
+												.add(new SeedTemplate("grade", 4,true))
+												.add(new SeedTemplate("createTime", 16))
+												);
 		
 		
 	}

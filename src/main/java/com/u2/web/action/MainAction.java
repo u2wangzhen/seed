@@ -6,10 +6,10 @@ public class MainAction extends SeedAction{
 
 	public String toMain(){
 		
-		return "main.jsp";
+		return "/WEB-INF/page/main/main.jsp";
 	}
 	public String home(){
 		
-		return "home.jsp";
+		return "/WEB-INF/page/main/home.jsp";
 	}
 }

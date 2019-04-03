@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/resources/beetl.properties=UTF-8
-encoding//src/main/webapp/main/home.jsp=UTF-8
-encoding//src/main/webapp/sysconf/add.jsp=UTF-8
-encoding//src/main/webapp/sysconf/index.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/page/main/home.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/page/sysconf/add.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/page/sysconf/index.jsp=UTF-8
 encoding/<project>=UTF-8

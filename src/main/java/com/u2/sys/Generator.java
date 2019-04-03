@@ -65,7 +65,7 @@ public class Generator {
 	}
 	public static void main(String[] args) {
 		try {
-			new Generator().generator("student");
+			new Generator().generator("lesson");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

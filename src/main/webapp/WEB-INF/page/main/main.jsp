@@ -31,7 +31,7 @@ var data = [{
     children: [{
         text: '<div onclick="addTab(\'student\',\'学生\');">学生</div>'
     },{
-        text: 'Option2'
+        text: '<div onclick="addTab(\'lesson\',\'课\');">课</div>'
     },{
         text: 'Option3',
         children: [{

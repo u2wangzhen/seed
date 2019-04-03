@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey}</title>
+<title>lesson</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,17 +13,18 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/#{fkey}/page',
+		url:'/seed/lesson/page',
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: '#{fkey} add',
+	    title: 'lesson add',
 	    width: 400,
 	    height: 600,
 	    closed: true,
+	    maximizable:true,
 	    cache: false,
 	    modal: true,
 	    onClose:function(){
@@ -32,12 +33,12 @@ $(function(){
 	});
 });
 function openAdd(){
-	$("##{fkey}_add_iframe").attr("src","/seed/#{fkey}/toAdd");
+	$("#lesson_add_iframe").attr("src","/seed/lesson/toAdd");
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("##{fkey}_add_iframe").attr("src","/seed/#{fkey}/toEdit?id="+id);
-	$('#dd').dialog({title:'#{fkey} edit'});
+	$("#lesson_add_iframe").attr("src","/seed/lesson/toEdit?id="+id);
+	$('#dd').dialog({title:'lesson edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -46,7 +47,7 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/#{fkey}/delete',{'id':id},function(data){
+	$.post('/seed/lesson/delete',{'id':id},function(data){
 		/* alert(data);
 		var data = eval('(' + data + ')');
 		alert(data); */
@@ -57,28 +58,25 @@ function deleteOne(id){
 	});
 }
 function searchPage(){
-<@ for(ss in searchSeeds) {@>
-	var #{ss}=$("##{ss}").val();
-<@}@>
+	var subject=$("#subject").val();
+	var grade=$("#grade").val();
+	var name=$("#name").val();
 
 	$('#dg').datagrid('load', {
-	<@ for(ss in searchSeeds) {@>
-		<@ if(ssLP.index==1){@>
-		 #{ss}:#{ss}
-		<@}@>
-	   	<@ if(ssLP.index>1){@>
-		 ,#{ss}:#{ss}
-		<@}@>
+		 subject:subject
 	    
-	    <@}@>
+		 ,grade:grade
+	    
+		 ,name:name
+	    
 	});
 }
 </script>
 </head>
 <body>
-<@ for(ss in searchSeeds) {@>
-<input type="text" class="easyui-textbox" id="#{ss}" >
-<@}@>
+<input type="text" class="easyui-textbox" id="subject" >
+<input type="text" class="easyui-textbox" id="grade" >
+<input type="text" class="easyui-textbox" id="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
@@ -87,15 +85,16 @@ function searchPage(){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>
-			<@ for(sk in skeys) {@>
-					<th data-options="field:'#{sk}',width:100,sortable:true">#{sk}</th>
-			<@}@>
+					<th data-options="field:'name',width:100,sortable:true">name</th>
+					<th data-options="field:'subject',width:100,sortable:true">subject</th>
+					<th data-options="field:'grade',width:100,sortable:true">grade</th>
+					<th data-options="field:'createTime',width:100,sortable:true">createTime</th>
 			<th data-options="field:'c',width:200,align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="#{fkey}_add_iframe" src="/seed/#{fkey}/toAdd" width="100%" height="100%"></iframe>
+<iframe id="lesson_add_iframe" src="/seed/lesson/toAdd" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

@@ -123,9 +123,9 @@ public abstract class SeedAction {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				if(key!=null&&!"".equals(key)){
-					str="/"+key+"/index.jsp";
+					str="/WEB-INF/page/"+key+"/index.jsp";
 				}else{
-					str="/index.jsp";
+					str="/WEB-INF/page/index.jsp";
 				}
 				
 			} 
@@ -149,7 +149,10 @@ public abstract class SeedAction {
 	}
 	
 	public String toAdd(){
-		return "add.jsp";
+		return "/WEB-INF/page/"+key+"/add.jsp";
+	}
+	public String toSelect(){
+		return "/WEB-INF/page/"+key+"/select.jsp";
 	}
 	public String toEdit(){
 		String id=param("id");
@@ -161,8 +164,15 @@ public abstract class SeedAction {
 			for (String seedKey : set) {
 				request.setAttribute(seedKey, obj.get(seedKey));
 			}
+			Map<String, Set<Fruit_>> map = f.getOtherFruits();
+			if(map!=null){
+				Set<String> s = map.keySet();
+				for (String sk : s) {
+					request.setAttribute(sk, map.get(sk));
+				}
+			}
 		}
-		return "edit.jsp";
+		return "/WEB-INF/page/"+key+"/edit.jsp";
 	}
 
 }
