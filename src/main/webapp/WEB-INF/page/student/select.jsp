@@ -15,19 +15,26 @@ $(function(){
 	$('#dg').datagrid({
 		url:'/seed/student/getAll',
 	    loadMsg:'请稍后...',
-	    toolbar: '#tb',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
 	    	var s=$("[name='student_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
-	    			alert(s[i].value);
 	    			$('#dg').datagrid("selectRecord",s[i].value);
 	    		}
 
 	    	}
+	    },
+	    onSelect:function(){
+	    	
+	    	getSelections();
+	    },
+		onUnselect:function(){
+	    	
+	    	getSelections();
 	    }
+	    
 	});
 	
 });
@@ -36,6 +43,8 @@ function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
 		parent.insert(s);
+	}else{
+		parent.clear();
 	}
 }
 function searchPage(){
@@ -53,9 +62,6 @@ function searchPage(){
 <input type="text" class="easyui-textbox" id="sex" >
 <input type="text" class="easyui-textbox" id="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
-<div id="tb">
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="getSelections();"></a>
-</div>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:500px">
     <thead>
 		<tr>

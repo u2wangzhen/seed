@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,9 +24,24 @@ function ok() {
 
 	});
 }
+function insert(s){
+	var str="";
+	for(var i=0;i<s.length;i++){
+		str+=build(s[i]);
+	}
+	$("#students").html(str);
+}
+function clear(){
+	$("#students").html("");
+}
+function build(obj){
+	var str='<div><input type="hidden" name="student_fid"  value="'+obj.id+'">'+obj.name+'</div>';
+	return str;
+}
 </script>
 </head>
-<body>
+<body class="easyui-layout">
+<div data-options="region:'center'">
 <form id="lesson_form" action="/seed/lesson/update" method="post">
 	<input type="hidden" name="id" value="${id}">
 
@@ -49,9 +65,20 @@ function ok() {
 <th>createTime:</th>
 <td><input type="text" name="createTime"  class="easyui-textbox" value="${createTime}"></td>
 </tr>
-
+<tr>
+<th>student:</th>
+<td><div id="students">
+<c:forEach items="${student}" var="stu">
+<div><input type="hidden" name="student_fid" value="${stu.id}"/>${stu.jsonObj.name }</div>
+</c:forEach>
+</div></td>
+</tr>
 <tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
 </table>
 </form>
+</div>
+<div data-options="region:'east',split:true,title:'选择学生'" style="width:600px;padding:10px;">
+<iframe id="student_select_iframe" src="/seed/student/toSelect" width="100%" height="100%"></iframe>
+</div>
 </body>
 </html>

@@ -18,6 +18,7 @@ $(function(){
 	    closed: true,
 	    cache: false,
 	    maximizable:true,
+	    maximizabd:true,
 	    modal: true,
 	    onClose:function(){
 	    	$('#dg').datagrid('reload'); 
@@ -47,13 +48,17 @@ function insert(s){
 	}
 	$("#students").html(str);
 }
+function clear(){
+	$("#students").html("");
+}
 function build(obj){
-	var str='<div id="'+obj.id+'"><input type="hidden" name="student_fid"  value="'+obj.id+'">'+obj.name+'</div>';
+	var str='<div><input type="hidden" name="student_fid"  value="'+obj.id+'">'+obj.name+'</div>';
 	return str;
 }
 </script>
 </head>
-<body>
+<body class="easyui-layout">
+<div data-options="region:'center'">
 <form id="lesson_form" action="/seed/lesson/add" method="post">
 <table>
 <tr>
@@ -79,13 +84,13 @@ function build(obj){
 <tr>
 <th>students:</th>
 <td><div id="students"></div>
-<button type="button" onclick="add();">添加</button>
 </td>
 </tr>
 <tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
 </table>
 </form>
-<div id="dd">
+</div>
+<div data-options="region:'east',split:true,title:'选择学生'" style="width:600px;padding:10px;">
 <iframe id="student_select_iframe" src="/seed/student/toSelect" width="100%" height="100%"></iframe>
 </div>
 </body>

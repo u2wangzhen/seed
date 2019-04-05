@@ -58,7 +58,7 @@ var data = [{
 	<div data-options="region:'west',split:true,title:'Seeds'" style="width:150px;padding:10px;">
 	
 	
-	<div id="sm" class="easyui-sidemenu" data-options="data:data"></div>
+		<div id="sm" class="easyui-sidemenu" data-options="data:data"></div>
 	
 	</div>
 	

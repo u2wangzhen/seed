@@ -25,6 +25,7 @@ $(function(){
 	    height: 600,
 	    closed: true,
 	    maximizable:true,
+	    maximizabd:true,
 	    cache: false,
 	    modal: true,
 	    onClose:function(){
