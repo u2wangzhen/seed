@@ -1,28 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>student</title>
+<title>price</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	
+	var lesson_fid=$("#lesson_fid").val();
 	$('#dg').datagrid({
-		url:'/seed/student/page',
+		url:'/seed/price/page?lesson_fid='+lesson_fid,
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: 'student add',
+	    title: 'price add',
 	    width: 400,
-	    height: 200,
+	    height: 300,
 	    closed: true,
 	    cache: false,
 	    modal: true,
@@ -32,12 +32,13 @@ $(function(){
 	});
 });
 function openAdd(){
-	$("#student_add_iframe").attr("src","/seed/student/toAdd");
+	var lesson_fid=$("#lesson_fid").val();
+	$("#price_add_iframe").attr("src","/seed/price/toAdd?lesson_fid="+lesson_fid);
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("#student_add_iframe").attr("src","/seed/student/toEdit?id="+id);
-	$('#dd').dialog({title:'student edit'});
+	$("#price_add_iframe").attr("src","/seed/price/toEdit?id="+id);
+	$('#dd').dialog({title:'price edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -46,7 +47,7 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/student/delete',{'id':id},function(data){
+	$.post('/seed/price/delete',{'id':id},function(data){
 		alert(data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
@@ -54,21 +55,13 @@ function deleteOne(id){
 	});
 }
 function searchPage(){
-	var sex=$("#sex").val();
-	var name=$("#name").val();
-
-	$('#dg').datagrid('load', {
-		 sex:sex
-	    
-		 ,name:name
-	    
-	});
+	var lesson_fid=$("#lesson_fid").val();
+	$('#dg').datagrid('load', {lesson_fid:lesson_fid});
 }
 </script>
 </head>
 <body>
-<input type="text" class="easyui-textbox" id="sex" >
-<input type="text" class="easyui-textbox" id="name" >
+<input type="hidden" id="lesson_fid" value="${lesson_fid}">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
@@ -77,17 +70,14 @@ function searchPage(){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>
-					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'sex',width:100,sortable:true">sex</th>
-					<th data-options="field:'school',width:100,sortable:true">school</th>
+					<th data-options="field:'price',width:100,sortable:true">price</th>
 					<th data-options="field:'remark',width:100,sortable:true">remark</th>
-					<th data-options="field:'createTime',width:100,sortable:true">createTime</th>
 			<th data-options="field:'c',width:200,align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="student_add_iframe" src="/seed/student/toAdd" width="100%" height="100%"></iframe>
+<iframe id="price_add_iframe" src="/seed/price/toAdd" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

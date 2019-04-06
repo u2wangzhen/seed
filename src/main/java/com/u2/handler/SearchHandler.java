@@ -61,15 +61,26 @@ abstract class SearchHandler extends Handler{
 			boolean b=false;
 			
 			for (Factor factor : fs) {
-				
-				Seed_ seed = f.getSeeds().get(factor.seedKey);
-				if(seed!=null){
-					if(factor.isLike){
-						b=seed.getValue().indexOf(factor.value)>=0;
-					}else{
-						b=seed.equalsValue(factor.value);
+				if(factor.isRelation){
+					Set<Fruit_> s = f.getOtherFruits(factor.seedKey);
+					if(s!=null&&!s.isEmpty()){
+						for (Fruit_ fruit_ : s) {
+							if(fruit_.getId()==Long.valueOf(factor.value)){
+								b=true;
+								break;
+							}
+						}
 					}
-					
+				}else{
+					Seed_ seed = f.getSeeds().get(factor.seedKey);
+					if(seed!=null){
+						if(factor.isLike){
+							b=seed.getValue().indexOf(factor.value)>=0;
+						}else{
+							b=seed.equalsValue(factor.value);
+						}
+						
+					}
 				}
 				if(!b){
 					return false;
@@ -83,10 +94,14 @@ abstract class SearchHandler extends Handler{
 		String seedKey;
 		String value;
 		boolean isLike=false;
+		boolean isRelation=false;
 		public Factor(String searchKey, String value) {
 			if(searchKey.endsWith("_l")){
 				this.isLike = true;
 				this.seedKey=searchKey.split("_l")[0];
+			}else if(searchKey.endsWith("_fid")){
+				this.isRelation = true;
+				this.seedKey=searchKey.split("_fid")[0];
 			}else{
 				this.seedKey=searchKey;
 			}

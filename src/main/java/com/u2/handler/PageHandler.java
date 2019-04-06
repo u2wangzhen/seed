@@ -2,6 +2,7 @@ package com.u2.handler;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -36,7 +37,23 @@ public class PageHandler extends SearchHandler {
 					break;
 				}
 				Fruit_ fruit = list.get(i);
-				array.add(fruit.getJsonObj());
+				JSONObject obj = fruit.getJsonObj();
+				
+				Map<String, Set<Fruit_>> ofm = fruit.getOtherFruits();
+				if(ofm!=null&&!ofm.isEmpty()){
+					Set<String> set = ofm.keySet();
+					for (String key : set) {
+						Set<Fruit_> s = ofm.get(key);
+						if(s!=null&&!s.isEmpty()){
+							JSONArray l=new JSONArray();
+							for (Fruit_ ff : s) {
+								l.add(ff.getJsonObj().clone());
+							}
+							obj.put(key+"_s", l);
+						}
+					}
+				}
+				array.add(obj);
 			}
 		}
 		JSONObject obj=new JSONObject();

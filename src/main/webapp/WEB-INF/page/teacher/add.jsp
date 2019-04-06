@@ -1,24 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey} edit</title>
+<title>teacher add</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 function ok() {
-	$('##{fkey}_form').form('submit', {
+	$('#teacher_form').form('submit', {
 
 		success : function(data) {
 			var data = eval('(' + data + ')'); // change the JSON string to javascript object
 			if (data.success) {
 				alert(data.message);
-				$('##{fkey}_form').form('clear');
+				$('#teacher_form').form('clear');
 			}
 		}
 
@@ -27,18 +26,24 @@ function ok() {
 </script>
 </head>
 <body>
-<form id="#{fkey}_form" action="/seed/#{fkey}/update" method="post">
-	<input type="hidden" name="id" value="${id}">
-
+<form id="teacher_form" action="/seed/teacher/add" method="post">
 <table>
-<@ 
-for(sk in skeys) {@>
 <tr>
-<th>#{sk}:</th>
-<td><input type="text" name="#{sk}"  class="easyui-textbox" value="${#{sk}}"></td>
+<th>name:</th>
+<td><input type="text" name="name"  class="easyui-textbox" value=""></td>
 </tr>
 
-<@}@>
+<tr>
+<th>subject:</th>
+<td><input type="text" name="subject"  class="easyui-textbox" value=""></td>
+</tr>
+
+<tr>
+<th>remark:</th>
+<td><input type="text" name="remark"  class="easyui-textbox" value=""></td>
+</tr>
+
+
 <tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
 </table>
 </form>

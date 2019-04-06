@@ -31,6 +31,8 @@ var data = [{
     children: [{
         text: '<div onclick="addTab(\'student\',\'学生\');">学生</div>'
     },{
+        text: '<div onclick="addTab(\'teacher\',\'老师\');">老师</div>'
+    },{
         text: '<div onclick="addTab(\'lesson\',\'课\');">课</div>'
     },{
         text: 'Option3',
@@ -46,6 +48,8 @@ var data = [{
     state: 'open',
     children: [{
         text: '<div onclick="addTab(\'sysconf\',\'模板注册\');">模板注册</div>'
+    },{
+        text: '<div onclick="addTab(\'fruit\',\'fruit\');">fruit</div>'
     },{
         text: '<div onclick="addTab(\'user\',\'用户管理\');">用户管理</div>'
     },{

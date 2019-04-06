@@ -20,16 +20,21 @@ public class DeleteHandler extends Handler {
 		if(id!=null&&!"".equals(id)){
 			//Fruit_ f = MainCache.me().getFruit(key, Long.valueOf(id));
 			Fruit_ f = MainCache.me().getFruit( Long.valueOf(id));
-			try {
-				TransactionManager.get().open();
-				FruitHandler.me().deleteFruit(f);
-				TransactionManager.get().commit();
-			}catch (Exception e) {
-				// TODO Auto-generated catch block
-				TransactionManager.get().rollback();
-			}finally {
-				TransactionManager.get().close();
+			if(f.getCitedFruits()!=null&&!f.getCitedFruits().isEmpty()){
+				return "{\"success\":"+false+",\"message\":\"删除失败，被引用！\"}";
+			}else{
+				try {
+					TransactionManager.get().open();
+					FruitHandler.me().deleteFruit(f);
+					TransactionManager.get().commit();
+				}catch (Exception e) {
+					// TODO Auto-generated catch block
+					TransactionManager.get().rollback();
+				}finally {
+					TransactionManager.get().close();
+				}
 			}
+			
 		}
 		return "{\"success\":"+true+",\"message\":\"删除成功！\"}";
 	}

@@ -33,7 +33,11 @@ public class TableManager implements TableManagerI{
 												.add(new SeedTemplate("createTime", 16))
 												);
 		
-		
+		map.put("teacher", new FruitTemplate().add(new SeedTemplate("name", 16))
+										.add(new SeedTemplate("subject", 8))
+										.add(new SeedTemplate("remark", 255)));
+		map.put("price", new FruitTemplate().add(new SeedTemplate("price", 16))
+				.add(new SeedTemplate("remark", 255)));
 	}
 	private void initRelation(){
 		
@@ -187,6 +191,10 @@ public class TableManager implements TableManagerI{
 		s.add(1);
 		System.out.println(s.size());
 	}*/
+	public Set<String> findAllFruitKey() {
+		// TODO Auto-generated method stub
+		return map.keySet();
+	}
 	
 	
 }

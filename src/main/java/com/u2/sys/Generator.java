@@ -14,8 +14,8 @@ import com.u2.db.manager.TableManager;
 
 public class Generator {
 
-	//private static String root="G:/git/seed";
-	private static String root="D:/work/workspace/seed";
+	private static String root="G:/git/seed";
+	//private static String root="D:/work/workspace/seed";
 	
 	public void generator(String fkey) throws IOException{
 		
@@ -65,7 +65,7 @@ public class Generator {
 	}
 	public static void main(String[] args) {
 		try {
-			new Generator().generator("lesson");
+			new Generator().generator("price");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

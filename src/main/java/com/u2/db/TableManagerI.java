@@ -10,4 +10,5 @@ public interface TableManagerI {
 	public Set<String> findSeedskey(String fkey);
 	public Set<String> findSearchSeedKeys(String fkey);
 	public List<String> findSeedskeyList(String fkey);
+	public Set<String> findAllFruitKey();
 }

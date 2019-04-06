@@ -110,6 +110,7 @@ public abstract class SeedAction {
 		if(returnJsonStr!=null&&!"".equals(returnJsonStr)){
 			outJson();
 		}else{
+			
 			new Route(routeStr,request,response).render();
 		}
 		
@@ -123,6 +124,12 @@ public abstract class SeedAction {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				if(key!=null&&!"".equals(key)){
+					Set<String> ks = param.keySet();
+					if(ks!=null&&!ks.isEmpty()){
+						for (String k : ks) {
+							request.setAttribute(k, param.get(k)[0]);
+						}
+					}
 					str="/WEB-INF/page/"+key+"/index.jsp";
 				}else{
 					str="/WEB-INF/page/index.jsp";
@@ -149,6 +156,12 @@ public abstract class SeedAction {
 	}
 	
 	public String toAdd(){
+		Set<String> ks = param.keySet();
+		if(ks!=null&&!ks.isEmpty()){
+			for (String k : ks) {
+				request.setAttribute(k, param.get(k)[0]);
+			}
+		}
 		return "/WEB-INF/page/"+key+"/add.jsp";
 	}
 	public String toSelect(){

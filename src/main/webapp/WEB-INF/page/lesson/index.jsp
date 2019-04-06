@@ -49,11 +49,8 @@ function buildButton(value,row,index){
 }
 function deleteOne(id){
 	$.post('/seed/lesson/delete',{'id':id},function(data){
-		/* alert(data);
-		var data = eval('(' + data + ')');
-		alert(data); */
+		alert(data.message);
 		if (data.success) {
-			alert(data.message);
 			$('#dg').datagrid('reload'); 
 		}
 	});
@@ -71,6 +68,20 @@ function searchPage(){
 		 ,name:name
 	    
 	});
+}
+function viewFruit(value,row,index){
+	var str="";
+	debugger;
+	if(value!=null&&value.length>0){
+		for(var i=0;i<value.length;i++){
+			if(i!=0){
+				str+=",";
+			}
+			str+=value[i].name;
+		}
+	}
+		
+	return str;
 }
 </script>
 </head>
@@ -90,6 +101,8 @@ function searchPage(){
 					<th data-options="field:'subject',width:100,sortable:true">subject</th>
 					<th data-options="field:'grade',width:100,sortable:true">grade</th>
 					<th data-options="field:'createTime',width:100,sortable:true">createTime</th>
+					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">学生</th>
+ 					<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">老师</th>
 			<th data-options="field:'c',width:200,align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
