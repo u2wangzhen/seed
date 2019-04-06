@@ -37,7 +37,7 @@ public class PageHandler extends SearchHandler {
 					break;
 				}
 				Fruit_ fruit = list.get(i);
-				JSONObject obj = fruit.getJsonObj();
+				JSONObject obj = (JSONObject) (fruit.getJsonObj()).clone();
 				
 				Map<String, Set<Fruit_>> ofm = fruit.getOtherFruits();
 				if(ofm!=null&&!ofm.isEmpty()){
