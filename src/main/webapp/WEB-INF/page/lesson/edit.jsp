@@ -97,7 +97,7 @@
 				</tr>
 			</table>
 		</form>
-		<iframe id="price_iframe" src="/seed/price?lesson_fid=${id }" width="100%" height="400"></iframe>
+		<iframe id="price_iframe" src="/seed/price?lesson_fid=${id }" width="100%" height="300"></iframe>
 	</div>
 	<div id="select" data-options="region:'east',split:true,title:'选择'"
 		style="width: 600px; padding: 10px;"></div>

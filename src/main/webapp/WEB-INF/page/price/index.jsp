@@ -13,8 +13,8 @@
 $(function(){
 	var lesson_fid=$("#lesson_fid").val();
 	$('#dg').datagrid({
-		url:'/seed/price/page?lesson_fid='+lesson_fid,
-	    pagination:true,
+		url:'/seed/price/getAll?lesson_fid='+lesson_fid,
+	   // pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
@@ -66,13 +66,13 @@ function searchPage(){
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
-<table id="dg" class="easyui-datagrid" style="width:100%;height:500px">
+<table id="dg" class="easyui-datagrid" style="width:100%;height:100%">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>
 					<th data-options="field:'price',width:100,sortable:true">price</th>
 					<th data-options="field:'remark',width:100,sortable:true">remark</th>
-			<th data-options="field:'c',width:200,align:'center',formatter:buildButton">操作</th>
+			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
