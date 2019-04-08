@@ -59,15 +59,15 @@ function searchPage(){
 <input type="text" class="easyui-textbox" id="sex" >
 <input type="text" class="easyui-textbox" id="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
-<table id="dg" class="easyui-datagrid" style="width:100%;height:500px">
+<table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
-			<th data-options="field:'id',width:100,sortable:true" >ID</th>
+			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'sex',width:100,sortable:true">sex</th>
+					<th data-options="field:'sex',width:50,sortable:true">sex</th>
 					<th data-options="field:'school',width:100,sortable:true">school</th>
-					<th data-options="field:'remark',width:100,sortable:true">remark</th>
 					<th data-options="field:'createTime',width:100,sortable:true">createTime</th>
+					<th data-options="field:'remark',sortable:true">remark</th>
 		</tr>
     </thead>
 </table>

@@ -66,7 +66,7 @@ function searchPage(){
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
-<table id="dg" class="easyui-datagrid" style="width:100%;height:100%">
+<table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>

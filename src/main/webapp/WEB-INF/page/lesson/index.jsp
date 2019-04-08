@@ -19,10 +19,11 @@ $(function(){
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
+	
 	$('#dd').dialog({
 	    title: 'lesson add',
-	    width: 400,
-	    height: 600,
+	    width: $(document).width()-50,
+	    height: $(document).height()-50,
 	    closed: true,
 	    maximizable:true,
 	    maximizabd:true,

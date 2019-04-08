@@ -1,7 +1,6 @@
 package com.u2.handler;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,7 +34,6 @@ public class AddHandler extends Handler{
 					Seed s = new Seed(n,param.get(n));
 					seeds.add(s);
 				}
-				
 			}
 			try {
 				TransactionManager.get().open();

@@ -76,6 +76,7 @@ public class MainCache implements MainCacheI {
 
 	public void delFruit(Fruit_ f) {
 		// TODO Auto-generated method stub
+		f.delRelation();
 		cubel.remove(f.getId());
 	}
 

@@ -17,12 +17,14 @@ abstract class SearchHandler extends Handler{
 		// TODO Auto-generated constructor stub
 		if(param!=null&&param.size()>0){
 			Set<String> ks = param.keySet();
- 			ks.remove("rows");
-			ks.remove("page");
+ 			//ks.remove("rows");
+			//ks.remove("page");
 			if(ks!=null&&!ks.isEmpty()){
 				search=new Search();
 				for(String k:ks){
-					search.addFactor(k, param.get(k)[0]);
+					if(!"rows".equals(k)&&!"page".equals(k)){
+						search.addFactor(k, param.get(k)[0]);
+					}
 				}
 			}
 		}

@@ -122,13 +122,13 @@ public class BaseDao {
 		return list;
 	}
 
-	public synchronized boolean insertFruit(Fruit fruit) throws SQLException {
+	public synchronized void insertFruit(Fruit fruit) throws SQLException {
 
 		DruidPooledConnection c = TransactionManager.get().getConn();
 
 		Statement s = c.createStatement();
 
-		boolean i = s.execute("INSERT INTO T_FRUIT (F_KEY) VALUES ('" + fruit.getKey() + "')");
+		s.execute("INSERT INTO T_FRUIT (F_KEY) VALUES ('" + fruit.getKey() + "')");
 
 		ResultSet r = s.executeQuery("select last_insert_id()");
 		while (r.next()) {
@@ -138,7 +138,6 @@ public class BaseDao {
 		r.close();
 		s.close();
 		// c.close();
-		return i;
 	}
 
 	/*
@@ -152,7 +151,7 @@ public class BaseDao {
 	 * 
 	 * }
 	 */
-	public synchronized boolean updateSeed(Long id, String newValue, int l) throws SQLException {
+	public synchronized void updateSeed(Long id, String newValue, int l) throws SQLException {
 		// TODO Auto-generated method stub
 		if (newValue == null) {
 			newValue = "";
@@ -160,42 +159,35 @@ public class BaseDao {
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql = "update T_SEED_" + l + " set s_value='" + newValue + "' where id=" + id;
-		boolean i = s.execute(sql);
+		s.execute(sql);
 		s.close();
-		return i;
 	}
 
-	public boolean deleteFruit(Long fid) throws SQLException {
+	public void deleteFruit(Long fid) throws SQLException {
 		// TODO Auto-generated method stub
-		boolean i = true;
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql = "delete from T_FRUIT where id=" + fid;
-		i &= s.execute(sql);
+		s.execute(sql);
 		s.close();
-		return i;
 	}
 	
-	public boolean deleteRelation(Long mainId) throws SQLException {
+	public void deleteRelation(Long mainId) throws SQLException {
 		// TODO Auto-generated method stub
-		boolean i = true;
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql = "delete from T_RELATION where main_Id=" + mainId;
-		i &= s.execute(sql);
+		s.execute(sql);
 		s.close();
-		return i;
 	}
 
-	public boolean deleteSeed(long fid, int l) throws SQLException {
+	public void deleteSeed(long fid, int l) throws SQLException {
 		// TODO Auto-generated method stub
-		boolean i = true;
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
 		String sql = "delete from T_SEED_" + l + " where s_fid=" + fid;
-		i &= s.execute(sql);
+		s.execute(sql);
 		s.close();
-		return i;
 	}
 
 	public boolean isExist(String tableName) throws SQLException {

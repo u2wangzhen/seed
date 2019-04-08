@@ -124,7 +124,7 @@ public class Fruit_ extends Fruit {
 
 	}
 
-	public void delRelation() {
+	 void delRelation() {
 		// TODO Auto-generated method stub
 		if (otherFruits != null) {
 			Set<String> ks = otherFruits.keySet();
@@ -141,7 +141,18 @@ public class Fruit_ extends Fruit {
 	private void removeOther(String key, Fruit_ f) {
 		// TODO Auto-generated method stub
 		if (citedFruits != null) {
-			citedFruits.get(key).remove(f);
+			Set<Fruit_> set = citedFruits.get(key);
+			if(set!=null){
+				if(set.isEmpty()){
+					citedFruits.remove(key);
+				}else{
+					set.remove(f);
+					if(set.isEmpty()){
+						citedFruits.remove(key);
+					}
+				}
+			}
 		}
 	}
+
 }

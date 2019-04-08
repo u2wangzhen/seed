@@ -53,7 +53,7 @@ function searchPage(){
 <body>
 <input type="text" class="easyui-textbox" id="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
-<table id="dg" class="easyui-datagrid" style="width:100%;height:500px">
+<table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:100,sortable:true" >ID</th>

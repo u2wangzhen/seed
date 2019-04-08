@@ -51,7 +51,7 @@ public class FruitHandler {
 		// Fruit_ f_ = MainCache.me().getFruit(f.getKey(), f.getId());
 		Seed_ s_ = f_.getSeed(newSeed.getKey());
 		int l = TableManager.me().findLength(f_.getKey(), s_.getKey());
-		b = BaseDao.me().updateSeed(s_.getId(), newSeed.getValue(), l);
+		BaseDao.me().updateSeed(s_.getId(), newSeed.getValue(), l);
 
 		TransactionManager.pushSeed(s_, newSeed.getValue());
 
@@ -60,7 +60,7 @@ public class FruitHandler {
 
 	public synchronized boolean deleteFruit(Fruit_ f) throws SQLException {
 		boolean b = true;
-
+		BaseDao.me().deleteRelation(f.getId());
 		Set<Integer> ls = TableManager.me().findSeedsLength(f.getKey());
 		for (Integer l : ls) {
 			BaseDao.me().deleteSeed(f.getId(), l);
