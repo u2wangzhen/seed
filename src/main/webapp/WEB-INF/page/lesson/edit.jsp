@@ -10,11 +10,13 @@
 	href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
 	href="/seed/js/ui/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="/seed/css/select_div.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
-<style type="text/css">
+<!-- <style type="text/css">
 .selectOther div{float:left;padding:5px;background:#fafafa;border:1px solid #ccc}
-</style>
+</style> -->
 <script type="text/javascript">
 	function ok() {
 		$('#lesson_form').form('submit', {

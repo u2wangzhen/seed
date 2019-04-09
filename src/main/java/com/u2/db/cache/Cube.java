@@ -99,17 +99,17 @@ public class Cube implements CubeI {
 					ss = new Square[2];
 					key_map.put(key, ss);
 					ss[0] = this;
-				}
-				if (ss[1] != null) {
-					this.previous = ss[1];
-					ss[1].next = this;
-					ss[1]=this;
 				}else{
-					ss[0].next=this;
-					ss[1] = this;
+					if (ss[1] != null) {
+						this.previous = ss[1];
+						ss[1].next = this;
+						ss[1]=this;
+					}else{
+						ss[0].next=this;
+						this.previous=ss[0];
+						ss[1] = this;
+					}
 				}
-				
-
 			} else {
 				throw new RuntimeException("Fruit'key is lost!");
 			}

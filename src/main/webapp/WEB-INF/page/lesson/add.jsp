@@ -9,6 +9,8 @@
 	href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
 	href="/seed/js/ui/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="/seed/css/select_div.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/seed/js/validate_repeat.js"></script>
@@ -98,27 +100,23 @@
 
 				<tr>
 					<th>students:</th>
-					<td><div id="student"></div>
+					<td><div id="student" class="selectOther"></div>
 						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('student');"></a>
 						</td>
 				</tr>
 
 				<tr>
 					<th>teacher:</th>
-					<td><div id="teacher"></div>
+					<td><div id="teacher" class="selectOther"></div>
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('teacher');"></a>
 					</td>
 				</tr>
 				<tr>
-					<th colspan="2"><button type="button" onclick="ok();">提交</button></th>
+					<th colspan="2"><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">提交</a></th>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div id="select" data-options="region:'east',split:true,title:'选择'"
-		style="width: 600px; padding: 10px;">
-		<!-- <iframe id="select_iframe" src="/seed/student/toSelect" width="100%" height="100%"></iframe>
- -->
-	</div>
+	<div id="select" data-options="region:'east',split:true,title:'附属窗口'" style="width: 600px; padding: 10px;"></div>
 </body>
 </html>

@@ -14,10 +14,29 @@ import com.u2.db.manager.TableManager;
 
 public class Generator {
 
-	private static String root="G:/git/seed";
-	//private static String root="D:/work/workspace/seed";
+	//private static String root="G:/git/seed";
+	private static String root="D:/work/workspace/seed";
 	
-	public void generator(String fkey) throws IOException{
+	public void generatorIndex(String fkey) throws IOException{
+		
+		ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("com/u2/ftl/");
+		Configuration cfg = Configuration.defaultConfiguration();
+		GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
+		
+		((TableManager)TableManager.me()).init();
+		
+		File ff=new File(root+"/src/main/webapp/"+fkey);
+		if(!ff.exists()){
+			ff.mkdirs();
+		}
+        
+        Template it = gt.getTemplate("/index.btl");
+        binding(fkey,it);
+        outFile(it,root+"/src/main/webapp/"+fkey+"/index.jsp");
+		
+	}
+	
+	public void generatorAdd(String fkey) throws IOException{
 		
 		ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("com/u2/ftl/");
 		Configuration cfg = Configuration.defaultConfiguration();
@@ -35,15 +54,48 @@ public class Generator {
 		binding(fkey,at);
 		outFile(at,root+"/src/main/webapp/"+fkey+"/add.jsp");
 		
+	}
+	
+	public void generatorSelect(String fkey) throws IOException{
+		
+		ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("com/u2/ftl/");
+		Configuration cfg = Configuration.defaultConfiguration();
+		GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
+		
+		((TableManager)TableManager.me()).init();
+		
+		File ff=new File(root+"/src/main/webapp/"+fkey);
+		if(!ff.exists()){
+			ff.mkdirs();
+		}
+		
+		
+		Template at = gt.getTemplate("/select.btl");
+		binding(fkey,at);
+		outFile(at,root+"/src/main/webapp/"+fkey+"/select.jsp");
+		
+	}
+	
+	
+	public void generatorEdit(String fkey) throws IOException{
+		
+		ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("com/u2/ftl/");
+		Configuration cfg = Configuration.defaultConfiguration();
+		GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
+		
+		((TableManager)TableManager.me()).init();
+		
+		File ff=new File(root+"/src/main/webapp/"+fkey);
+		if(!ff.exists()){
+			ff.mkdirs();
+		}
+		
         Template et = gt.getTemplate("/edit.btl");
         binding(fkey,et);
         outFile(et,root+"/src/main/webapp/"+fkey+"/edit.jsp");
         
-        Template it = gt.getTemplate("/index.btl");
-        binding(fkey,it);
-        outFile(it,root+"/src/main/webapp/"+fkey+"/index.jsp");
-		
 	}
+	
 	private void binding(String fkey, Template t) {
 		// TODO Auto-generated method stub
 		t.binding("fkey", fkey);
@@ -65,7 +117,7 @@ public class Generator {
 	}
 	public static void main(String[] args) {
 		try {
-			new Generator().generator("price");
+			new Generator().generatorSelect("student");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

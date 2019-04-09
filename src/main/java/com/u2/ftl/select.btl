@@ -13,12 +13,12 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/student/getAll',
+		url:'/seed/#{fkey}/getAll',
 	    loadMsg:'请稍后...',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
-	    	var s=$("[name='student_fid']",window.parent.document);
+	    	var s=$("[name='#{fkey}_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
 	    			$('#dg').datagrid("selectRecord",s[i].value);
@@ -39,37 +39,42 @@ $(function(){
 function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
-		parent.insert("student",s);
+		parent.insert("#{fkey}",s);
 	}else{
-		parent.clear("student");
+		parent.clear("#{fkey}");
 	}
 }
 function searchPage(){
-	var sex=$("#sex").val();
-	var name=$("#name").val();
+<@ for(ss in searchSeeds) {@>
+	var #{ss}=$("##{ss}").val();
+<@}@>
 
 	$('#dg').datagrid('load', {
-		 sex:sex
+	<@ for(ss in searchSeeds) {@>
+		<@ if(ssLP.index==1){@>
+		 #{ss}:#{ss}
+		<@}@>
+	   	<@ if(ssLP.index>1){@>
+		 ,#{ss}:#{ss}
+		<@}@>
 	    
-		 ,name:name
-	    
+	    <@}@>
 	});
 }
 </script>
 </head>
 <body>
-<input type="text" class="easyui-textbox" id="sex" >
-<input type="text" class="easyui-textbox" id="name" >
+<@ for(ss in searchSeeds) {@>
+<input type="text" class="easyui-textbox" id="#{ss}" >
+<@}@>
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<th data-options="field:'name',width:50,sortable:true">name</th>
-					<th data-options="field:'sex',width:50,sortable:true">sex</th>
-					<th data-options="field:'school',width:100,sortable:true">school</th>
-					<th data-options="field:'remark',width:100,sortable:true">remark</th>
-					<th data-options="field:'createTime',sortable:true">createTime</th>
+					<@ for(sk in skeys) {@>
+					<th data-options="field:'#{sk}',width:100,sortable:true">#{sk}</th>
+					<@}@>
 		</tr>
     </thead>
 </table>
