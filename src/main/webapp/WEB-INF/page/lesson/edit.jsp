@@ -16,24 +16,15 @@
 .selectOther div{float:left;padding:5px;background:#fafafa;border:1px solid #ccc}
 </style>
 <script type="text/javascript">
-/* $(function(){
-	
-	var w=$(document).width()/2;
-	alert(w);
-	$("#select").width(w);
-	
-}); */
 	function ok() {
 		$('#lesson_form').form('submit', {
-
 			success : function(data) {
 				var data = eval('(' + data + ')'); // change the JSON string to javascript object
 				if (data.success) {
-					alert(data.message);
+					$.messager.alert("操作提示", data.message);
 					$('#lesson_form').form('clear');
 				}
 			}
-
 		});
 	}
 	function openSub(){

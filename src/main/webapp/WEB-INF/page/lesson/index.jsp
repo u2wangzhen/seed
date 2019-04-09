@@ -23,7 +23,7 @@ $(function(){
 	$('#dd').dialog({
 	    title: 'lesson add',
 	    width: $(document).width()-50,
-	    height: $(document).height()-50,
+	    height: $(document).height()-100,
 	    closed: true,
 	    maximizable:true,
 	    maximizabd:true,
@@ -50,7 +50,7 @@ function buildButton(value,row,index){
 }
 function deleteOne(id){
 	$.post('/seed/lesson/delete',{'id':id},function(data){
-		alert(data.message);
+		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
@@ -94,10 +94,10 @@ function viewFruit(value,row,index){
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
-<table id="dg" class="easyui-datagrid" style="width:100%;height:500px">
+<table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
-			<th data-options="field:'id',width:100,sortable:true" >ID</th>
+			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
 					<th data-options="field:'subject',width:100,sortable:true">subject</th>
 					<th data-options="field:'grade',width:100,sortable:true">grade</th>

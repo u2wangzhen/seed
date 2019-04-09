@@ -43,8 +43,8 @@
 			success : function(data) {
 				var data = eval('(' + data + ')'); // change the JSON string to javascript object
 				if (data.success) {
-					alert(data.message);
-					 //$.messager.alert("操作提示", data.message);
+					//alert(data.message);
+					$.messager.alert("操作提示", data.message);
 					$('#lesson_form').form('clear');
 				}
 				$.messager.progress('close');

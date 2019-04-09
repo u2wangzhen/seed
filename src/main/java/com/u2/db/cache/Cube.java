@@ -103,8 +103,12 @@ public class Cube implements CubeI {
 				if (ss[1] != null) {
 					this.previous = ss[1];
 					ss[1].next = this;
+					ss[1]=this;
+				}else{
+					ss[0].next=this;
+					ss[1] = this;
 				}
-				ss[1] = this;
+				
 
 			} else {
 				throw new RuntimeException("Fruit'key is lost!");
@@ -137,22 +141,29 @@ public class Cube implements CubeI {
 
 		void remove() {
 			// TODO Auto-generated method stub
-
-			if (this.next == null) {
-				if (this.previous != null) {
-					this.previous.next = null;
-				} else {
-					key_map.remove(fruit.getKey());
+			Square[] mm = key_map.get(fruit.getKey());
+			if(this.equals(mm[0])){
+				if(this.next==null){
+					mm[0]=null;
+				}else{
+					mm[0]=this.next;
 				}
-			} else {
-				if (this.previous != null) {
-					this.previous.next = this.next;
-					this.next.previous = this.previous;
-				} else {
-					this.next.previous = null;
-					key_map.get(fruit.getKey())[0] = next;
+				
+			}else if(this.equals(mm[1])){
+				
+				if(this.previous.equals(mm[0])){
+					mm[0].next=null;
+					mm[1]=null;
+				}else{
+					mm[1]=this.previous;
+					this.previous.next=null;
 				}
+				
+			}else{
+				this.previous.next = this.next;
+				this.next.previous = this.previous;
 			}
+			
 			fruit = null;
 		}
 	}
