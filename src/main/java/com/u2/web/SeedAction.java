@@ -187,5 +187,20 @@ public abstract class SeedAction {
 		}
 		return "/WEB-INF/page/"+key+"/edit.jsp";
 	}
+	public String validate(){
+		
+		String skey=param("skey");
+		String value=param("value");
+		
+		if(skey!=null&&!"".equals(skey)&&value!=null&&!"".equals(value)){
+			List<Fruit_> list = MainCache.me().getFruitList(key);
+			for (Fruit_ f : list) {
+				if(value.equals(f.getSeed(skey).getValue())){
+					return "1";
+				}
+			}
+		}
+		return "0";
+	}
 
 }

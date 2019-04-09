@@ -11,16 +11,43 @@
 	href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/seed/js/validate_repeat.js"></script>
 <script type="text/javascript">
-	function ok() {
-		$('#lesson_form').form('submit', {
 
+	$(function(){
+		
+		$('#subject').validatebox({
+		    required: false,
+		    validType: 'length[0,4]',
+		    invalidMessage:'不超过4个字'
+		});
+		
+		$('#name').validatebox({
+		    required: true,
+		    validType: 'repeat[4,"lesson","name"]',
+		    invalidMessage:'不能重复,且不能超过4个字'
+		});
+		
+	});
+	
+	function ok() {
+		$.messager.progress();
+		$('#lesson_form').form('submit', {
+			onSubmit: function(){
+				var isValid = $(this).form('validate');
+				if (!isValid){
+					$.messager.progress('close');	// hide progress bar while the form is invalid
+				}
+				return isValid;	// return false will stop the form submission
+			},
 			success : function(data) {
 				var data = eval('(' + data + ')'); // change the JSON string to javascript object
 				if (data.success) {
 					alert(data.message);
+					 //$.messager.alert("操作提示", data.message);
 					$('#lesson_form').form('clear');
 				}
+				$.messager.progress('close');
 			}
 
 		});
@@ -51,26 +78,22 @@
 			<table>
 				<tr>
 					<th>name:</th>
-					<td><input type="text" name="name" class="easyui-textbox"
-						value=""></td>
+					<td><input type="text" id="name" name="name"  value=""></td>
 				</tr>
 
 				<tr>
 					<th>subject:</th>
-					<td><input type="text" name="subject" class="easyui-textbox"
-						value=""></td>
+					<td><input type="text" id="subject" name="subject"  value=""></td>
 				</tr>
 
 				<tr>
 					<th>grade:</th>
-					<td><input type="text" name="grade" class="easyui-textbox"
-						value=""></td>
+					<td><input type="text" name="grade"  value=""></td>
 				</tr>
 
 				<tr>
 					<th>createTime:</th>
-					<td><input type="text" name="createTime"
-						class="easyui-textbox" value=""></td>
+					<td><input type="text" name="createTime" value=""></td>
 				</tr>
 
 				<tr>
