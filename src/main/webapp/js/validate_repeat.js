@@ -3,7 +3,13 @@ $.extend($.fn.validatebox.defaults.rules, {
 		validator: function(value, param){
 			if(value.length<=param[0]){
 				var b=false;
-				$.ajax({url:'/seed/'+param[1]+'/validate',async:false,data:{skey:param[2],value:value},success:function(data){
+				debugger;
+				//var id=($("#id")==null?"n":$("#id").val());
+				var id=$("#id").val();
+				if(id==null){
+					id="n";
+				}
+				$.ajax({url:'/seed/'+param[1]+'/validate',async:false,data:{skey:param[2],value:value,id:id},success:function(data){
 					if(data=='1'){
 						b=false;
 					}else{

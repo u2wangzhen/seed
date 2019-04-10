@@ -191,10 +191,16 @@ public abstract class SeedAction {
 		
 		String skey=param("skey");
 		String value=param("value");
+		String id=param("id");
 		
 		if(skey!=null&&!"".equals(skey)&&value!=null&&!"".equals(value)){
 			List<Fruit_> list = MainCache.me().getFruitList(key);
 			for (Fruit_ f : list) {
+				if(!"n".equals(id)){
+					if(f.getId()==Long.valueOf(id)){
+						continue;
+					}
+				}
 				if(value.equals(f.getSeed(skey).getValue())){
 					return "1";
 				}

@@ -10,14 +10,29 @@
 	href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
 	href="/seed/js/ui/themes/icon.css">
-<link rel="stylesheet" type="text/css"
-	href="/seed/css/select_div.css">
+<link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/seed/js/validate_repeat.js"></script>
 <!-- <style type="text/css">
 .selectOther div{float:left;padding:5px;background:#fafafa;border:1px solid #ccc}
 </style> -->
 <script type="text/javascript">
+	$(function() {
+
+		$('#subject').validatebox({
+			required : false,
+			validType : 'length[0,4]',
+			invalidMessage : '不超过4个字'
+		});
+
+		$('#name').validatebox({
+			required : true,
+			validType : 'repeat[4,"lesson","name"]',
+			invalidMessage : '不能重复,且不能超过4个字'
+		});
+
+	});
 	function ok() {
 		$('#lesson_form').form('submit', {
 			success : function(data) {
@@ -29,10 +44,11 @@
 			}
 		});
 	}
-	function openSub(){
-		var id=$("#id").val();
+	function openSub() {
+		var id = $("#id").val();
 		$('#select').html(
-				'<iframe id="select_iframe" src="/seed/price?lesson_fid='+id+'" width="100%" height="100%"></iframe>');
+				'<iframe id="select_iframe" src="/seed/price?lesson_fid=' + id
+						+ '" width="100%" height="100%"></iframe>');
 	}
 	function openSelect(key) {
 		$('#select').html(
@@ -64,55 +80,68 @@
 			<table>
 				<tr>
 					<th>name:</th>
-					<td><input type="text" name="name" class="easyui-textbox"
-						value="${name}"></td>
-				
+					<td><input type="text" id="name" name="name" value="${name}"></td>
+				</tr>
+
+				<tr>
 					<th>subject:</th>
-					<td><input type="text" name="subject" class="easyui-textbox"
-						value="${subject}"></td>
+					<td><input type="text" id="subject" name="subject" value="${subject}"></td>
 				</tr>
 
 				<tr>
 					<th>grade:</th>
-					<td><input type="text" name="grade" class="easyui-textbox"
-						value="${grade}"></td>
-				
+					<td><input type="text" id="grade" name="grade" value="${grade}"></td>
+				</tr>
+
+				<tr>
 					<th>createTime:</th>
-					<td><input type="text" name="createTime"
-						class="easyui-textbox" value="${createTime}"></td>
+					<td><input type="text" id="createTime" name="createTime" value="${createTime}"></td>
 				</tr>
 				<tr>
 					<th>student:</th>
 					<td><div id="student" class="selectOther">
 							<c:forEach items="${student}" var="obj">
-								<div><input type="hidden" name="student_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
+								<div>
+									<input type="hidden" name="student_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
 							</c:forEach>
-						</div>
-						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('student');"></a>
-						</td>
-				
+						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="openSelect('student');"></a></td>
+				</tr>
+
+				<tr>
 					<th>teacher:</th>
 					<td><div id="teacher" class="selectOther">
 							<c:forEach items="${teacher}" var="obj">
-								<div >
+								<div>
 									<input type="hidden" name="teacher_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
 							</c:forEach>
-						</div><div ><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('teacher');"></a></div></td>
+						</div>
+						<div>
+							<a href="javascript:void(0);" class="easyui-linkbutton"
+								data-options="iconCls:'icon-search',plain:true"
+								onclick="openSelect('teacher');"></a>
+						</div></td>
 				</tr>
 				<tr>
-					
-					<th colspan="2"><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub();">打开子表</a></th>
+
+					<th colspan="2"><a href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="iconCls:'icon-add',plain:true" onclick="openSub();">打开子表</a></th>
 				</tr>
 				<tr>
-					<th colspan="2"><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">提交</></th>
+					<th colspan="2"><a href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="iconCls:'icon-save',plain:true" onclick="ok();">提交</></th>
 				</tr>
 			</table>
 		</form>
-		
+
 	</div>
 	<div id="select" data-options="region:'east',split:true,title:'附属窗口'"
-		style="width:600px;padding: 10px;">
-		<iframe id="price_iframe" src="/seed/price?lesson_fid=${id }" width="100%" height="100%"></iframe>
-		</div>
+		style="width: 600px; padding: 10px;">
+		<iframe id="price_iframe" src="/seed/price?lesson_fid=${id }"
+			width="100%" height="100%"></iframe>
+	</div>
 </body>
 </html>
