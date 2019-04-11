@@ -38,6 +38,20 @@ public class TableManager implements TableManagerI{
 										.add(new SeedTemplate("remark", 255)));
 		map.put("price", new FruitTemplate().add(new SeedTemplate("price", 16))
 				.add(new SeedTemplate("remark", 255)));
+		
+		
+		map.put("demo1", new FruitTemplate().add("name", 16,true).add("age",4)
+				.addSubKey("demo2").addSubKey("demo3")
+				.addRelationKey("teacher").addRelationKey("student")
+				.addParentKey("demo4"));
+		map.put("demo2", new FruitTemplate().add("name", 16, true).add("age", 4)
+				.addParentKey("demo1")
+				.addRelationKey("teacher").addRelationKey("student"));
+		map.put("demo3", new FruitTemplate().add("name", 16, true).add("age", 4)
+				.addParentKey("demo1")
+				.addRelationKey("teacher").addRelationKey("student"));
+		map.put("demo4", new FruitTemplate().add("name", 16, true).add("age", 4));
+		
 	}
 	private void initRelation(){
 		
@@ -103,6 +117,29 @@ public class TableManager implements TableManagerI{
 		}
 		return f.skeys;
 	}
+	public List<String> findSubKeys(String fkey){
+		FruitTemplate f = map.get(fkey);
+		if(f==null){
+			throw new RuntimeException("not found "+fkey);
+		}
+		return f.subKeys;
+	}
+	
+	public List<String> findRelationKeys(String fkey){
+		FruitTemplate f = map.get(fkey);
+		if(f==null){
+			throw new RuntimeException("not found "+fkey);
+		}
+		return f.relationKeys;
+	}
+	public String findParentKeys(String fkey){
+		FruitTemplate f = map.get(fkey);
+		if(f==null){
+			throw new RuntimeException("not found "+fkey);
+		}
+		return f.parentKey;
+	}
+	
 	public void init() {
 		try {
 			initFruitTable();
@@ -148,6 +185,9 @@ public class TableManager implements TableManagerI{
 		Map<String,Integer> sk_sl;
 		Set<String> searchKeys;
 		List<String> skeys;
+		String parentKey;
+		List<String> subKeys;
+		List<String> relationKeys;
 		FruitTemplate(){
 			this.seeds=new HashSet<SeedTemplate>();
 			this.sk_sl=new HashMap<String,Integer>();
@@ -169,6 +209,36 @@ public class TableManager implements TableManagerI{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return this;
+		}
+		
+		FruitTemplate add(String k,Integer l){
+			SeedTemplate s=new SeedTemplate(k, l);
+			return add(s);
+		}
+		
+		FruitTemplate add(String k,Integer l,boolean like){
+			SeedTemplate s=new SeedTemplate(k, l,like);
+			return add(s);
+		}
+		
+		FruitTemplate addParentKey(String pk){
+			this.parentKey=pk;
+			return this;
+		}
+		FruitTemplate addSubKey(String k){
+			if(this.subKeys==null){
+				this.subKeys=new ArrayList<String>();
+			}
+			subKeys.add(k);
+			return this;
+		}
+		
+		FruitTemplate addRelationKey(String k){
+			if(this.relationKeys==null){
+				this.relationKeys=new ArrayList<String>();
+			}
+			relationKeys.add(k);
 			return this;
 		}
 	}

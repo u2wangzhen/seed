@@ -4,28 +4,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey} add</title>
+<title>demo1 add</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
-<@ if(has(relationKeys)){ @>
-<link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
-<@ }@>
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
-		<@ for(sk in skeys) {@>
-		$('##{sk.key}').validatebox({
+		$('#name').validatebox({
 		    required: false,
-		    validType: 'length[0,#{sk.length}]',
-		    invalidMessage:'不超过#{sk.length}个字'
+		    validType: 'length[0,16]',
+		    invalidMessage:'不超过16个字'
 		});
-		<@}@>
+		$('#age').validatebox({
+		    required: false,
+		    validType: 'length[0,4]',
+		    invalidMessage:'不超过4个字'
+		});
 });
 function ok() {
 	$.messager.progress();
-	$('##{fkey}_form').form('submit', {
+	$('#demo1_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -37,14 +37,13 @@ function ok() {
 			var data = eval('(' + data + ')'); // change the JSON string to javascript object
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('##{fkey}_form').form('clear');
+				$('#demo1_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
 
 	});
 }
-<@ if(has(relationKeys)){ @>
 	function openSelect(key) {
 		$('#select').html('<iframe id="select_iframe" src="/seed/'+key+'/toSelect" width="100%" height="100%"></iframe>');
 	}
@@ -63,38 +62,38 @@ function ok() {
 				+ obj.name + '</div>';
 		return str;
 	}
-<@ }@>
 </script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="#{fkey}_form" action="/seed/#{fkey}/add" method="post">
-<@ if(has(parentKey)){ @>
-<input type="hidden" name="#{parentKey}_fid" value="${#{parentKey}_fid}">
-<@ } @>
+<form id="demo1_form" action="/seed/demo1/add" method="post">
 <table>
-<@ for(sk in skeys) {@>
 <tr>
-<th>#{sk.key}:</th>
-<td><input type="text" name="#{sk.key}"  class="easyui-textbox" value="" maxlength="#{sk.length}" ></td>
+<th>name:</th>
+<td><input type="text" name="name"  class="easyui-textbox" value="" maxlength="16" ></td>
 </tr>
-<@}@>
-<@ if(has(relationKeys)){ @>
-<@ for(rk in relationKeys) {@>
 <tr>
-	<th>#{rk}s:</th>
+<th>age:</th>
+<td><input type="text" name="age"  class="easyui-textbox" value="" maxlength="4" ></td>
+</tr>
+<tr>
+	<th>teachers:</th>
 	<td>
-		<div id="#{rk}" class="selectOther"></div>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('#{rk}');"></a>
+		<div id="teacher" class="selectOther"></div>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('teacher');"></a>
 	</td>
 </tr>
-<@}}@>
+<tr>
+	<th>students:</th>
+	<td>
+		<div id="student" class="selectOther"></div>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('student');"></a>
+	</td>
+</tr>
 <tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
 </table>
 </form>
 </div>
-<@ if(has(relationKeys)){ @>
 <div id="select" data-options="region:'east',split:true,title:'附属窗口'" style="width: 600px; padding: 10px;"></div>
-<@ }@>
 </body>
 </html>

@@ -11,4 +11,7 @@ public interface TableManagerI {
 	public Set<String> findSearchSeedKeys(String fkey);
 	public List<String> findSeedskeyList(String fkey);
 	public Set<String> findAllFruitKey();
+	public String findParentKeys(String fkey);
+	public List<String> findRelationKeys(String fkey);
+	public List<String> findSubKeys(String fkey);
 }

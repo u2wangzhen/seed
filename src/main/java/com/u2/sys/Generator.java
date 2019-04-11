@@ -3,6 +3,8 @@ package com.u2.sys;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.beetl.core.Configuration;
@@ -15,8 +17,8 @@ import com.u2.db.manager.TableManager;
 public class Generator {
 
 	//private static String root="G:/git/seed";
-	private static String root="D:/work/workspace/seed";
-	
+	//private static String root="D:/work/workspace/seed";
+	private static String root="F:/work/git/seed";
 	public void generatorIndex(String fkey) throws IOException{
 		
 		ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("com/u2/ftl/");
@@ -99,12 +101,35 @@ public class Generator {
 	private void binding(String fkey, Template t) {
 		// TODO Auto-generated method stub
 		t.binding("fkey", fkey);
-		t.binding("skeys", TableManager.me().findSeedskeyList(fkey));
-		Set<String> sss = TableManager.me().findSearchSeedKeys(fkey);
-		if(sss!=null&&!"".equals(sss)){
-			t.binding("searchSeeds", sss);
+		t.binding("skeys", createSeeds(fkey));
+		Set<String> s = TableManager.me().findSearchSeedKeys(fkey);
+		if(s!=null&&!s.isEmpty()){
+			t.binding("searchSeeds",s );
 		}
+		List<String> r = TableManager.me().findRelationKeys(fkey);
+		if(r!=null){
+			t.binding("relationKeys",r );
+		}
+		List<String> sub = TableManager.me().findSubKeys(fkey);
+		if(sub!=null){
+			t.binding("subKeys", sub);
+		}
+		String p = TableManager.me().findParentKeys(fkey);
+		if(p!=null){
+			t.binding("parentKey", p);
+		}
+		
 	}
+	private Object createSeeds(String fkey) {
+		// TODO Auto-generated method stub
+		List<String> list = TableManager.me().findSeedskeyList(fkey);
+		List<Seed> s=new ArrayList<Seed>();
+		for (String k : list) {
+			s.add(new Seed(k, TableManager.me().findLength(fkey, k)));
+		}
+		return s;
+	}
+
 	private void outFile(Template t,String fname) throws IOException {
 		// TODO Auto-generated method stub
 		 File f=new File(fname);
@@ -117,11 +142,30 @@ public class Generator {
 	}
 	public static void main(String[] args) {
 		try {
-			new Generator().generatorSelect("student");
+			new Generator().generatorAdd("demo2");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+	private class Seed{
+		String key;
+		Integer length;
+		Seed(String key, Integer length) {
+			this.key = key;
+			this.length = length;
+		}
+		public String getKey() {
+			return key;
+		}
+		public void setKey(String key) {
+			this.key = key;
+		}
+		public Integer getLength() {
+			return length;
+		}
+		public void setLength(Integer length) {
+			this.length = length;
+		}
+	}
 }
