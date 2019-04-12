@@ -4,23 +4,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo3</title>
+<title>menu</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	var demo1_fid=$("#demo1_fid").val();
+	var menu_fid=$("#menu_fid").val();
 	$('#dg').datagrid({
-		url:'/seed/demo3/page?demo1_fid='+demo1_fid,
+		url:'/seed/menu/page?menu_fid='+menu_fid,
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: 'demo3 add',
+	    title: 'menu add',
 	    width: $(document).width()-50,
 	    height: $(document).height()-100,
 	    closed: true,
@@ -34,13 +34,13 @@ $(function(){
 	});
 });
 function openAdd(){
-	var demo1_fid=$("#demo1_fid").val();
-	$("#demo3_add_iframe").attr("src","/seed/demo3/toAdd?demo1_fid="+demo1_fid);
+	var menu_fid=$("#menu_fid").val();
+	$("#menu_add_iframe").attr("src","/seed/menu/toAdd?menu_fid="+menu_fid);
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("#demo3_add_iframe").attr("src","/seed/demo3/toEdit?id="+id);
-	$('#dd').dialog({title:'demo3 edit'});
+	$("#menu_add_iframe").attr("src","/seed/menu/toEdit?id="+id);
+	$('#dd').dialog({title:'menu edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -49,7 +49,7 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/demo3/delete',{'id':id},function(data){
+	$.post('/seed/menu/delete',{'id':id},function(data){
 		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
@@ -57,33 +57,21 @@ function deleteOne(id){
 	});
 }
 function searchPage(){
-var demo1_fid=$("#demo1_fid").val();
+var menu_fid=$("#menu_fid").val();
 	var name=$("#name").val();
 
 	$('#dg').datagrid('load', {
-		demo1_fid:demo1_fid
+		menu_fid:menu_fid
 		 ,name:name
 	});
 
 
 
 }
-function viewFruit(value,row,index){
-	var str="";
-	if(value!=null&&value.length>0){
-		for(var i=0;i<value.length;i++){
-			if(i!=0){
-				str+=",";
-			}
-			str+=value[i].name;
-		}
-	}
-	return str;
-}
 </script>
 </head>
 <body>
-<input type="hidden" id="demo1_fid" value="${demo1_fid}">
+<input type="hidden" id="menu_fid" value="${menu_fid}">
 <input type="text" id="name"  placeholder="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
@@ -94,16 +82,12 @@ function viewFruit(value,row,index){
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'age',width:100,sortable:true">age</th>
-				<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">teacher</th>
-				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
-				<th data-options="field:'demo5_s',width:100,sortable:true,formatter:viewFruit">demo5</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="demo3_add_iframe" src="" width="100%" height="100%"></iframe>
+<iframe id="menu_add_iframe" src="" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

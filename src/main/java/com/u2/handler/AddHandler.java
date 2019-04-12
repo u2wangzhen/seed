@@ -42,6 +42,7 @@ public class AddHandler extends Handler{
 				TransactionManager.get().commit();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
 				TransactionManager.get().rollback();
 			}finally {
 				TransactionManager.get().close();

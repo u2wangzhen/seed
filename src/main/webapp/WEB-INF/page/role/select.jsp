@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo1</title>
+<title>role</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,12 +13,12 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/demo1/getAll',
+		url:'/seed/role/getAll',
 	    loadMsg:'请稍后...',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
-	    	var s=$("[name='demo1_fid']",window.parent.document);
+	    	var s=$("[name='role_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
 	    			$('#dg').datagrid("selectRecord",s[i].value);
@@ -39,16 +39,10 @@ $(function(){
 function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
-		parent.insert("demo1",s);
+		parent.insert("role",s);
 	}else{
-		parent.clear("demo1");
+		parent.clear("role");
 	}
-}
-function searchPage(){
-	var name=$("#name").val();
-	$('#dg').datagrid('load', {
-		 name:name
-	});
 }
 function viewFruit(value,row,index){
 	var str="";
@@ -65,17 +59,12 @@ function viewFruit(value,row,index){
 </script>
 </head>
 <body>
-<input type="text" id="name" placeholder="name" >
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'age',width:100,sortable:true">age</th>
-					<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">teacher</th>
-					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
-					<th data-options="field:'demo5_s',width:100,sortable:true,formatter:viewFruit">demo5</th>
+					<th data-options="field:'model_s',width:100,sortable:true,formatter:viewFruit">model</th>
 		</tr>
     </thead>
 </table>

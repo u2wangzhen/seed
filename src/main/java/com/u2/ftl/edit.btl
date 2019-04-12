@@ -22,6 +22,12 @@ $(function(){
 		    invalidMessage:'不超过#{sk.length}个字'
 		});
 		<@}@>
+		
+		$('#selectWindow').panel('resize',{
+			width: $(document).width()*0.7
+		});
+		$('body').layout('resize');
+		
 		<@ if(has(subKeys)){ @>
 			openSub('#{subKeys[0]}');
 		<@}@>

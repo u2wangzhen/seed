@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo1 add</title>
+<title>account add</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
@@ -15,18 +15,27 @@
 $(function(){
 		$('#name').validatebox({
 		    required: false,
+		    validType: 'length[0,8]',
+		    invalidMessage:'不超过8个字'
+		});
+		$('#account').validatebox({
+		    required: false,
 		    validType: 'length[0,16]',
 		    invalidMessage:'不超过16个字'
 		});
-		$('#age').validatebox({
+		$('#password').validatebox({
 		    required: false,
-		    validType: 'length[0,4]',
-		    invalidMessage:'不超过4个字'
+		    validType: 'length[0,128]',
+		    invalidMessage:'不超过128个字'
 		});
+		$('#selectWindow').panel('resize',{
+			width: $(document).width()*0.7
+		});
+		$('body').layout('resize');
 });
 function ok() {
 	$.messager.progress();
-	$('#demo1_form').form('submit', {
+	$('#account_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -38,7 +47,7 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#demo1_form').form('clear');
+				$('#account_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -68,36 +77,25 @@ function ok() {
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="demo1_form" action="/seed/demo1/add" method="post">
-<input type="hidden" name="demo4_fid" value="${demo4_fid}">
+<form id="account_form" action="/seed/account/add" method="post">
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" id="name" name="name" value="" maxlength="16" ></td>
+<td><input type="text" id="name" name="name" value="" maxlength="8" ></td>
 </tr>
 <tr>
-<th>age:</th>
-<td><input type="text" id="age" name="age" value="" maxlength="4" ></td>
+<th>account:</th>
+<td><input type="text" id="account" name="account" value="" maxlength="16" ></td>
 </tr>
 <tr>
-	<th>teachers:</th>
+<th>password:</th>
+<td><input type="text" id="password" name="password" value="" maxlength="128" ></td>
+</tr>
+<tr>
+	<th>roles:</th>
 	<td>
-		<div id="teacher" class="selectOther"></div>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('teacher');"></a>
-	</td>
-</tr>
-<tr>
-	<th>students:</th>
-	<td>
-		<div id="student" class="selectOther"></div>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('student');"></a>
-	</td>
-</tr>
-<tr>
-	<th>demo5s:</th>
-	<td>
-		<div id="demo5" class="selectOther"></div>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('demo5');"></a>
+		<div id="role" class="selectOther"></div>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('role');"></a>
 	</td>
 </tr>
 <tr>

@@ -1,15 +1,30 @@
 package com.u2.test;
 
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
 		
+		String str=new String("str");
+		
+		ArrayList<String> list=new ArrayList<String>();
+		list.add(str);
+		ArrayList<String> a = (ArrayList<String>) list.clone();
+		System.out.println(a.get(0));
+		list.remove(0);
+		System.out.println(a.get(0));
+		System.out.println(list.get(0));
+		//str.c
+		
+		
 		/*ActionType a = ActionType.valueOf("cc");
 		System.out.println(a);*/
-		final Ccc c=new Ccc();
+		/*final Ccc c=new Ccc();
 		int i=0;
 		while(true){
 			i++;
@@ -32,12 +47,12 @@ public class Test {
 			if(i>100){
 				break;
 			}
-		}
+		}*/
 		
 		
 	}
 }
- class Ccc{
+ /*class Ccc{
 	 private Long[] ll=new Long[1];
 	 public void see(Long l){
 		 synchronized(l){
@@ -61,4 +76,4 @@ public class Test {
 		 ll[0]=null;
 		 }
 	 }
- }
+ }*/

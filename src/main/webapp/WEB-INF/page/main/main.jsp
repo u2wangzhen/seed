@@ -53,13 +53,13 @@ var data = [{
     iconCls: 'icon-more',
     state: 'open',
     children: [{
-        text: '<div onclick="addTab(\'sysconf\',\'模板注册\');">模板注册</div>'
+        text: '<div onclick="addTab(\'account\',\'账号\');">账号</div>'
     },{
-        text: '<div onclick="addTab(\'fruit\',\'fruit\');">fruit</div>'
+        text: '<div onclick="addTab(\'role\',\'角色\');">角色</div>'
     },{
-        text: '<div onclick="addTab(\'user\',\'用户管理\');">用户管理</div>'
+        text: '<div onclick="addTab(\'menu\',\'目录\');">目录</div>'
     },{
-        text: '<div onclick="addTab(\'maker\',\'生成器\');">生成器</div>'
+        text: '<div onclick="addTab(\'model\',\'模块\');">模块</div>'
     }]
 }];
 </script>
@@ -75,7 +75,6 @@ var data = [{
 	<div data-options="region:'center'">
 	<div id="main_tab" class="easyui-tabs" style="height:100%">
 		<div title="home" style="padding:10px">
-		${root }
 		 <iframe id="home_frame" src="/seed/main/home" style="width: 100%;height: 100%;"></iframe>
 		</div>
 	</div>

@@ -16,9 +16,22 @@ public class TableManager implements TableManagerI{
 	
 	private void initFruitTemplate() {
 		// TODO Auto-generated method stub
-		map.put("user", new FruitTemplate().add(new SeedTemplate("name", 8))
-												.add(new SeedTemplate("age", 2))
-												.add(new SeedTemplate("password", 16)));
+		map.put("account", new FruitTemplate().add("name", 8)
+												.add("account", 16)
+												.add("password", 128)
+												.addRelationKey("role"));
+		
+		map.put("role", new FruitTemplate().add("name", 8)
+				.addRelationKey("model"));
+		
+		map.put("menu", new FruitTemplate().add("name", 32,true)
+				.addSubKey("menu").addSubKey("model")
+				.addParentKey("menu")
+				);
+		map.put("model", new FruitTemplate().add("name", 32,true)
+				.add("path",64).addParentKey("menu")
+				);
+		
 		
 		map.put("student", new FruitTemplate()
 												.add(new SeedTemplate("name", 16,true))

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo1 edit</title>
+<title>role edit</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
@@ -15,20 +15,20 @@
 $(function(){
 		$('#name').validatebox({
 		    required: false,
-		    validType: 'length[0,16]',
-		    invalidMessage:'不超过16个字'
+		    validType: 'length[0,8]',
+		    invalidMessage:'不超过8个字'
 		});
-		$('#age').validatebox({
-		    required: false,
-		    validType: 'length[0,4]',
-		    invalidMessage:'不超过4个字'
+		
+		$('#selectWindow').panel('resize',{
+			width: $(document).width()*0.7
 		});
-			openSub('demo2');
+		$('body').layout('resize');
+		
 });
 
 function ok() {
 	$.messager.progress();
-	$('#demo1_form').form('submit', {
+	$('#role_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -40,7 +40,7 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#demo1_form').form('clear');
+				$('#role_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -65,75 +65,29 @@ function ok() {
 				+ obj.name + '</div>';
 		return str;
 	}
-	function openSub(key) {
-		var id = $("#id").val();
-		$('#selectWindow').html(
-				'<iframe id="select_iframe" src="/seed/'+key+'?demo1_fid=' + id
-						+ '" width="100%" height="100%"></iframe>');
-		$('#selectWindow').panel('setTitle','edit '+key);
-	}
 </script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="demo1_form" action="/seed/demo1/update" method="post">
+<form id="role_form" action="/seed/role/update" method="post">
 <input type="hidden" id="id" name="id" value="${id}">
-	<c:forEach items="${demo4}" var="obj">
-		<input type="hidden" name="demo4_fid" value="${obj.id}" />
-	</c:forEach>
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" id="name" name="name" value="${name}" maxlength="16"></td>
-</tr>
-<tr>
-<th>age:</th>
-<td><input type="text" id="age" name="age" value="${age}" maxlength="4"></td>
+<td><input type="text" id="name" name="name" value="${name}" maxlength="8"></td>
 </tr>
 
 <tr>
-					<th>teacher:</th>
-					<td><div id="teacher" class="selectOther">
-							<c:forEach items="${teacher}" var="obj">
+					<th>model:</th>
+					<td><div id="model" class="selectOther">
+							<c:forEach items="${model}" var="obj">
 								<div>
-									<input type="hidden" name="teacher_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
+									<input type="hidden" name="model_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
 							</c:forEach>
 						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
 						data-options="iconCls:'icon-search',plain:true"
-						onclick="openSelect('teacher');"></a></td>
+						onclick="openSelect('model');"></a></td>
 				</tr>
-<tr>
-					<th>student:</th>
-					<td><div id="student" class="selectOther">
-							<c:forEach items="${student}" var="obj">
-								<div>
-									<input type="hidden" name="student_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
-							</c:forEach>
-						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
-						data-options="iconCls:'icon-search',plain:true"
-						onclick="openSelect('student');"></a></td>
-				</tr>
-<tr>
-					<th>demo5:</th>
-					<td><div id="demo5" class="selectOther">
-							<c:forEach items="${demo5}" var="obj">
-								<div>
-									<input type="hidden" name="demo5_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
-							</c:forEach>
-						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
-						data-options="iconCls:'icon-search',plain:true"
-						onclick="openSelect('demo5');"></a></td>
-				</tr>
-<tr>
-	<th colspan="2">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('demo2');">open demo2</a>
-	</th>
-</tr>
-<tr>
-	<th colspan="2">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('demo3');">open demo3</a>
-	</th>
-</tr>
 <tr>
 <th colspan="2">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</a>

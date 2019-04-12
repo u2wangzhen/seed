@@ -30,6 +30,11 @@
 		    invalidMessage:'不能重复,且不能超过4个字'
 		});
 		
+		$('#select').panel('resize',{
+			width: $(document).width()*0.7
+		});
+		$('body').layout('resize');
+		
 	});
 	
 	function ok() {

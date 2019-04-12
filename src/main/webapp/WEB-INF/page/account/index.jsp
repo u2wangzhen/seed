@@ -4,23 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo1</title>
+<title>account</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	var demo4_fid=$("#demo4_fid").val();
 	$('#dg').datagrid({
-		url:'/seed/demo1/page?demo4_fid='+demo4_fid,
+		url:'/seed/account/page',
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: 'demo1 add',
+	    title: 'account add',
 	    width: $(document).width()-50,
 	    height: $(document).height()-100,
 	    closed: true,
@@ -34,13 +33,12 @@ $(function(){
 	});
 });
 function openAdd(){
-	var demo4_fid=$("#demo4_fid").val();
-	$("#demo1_add_iframe").attr("src","/seed/demo1/toAdd?demo4_fid="+demo4_fid);
+	$("#account_add_iframe").attr("src","/seed/account/toAdd");
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("#demo1_add_iframe").attr("src","/seed/demo1/toEdit?id="+id);
-	$('#dd').dialog({title:'demo1 edit'});
+	$("#account_add_iframe").attr("src","/seed/account/toEdit?id="+id);
+	$('#dd').dialog({title:'account edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -49,24 +47,12 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/demo1/delete',{'id':id},function(data){
+	$.post('/seed/account/delete',{'id':id},function(data){
 		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
 	});
-}
-function searchPage(){
-var demo4_fid=$("#demo4_fid").val();
-	var name=$("#name").val();
-
-	$('#dg').datagrid('load', {
-		demo4_fid:demo4_fid
-		 ,name:name
-	});
-
-
-
 }
 function viewFruit(value,row,index){
 	var str="";
@@ -83,9 +69,6 @@ function viewFruit(value,row,index){
 </script>
 </head>
 <body>
-<input type="hidden" id="demo4_fid" value="${demo4_fid}">
-<input type="text" id="name"  placeholder="name" >
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
@@ -94,16 +77,15 @@ function viewFruit(value,row,index){
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'age',width:100,sortable:true">age</th>
-				<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">teacher</th>
-				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
-				<th data-options="field:'demo5_s',width:100,sortable:true,formatter:viewFruit">demo5</th>
+					<th data-options="field:'account',width:100,sortable:true">account</th>
+					<th data-options="field:'password',width:100,sortable:true">password</th>
+				<th data-options="field:'role_s',width:100,sortable:true,formatter:viewFruit">role</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="demo1_add_iframe" src="" width="100%" height="100%"></iframe>
+<iframe id="account_add_iframe" src="" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

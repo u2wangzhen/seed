@@ -3,7 +3,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 		validator: function(value, param){
 			if(value.length<=param[0]){
 				var b=false;
-				debugger;
+				//debugger;
 				//var id=($("#id")==null?"n":$("#id").val());
 				var id=$("#id").val();
 				if(id==null){

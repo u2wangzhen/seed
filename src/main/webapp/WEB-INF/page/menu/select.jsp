@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo2</title>
+<title>menu</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,12 +13,12 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/demo2/getAll',
+		url:'/seed/menu/getAll',
 	    loadMsg:'请稍后...',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
-	    	var s=$("[name='demo2_fid']",window.parent.document);
+	    	var s=$("[name='menu_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
 	    			$('#dg').datagrid("selectRecord",s[i].value);
@@ -39,9 +39,9 @@ $(function(){
 function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
-		parent.insert("demo2",s);
+		parent.insert("menu",s);
 	}else{
-		parent.clear("demo2");
+		parent.clear("menu");
 	}
 }
 function searchPage(){
@@ -49,18 +49,6 @@ function searchPage(){
 	$('#dg').datagrid('load', {
 		 name:name
 	});
-}
-function viewFruit(value,row,index){
-	var str="";
-	if(value!=null&&value.length>0){
-		for(var i=0;i<value.length;i++){
-			if(i!=0){
-				str+=",";
-			}
-			str+=value[i].name;
-		}
-	}
-	return str;
 }
 </script>
 </head>
@@ -72,10 +60,6 @@ function viewFruit(value,row,index){
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'age',width:100,sortable:true">age</th>
-					<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">teacher</th>
-					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
-					<th data-options="field:'demo5_s',width:100,sortable:true,formatter:viewFruit">demo5</th>
 		</tr>
     </thead>
 </table>

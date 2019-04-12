@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo5 edit</title>
+<title>model edit</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -14,19 +14,25 @@
 $(function(){
 		$('#name').validatebox({
 		    required: false,
-		    validType: 'length[0,16]',
-		    invalidMessage:'不超过16个字'
+		    validType: 'length[0,32]',
+		    invalidMessage:'不超过32个字'
 		});
-		$('#age').validatebox({
+		$('#path').validatebox({
 		    required: false,
-		    validType: 'length[0,4]',
-		    invalidMessage:'不超过4个字'
+		    validType: 'length[0,64]',
+		    invalidMessage:'不超过64个字'
 		});
+		
+		$('#selectWindow').panel('resize',{
+			width: $(document).width()*0.7
+		});
+		$('body').layout('resize');
+		
 });
 
 function ok() {
 	$.messager.progress();
-	$('#demo5_form').form('submit', {
+	$('#model_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -38,7 +44,7 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#demo5_form').form('clear');
+				$('#model_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -48,16 +54,19 @@ function ok() {
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="demo5_form" action="/seed/demo5/update" method="post">
+<form id="model_form" action="/seed/model/update" method="post">
 <input type="hidden" id="id" name="id" value="${id}">
+	<c:forEach items="${menu}" var="obj">
+		<input type="hidden" name="menu_fid" value="${obj.id}" />
+	</c:forEach>
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" id="name" name="name" value="${name}" maxlength="16"></td>
+<td><input type="text" id="name" name="name" value="${name}" maxlength="32"></td>
 </tr>
 <tr>
-<th>age:</th>
-<td><input type="text" id="age" name="age" value="${age}" maxlength="4"></td>
+<th>path:</th>
+<td><input type="text" id="path" name="path" value="${path}" maxlength="64"></td>
 </tr>
 
 <tr>

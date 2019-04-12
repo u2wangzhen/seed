@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo4 edit</title>
+<title>menu edit</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
@@ -15,20 +15,21 @@
 $(function(){
 		$('#name').validatebox({
 		    required: false,
-		    validType: 'length[0,16]',
-		    invalidMessage:'不超过16个字'
+		    validType: 'length[0,32]',
+		    invalidMessage:'不超过32个字'
 		});
-		$('#age').validatebox({
-		    required: false,
-		    validType: 'length[0,4]',
-		    invalidMessage:'不超过4个字'
+		
+		$('#selectWindow').panel('resize',{
+			width: $(document).width()*0.7
 		});
-			openSub('demo1');
+		$('body').layout('resize');
+		
+			openSub('menu');
 });
 
 function ok() {
 	$.messager.progress();
-	$('#demo4_form').form('submit', {
+	$('#menu_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -40,7 +41,7 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#demo4_form').form('clear');
+				$('#menu_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -49,7 +50,7 @@ function ok() {
 	function openSub(key) {
 		var id = $("#id").val();
 		$('#selectWindow').html(
-				'<iframe id="select_iframe" src="/seed/'+key+'?demo4_fid=' + id
+				'<iframe id="select_iframe" src="/seed/'+key+'?menu_fid=' + id
 						+ '" width="100%" height="100%"></iframe>');
 		$('#selectWindow').panel('setTitle','edit '+key);
 	}
@@ -57,21 +58,25 @@ function ok() {
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="demo4_form" action="/seed/demo4/update" method="post">
+<form id="menu_form" action="/seed/menu/update" method="post">
 <input type="hidden" id="id" name="id" value="${id}">
+	<c:forEach items="${menu}" var="obj">
+		<input type="hidden" name="menu_fid" value="${obj.id}" />
+	</c:forEach>
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" id="name" name="name" value="${name}" maxlength="16"></td>
-</tr>
-<tr>
-<th>age:</th>
-<td><input type="text" id="age" name="age" value="${age}" maxlength="4"></td>
+<td><input type="text" id="name" name="name" value="${name}" maxlength="32"></td>
 </tr>
 
 <tr>
 	<th colspan="2">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('demo1');">open demo1</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('menu');">open menu</a>
+	</th>
+</tr>
+<tr>
+	<th colspan="2">
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('model');">open model</a>
 	</th>
 </tr>
 <tr>

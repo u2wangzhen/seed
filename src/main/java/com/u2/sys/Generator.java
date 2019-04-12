@@ -17,8 +17,8 @@ import com.u2.db.manager.TableManager;
 public class Generator {
 
 	//private static String root="G:/git/seed";
-	//private static String root="D:/work/workspace/seed";
-	private static String root="F:/work/git/seed";
+	private static String root="D:/work/workspace/seed";
+	//private static String root="F:/work/git/seed";
 	private static String path="/src/main/webapp/WEB-INF/page/";
 	public void generatorIndex(String fkey) throws IOException{
 		
@@ -143,11 +143,15 @@ public class Generator {
 	}
 	public static void main(String[] args) {
 		try {
-			new Generator().generatorAll("demo5");
-			new Generator().generatorAll("demo4");
-			new Generator().generatorAll("demo3");
-			new Generator().generatorAll("demo2");
-			new Generator().generatorAll("demo1");
+			//new Generator().generatorAll("role");
+			//new Generator().generatorAll("account");
+			//new Generator().generatorAll("menu");
+			new Generator().generatorAll("model");
+//			new Generator().generatorAll("demo5");
+//			new Generator().generatorAll("demo4");
+//			new Generator().generatorAll("demo3");
+//			new Generator().generatorAll("demo2");
+//			new Generator().generatorAll("demo1");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

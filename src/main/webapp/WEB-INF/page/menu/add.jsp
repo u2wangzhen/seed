@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo4 add</title>
+<title>menu add</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -14,18 +14,17 @@
 $(function(){
 		$('#name').validatebox({
 		    required: false,
-		    validType: 'length[0,16]',
-		    invalidMessage:'不超过16个字'
+		    validType: 'length[0,32]',
+		    invalidMessage:'不超过32个字'
 		});
-		$('#age').validatebox({
-		    required: false,
-		    validType: 'length[0,4]',
-		    invalidMessage:'不超过4个字'
+		$('#selectWindow').panel('resize',{
+			width: $(document).width()*0.7
 		});
+		$('body').layout('resize');
 });
 function ok() {
 	$.messager.progress();
-	$('#demo4_form').form('submit', {
+	$('#menu_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -37,7 +36,7 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#demo4_form').form('clear');
+				$('#menu_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -48,15 +47,12 @@ function ok() {
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="demo4_form" action="/seed/demo4/add" method="post">
+<form id="menu_form" action="/seed/menu/add" method="post">
+<input type="hidden" name="menu_fid" value="${menu_fid}">
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" id="name" name="name" value="" maxlength="16" ></td>
-</tr>
-<tr>
-<th>age:</th>
-<td><input type="text" id="age" name="age" value="" maxlength="4" ></td>
+<td><input type="text" id="name" name="name" value="" maxlength="32" ></td>
 </tr>
 <tr>
 <th colspan="2">

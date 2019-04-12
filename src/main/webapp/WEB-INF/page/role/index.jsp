@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo4</title>
+<title>role</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -12,14 +12,14 @@
 <script type="text/javascript">
 $(function(){
 	$('#dg').datagrid({
-		url:'/seed/demo4/page',
+		url:'/seed/role/page',
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: 'demo4 add',
+	    title: 'role add',
 	    width: $(document).width()-50,
 	    height: $(document).height()-100,
 	    closed: true,
@@ -33,12 +33,12 @@ $(function(){
 	});
 });
 function openAdd(){
-	$("#demo4_add_iframe").attr("src","/seed/demo4/toAdd");
+	$("#role_add_iframe").attr("src","/seed/role/toAdd");
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("#demo4_add_iframe").attr("src","/seed/demo4/toEdit?id="+id);
-	$('#dd').dialog({title:'demo4 edit'});
+	$("#role_add_iframe").attr("src","/seed/role/toEdit?id="+id);
+	$('#dd').dialog({title:'role edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -47,31 +47,28 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/demo4/delete',{'id':id},function(data){
+	$.post('/seed/role/delete',{'id':id},function(data){
 		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
 	});
 }
-function searchPage(){
-	var name=$("#name").val();
-	var age=$("#age").val();
-
-
-
-	$('#dg').datagrid('load', {
-		 name:name
-		 ,age:age
-	});
-
+function viewFruit(value,row,index){
+	var str="";
+	if(value!=null&&value.length>0){
+		for(var i=0;i<value.length;i++){
+			if(i!=0){
+				str+=",";
+			}
+			str+=value[i].name;
+		}
+	}
+	return str;
 }
 </script>
 </head>
 <body>
-<input type="text" id="name"  placeholder="name" >
-<input type="text" id="age"  placeholder="age" >
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
@@ -80,13 +77,13 @@ function searchPage(){
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
-					<th data-options="field:'age',width:100,sortable:true">age</th>
+				<th data-options="field:'model_s',width:100,sortable:true,formatter:viewFruit">model</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="demo4_add_iframe" src="" width="100%" height="100%"></iframe>
+<iframe id="role_add_iframe" src="" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>
