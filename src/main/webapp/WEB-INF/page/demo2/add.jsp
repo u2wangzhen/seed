@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>demo1 add</title>
+<title>demo2 add</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
@@ -25,19 +26,19 @@ $(function(){
 });
 function ok() {
 	$.messager.progress();
-	$('#demo1_form').form('submit', {
+	$('#demo2_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
-					$.messager.progress('close');	// hide progress bar while the form is invalid
+					$.messager.progress('close');
 				}
-				return isValid;	// return false will stop the form submission
+				return isValid;
 			},
 		success : function(data) {
-			var data = eval('(' + data + ')'); // change the JSON string to javascript object
+			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#demo1_form').form('clear');
+				$('#demo2_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -45,7 +46,8 @@ function ok() {
 	});
 }
 	function openSelect(key) {
-		$('#select').html('<iframe id="select_iframe" src="/seed/'+key+'/toSelect" width="100%" height="100%"></iframe>');
+		$('#selectWindow').html('<iframe id="select_iframe" src="/seed/'+key+'/toSelect" width="100%" height="100%"></iframe>');
+		$('#selectWindow').panel('setTitle','select '+key);
 	}
 	function insert(key, s) {
 		var str = "";
@@ -66,15 +68,16 @@ function ok() {
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="demo1_form" action="/seed/demo1/add" method="post">
+<form id="demo2_form" action="/seed/demo2/add" method="post">
+<input type="hidden" name="demo1_fid" value="${demo1_fid}">
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" name="name"  class="easyui-textbox" value="" maxlength="16" ></td>
+<td><input type="text" id="name" name="name" value="" maxlength="16" ></td>
 </tr>
 <tr>
 <th>age:</th>
-<td><input type="text" name="age"  class="easyui-textbox" value="" maxlength="4" ></td>
+<td><input type="text" id="age" name="age" value="" maxlength="4" ></td>
 </tr>
 <tr>
 	<th>teachers:</th>
@@ -90,10 +93,21 @@ function ok() {
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('student');"></a>
 	</td>
 </tr>
-<tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
+<tr>
+	<th>demo5s:</th>
+	<td>
+		<div id="demo5" class="selectOther"></div>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('demo5');"></a>
+	</td>
+</tr>
+<tr>
+<th colspan="2">
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</a>
+</th>
+</tr>
 </table>
 </form>
 </div>
-<div id="select" data-options="region:'east',split:true,title:'附属窗口'" style="width: 600px; padding: 10px;"></div>
+<div id="selectWindow" data-options="region:'east',split:true,title:' '" style="width: 600px; padding: 10px;"></div>
 </body>
 </html>

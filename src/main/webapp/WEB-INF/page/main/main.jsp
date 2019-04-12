@@ -35,11 +35,17 @@ var data = [{
     },{
         text: '<div onclick="addTab(\'lesson\',\'课\');">课</div>'
     },{
-        text: 'Option3',
+        text: 'demo',
         children: [{
-            text: 'Option31'
+            text: '<div onclick="addTab(\'demo1\',\'demo1\');">demo1</div>'
         },{
-            text: 'Option32'
+            text: '<div onclick="addTab(\'demo2\',\'demo2\');">demo2</div>'
+        },{
+            text: '<div onclick="addTab(\'demo3\',\'demo3\');">demo3</div>'
+        },{
+            text: '<div onclick="addTab(\'demo4\',\'demo4\');">demo4</div>'
+        },{
+            text: '<div onclick="addTab(\'demo5\',\'demo5\');">demo5</div>'
         }]
     }]
 },{

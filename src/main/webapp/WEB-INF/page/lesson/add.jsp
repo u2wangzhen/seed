@@ -56,6 +56,7 @@
 	}
 	function openSelect(key) {
 		$('#select').html('<iframe id="select_iframe" src="/seed/'+key+'/toSelect" width="100%" height="100%"></iframe>');
+		$('#select').panel('setTitle','select '+key);
 	}
 	function insert(key, s) {
 		var str = "";

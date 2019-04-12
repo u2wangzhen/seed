@@ -29,12 +29,12 @@ function ok() {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
-					$.messager.progress('close');	// hide progress bar while the form is invalid
+					$.messager.progress('close');
 				}
-				return isValid;	// return false will stop the form submission
+				return isValid;
 			},
 		success : function(data) {
-			var data = eval('(' + data + ')'); // change the JSON string to javascript object
+			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
 				$('#demo4_form').form('clear');
@@ -52,13 +52,17 @@ function ok() {
 <table>
 <tr>
 <th>name:</th>
-<td><input type="text" name="name"  class="easyui-textbox" value="" maxlength="16" ></td>
+<td><input type="text" id="name" name="name" value="" maxlength="16" ></td>
 </tr>
 <tr>
 <th>age:</th>
-<td><input type="text" name="age"  class="easyui-textbox" value="" maxlength="4" ></td>
+<td><input type="text" id="age" name="age" value="" maxlength="4" ></td>
 </tr>
-<tr><th colspan="2"><button type="button" onclick="ok();">提交</button></th></tr>
+<tr>
+<th colspan="2">
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</a>
+</th>
+</tr>
 </table>
 </form>
 </div>

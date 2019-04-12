@@ -5,31 +5,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey} edit</title>
+<title>demo1 edit</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
-<@ if(has(relationKeys)||has(subKeys)){ @>
 <link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
-<@ }@>
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-		<@ for(sk in skeys) {@>
-		$('##{sk.key}').validatebox({
+		$('#name').validatebox({
 		    required: false,
-		    validType: 'length[0,#{sk.length}]',
-		    invalidMessage:'不超过#{sk.length}个字'
+		    validType: 'length[0,16]',
+		    invalidMessage:'不超过16个字'
 		});
-		<@}@>
-		<@ if(has(subKeys)){ @>
-			openSub('#{subKeys[0]}');
-		<@}@>
+		$('#age').validatebox({
+		    required: false,
+		    validType: 'length[0,4]',
+		    invalidMessage:'不超过4个字'
+		});
+			openSub('demo2');
 });
 
 function ok() {
 	$.messager.progress();
-	$('##{fkey}_form').form('submit', {
+	$('#demo1_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -41,13 +40,12 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('##{fkey}_form').form('clear');
+				$('#demo1_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
 	});
 }
-<@ if(has(relationKeys)){ @>
 	function openSelect(key) {
 		$('#selectWindow').html('<iframe id="select_iframe" src="/seed/'+key+'/toSelect" width="100%" height="100%"></iframe>');
 		$('#selectWindow').panel('setTitle','select '+key);
@@ -67,58 +65,75 @@ function ok() {
 				+ obj.name + '</div>';
 		return str;
 	}
-<@ }@>
-<@ if(has(subKeys)){ @>
 	function openSub(key) {
 		var id = $("#id").val();
 		$('#selectWindow').html(
-				'<iframe id="select_iframe" src="/seed/'+key+'?#{fkey}_fid=' + id
+				'<iframe id="select_iframe" src="/seed/'+key+'?demo1_fid=' + id
 						+ '" width="100%" height="100%"></iframe>');
 		$('#selectWindow').panel('setTitle','edit '+key);
 	}
-<@ }@>
 </script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="#{fkey}_form" action="/seed/#{fkey}/update" method="post">
+<form id="demo1_form" action="/seed/demo1/update" method="post">
 <input type="hidden" id="id" name="id" value="${id}">
-<@ if(has(parentKey)){ @>
-	<c:forEach items="${#{parentKey}}" var="obj">
-		<input type="hidden" name="#{parentKey}_fid" value="${obj.id}" />
+	<c:forEach items="${demo4}" var="obj">
+		<input type="hidden" name="demo4_fid" value="${obj.id}" />
 	</c:forEach>
-<@ } @>
 <table>
-<@ 
-for(sk in skeys) {@>
 <tr>
-<th>#{sk.key}:</th>
-<td><input type="text" id="#{sk.key}" name="#{sk.key}" value="${#{sk.key}}" maxlength="#{sk.length}"></td>
+<th>name:</th>
+<td><input type="text" id="name" name="name" value="${name}" maxlength="16"></td>
 </tr>
-<@}@>
-
-<@ if(has(relationKeys)){ @>
-<@ for(rk in relationKeys) {@>
 <tr>
-					<th>#{rk}:</th>
-					<td><div id="#{rk}" class="selectOther">
-							<c:forEach items="${#{rk}}" var="obj">
+<th>age:</th>
+<td><input type="text" id="age" name="age" value="${age}" maxlength="4"></td>
+</tr>
+
+<tr>
+					<th>teacher:</th>
+					<td><div id="teacher" class="selectOther">
+							<c:forEach items="${teacher}" var="obj">
 								<div>
-									<input type="hidden" name="#{rk}_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
+									<input type="hidden" name="teacher_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
 							</c:forEach>
 						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
 						data-options="iconCls:'icon-search',plain:true"
-						onclick="openSelect('#{rk}');"></a></td>
+						onclick="openSelect('teacher');"></a></td>
 				</tr>
-<@}}@>
-<@ if(has(subKeys)){ @>
-<@ for(sk in subKeys) {@>
+<tr>
+					<th>student:</th>
+					<td><div id="student" class="selectOther">
+							<c:forEach items="${student}" var="obj">
+								<div>
+									<input type="hidden" name="student_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
+							</c:forEach>
+						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="openSelect('student');"></a></td>
+				</tr>
+<tr>
+					<th>demo5:</th>
+					<td><div id="demo5" class="selectOther">
+							<c:forEach items="${demo5}" var="obj">
+								<div>
+									<input type="hidden" name="demo5_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
+							</c:forEach>
+						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="openSelect('demo5');"></a></td>
+				</tr>
 <tr>
 	<th colspan="2">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('#{sk}');">open #{sk}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('demo2');">open demo2</a>
 	</th>
 </tr>
-<@}}@>
+<tr>
+	<th colspan="2">
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openSub('demo3');">open demo3</a>
+	</th>
+</tr>
 <tr>
 <th colspan="2">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</a>
@@ -126,9 +141,7 @@ for(sk in skeys) {@>
 </tr>
 </table>
 </div>
-<@ if(has(relationKeys)||has(subKeys)){ @>
 <div id="selectWindow" data-options="region:'east',split:true,title:' '" style="width: 600px; padding: 10px;"></div>
-<@ }@>
 </form>
 </body>
 </html>

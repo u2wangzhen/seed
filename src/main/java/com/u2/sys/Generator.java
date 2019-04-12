@@ -19,6 +19,7 @@ public class Generator {
 	//private static String root="G:/git/seed";
 	//private static String root="D:/work/workspace/seed";
 	private static String root="F:/work/git/seed";
+	private static String path="/src/main/webapp/WEB-INF/page/";
 	public void generatorIndex(String fkey) throws IOException{
 		
 		ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("com/u2/ftl/");
@@ -27,14 +28,14 @@ public class Generator {
 		
 		((TableManager)TableManager.me()).init();
 		
-		File ff=new File(root+"/src/main/webapp/"+fkey);
+		File ff=new File(root+path+fkey);
 		if(!ff.exists()){
 			ff.mkdirs();
 		}
         
         Template it = gt.getTemplate("/index.btl");
         binding(fkey,it);
-        outFile(it,root+"/src/main/webapp/"+fkey+"/index.jsp");
+        outFile(it,root+path+fkey+"/index.jsp");
 		
 	}
 	
@@ -46,7 +47,7 @@ public class Generator {
 		
 		((TableManager)TableManager.me()).init();
 		
-		File ff=new File(root+"/src/main/webapp/"+fkey);
+		File ff=new File(root+path+fkey);
 		if(!ff.exists()){
 			ff.mkdirs();
 		}
@@ -54,7 +55,7 @@ public class Generator {
 		
 		Template at = gt.getTemplate("/add.btl");
 		binding(fkey,at);
-		outFile(at,root+"/src/main/webapp/"+fkey+"/add.jsp");
+		outFile(at,root+path+fkey+"/add.jsp");
 		
 	}
 	
@@ -66,7 +67,7 @@ public class Generator {
 		
 		((TableManager)TableManager.me()).init();
 		
-		File ff=new File(root+"/src/main/webapp/"+fkey);
+		File ff=new File(root+path+fkey);
 		if(!ff.exists()){
 			ff.mkdirs();
 		}
@@ -74,7 +75,7 @@ public class Generator {
 		
 		Template at = gt.getTemplate("/select.btl");
 		binding(fkey,at);
-		outFile(at,root+"/src/main/webapp/"+fkey+"/select.jsp");
+		outFile(at,root+path+fkey+"/select.jsp");
 		
 	}
 	
@@ -87,14 +88,14 @@ public class Generator {
 		
 		((TableManager)TableManager.me()).init();
 		
-		File ff=new File(root+"/src/main/webapp/"+fkey);
+		File ff=new File(root+path+fkey);
 		if(!ff.exists()){
 			ff.mkdirs();
 		}
 		
         Template et = gt.getTemplate("/edit.btl");
         binding(fkey,et);
-        outFile(et,root+"/src/main/webapp/"+fkey+"/edit.jsp");
+        outFile(et,root+path+fkey+"/edit.jsp");
         
 	}
 	
@@ -142,11 +143,22 @@ public class Generator {
 	}
 	public static void main(String[] args) {
 		try {
-			new Generator().generatorAdd("demo2");
+			new Generator().generatorAll("demo5");
+			new Generator().generatorAll("demo4");
+			new Generator().generatorAll("demo3");
+			new Generator().generatorAll("demo2");
+			new Generator().generatorAll("demo1");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void generatorAll(String key) throws IOException {
+		// TODO Auto-generated method stub
+		generatorAdd(key);
+		generatorEdit(key);
+		generatorSelect(key);
+		generatorIndex(key);
 	}
 	private class Seed{
 		String key;
@@ -155,15 +167,19 @@ public class Generator {
 			this.key = key;
 			this.length = length;
 		}
+		@SuppressWarnings("unused")
 		public String getKey() {
 			return key;
 		}
+		@SuppressWarnings("unused")
 		public void setKey(String key) {
 			this.key = key;
 		}
+		@SuppressWarnings("unused")
 		public Integer getLength() {
 			return length;
 		}
+		@SuppressWarnings("unused")
 		public void setLength(Integer length) {
 			this.length = length;
 		}

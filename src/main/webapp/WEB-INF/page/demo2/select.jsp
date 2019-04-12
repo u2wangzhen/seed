@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey}</title>
+<title>demo2</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,12 +13,12 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/#{fkey}/getAll',
+		url:'/seed/demo2/getAll',
 	    loadMsg:'请稍后...',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
-	    	var s=$("[name='#{fkey}_fid']",window.parent.document);
+	    	var s=$("[name='demo2_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
 	    			$('#dg').datagrid("selectRecord",s[i].value);
@@ -39,29 +39,17 @@ $(function(){
 function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
-		parent.insert("#{fkey}",s);
+		parent.insert("demo2",s);
 	}else{
-		parent.clear("#{fkey}");
+		parent.clear("demo2");
 	}
 }
-<@ if(has(searchSeeds)){ @>
 function searchPage(){
-<@ for(ss in searchSeeds) {@>
-	var #{ss}=$("##{ss}").val();
-<@}@>
+	var name=$("#name").val();
 	$('#dg').datagrid('load', {
-	<@ for(ss in searchSeeds) {@>
-		<@ if(ssLP.index==1){@>
-		 #{ss}:#{ss}
-		<@}@>
-	   	<@ if(ssLP.index>1){@>
-		 ,#{ss}:#{ss}
-		<@}@>
-	    <@}@>
+		 name:name
 	});
 }
-<@ } @>
-<@ if(has(relationKeys)){ @>
 function viewFruit(value,row,index){
 	var str="";
 	if(value!=null&&value.length>0){
@@ -74,27 +62,20 @@ function viewFruit(value,row,index){
 	}
 	return str;
 }
-<@ } @>
 </script>
 </head>
 <body>
-<@ if(has(searchSeeds)){ @>
-<@ for(ss in searchSeeds) { @>
-<input type="text" id="#{ss}" placeholder="#{ss}" >
-<@ } @>
+<input type="text" id="name" placeholder="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
-<@ } @>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<@ for(sk in skeys) {@>
-					<th data-options="field:'#{sk.key}',width:100,sortable:true">#{sk.key}</th>
-					<@}@>
-					<@ if(has(relationKeys)){ @>
-					<@ for(rk in relationKeys) {@>
-					<th data-options="field:'#{rk}_s',width:100,sortable:true,formatter:viewFruit">#{rk}</th>
-					<@ }} @>
+					<th data-options="field:'name',width:100,sortable:true">name</th>
+					<th data-options="field:'age',width:100,sortable:true">age</th>
+					<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">teacher</th>
+					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
+					<th data-options="field:'demo5_s',width:100,sortable:true,formatter:viewFruit">demo5</th>
 		</tr>
     </thead>
 </table>

@@ -42,15 +42,17 @@ public class TableManager implements TableManagerI{
 		
 		map.put("demo1", new FruitTemplate().add("name", 16,true).add("age",4)
 				.addSubKey("demo2").addSubKey("demo3")
-				.addRelationKey("teacher").addRelationKey("student")
+				.addRelationKey("teacher").addRelationKey("student").addRelationKey("demo5")
 				.addParentKey("demo4"));
 		map.put("demo2", new FruitTemplate().add("name", 16, true).add("age", 4)
 				.addParentKey("demo1")
-				.addRelationKey("teacher").addRelationKey("student"));
+				.addRelationKey("teacher").addRelationKey("student").addRelationKey("demo5"));
 		map.put("demo3", new FruitTemplate().add("name", 16, true).add("age", 4)
 				.addParentKey("demo1")
-				.addRelationKey("teacher").addRelationKey("student"));
-		map.put("demo4", new FruitTemplate().add("name", 16, true).add("age", 4));
+				.addRelationKey("teacher").addRelationKey("student").addRelationKey("demo5"));
+		map.put("demo4", new FruitTemplate().add("name", 16,true).add("age", 4,true)
+				.addSubKey("demo1"));
+		map.put("demo5", new FruitTemplate().add("name", 16).add("age", 4));
 		
 	}
 	private void initRelation(){

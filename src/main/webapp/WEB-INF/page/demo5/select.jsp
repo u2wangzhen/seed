@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey}</title>
+<title>demo5</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,12 +13,12 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/#{fkey}/getAll',
+		url:'/seed/demo5/getAll',
 	    loadMsg:'请稍后...',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
-	    	var s=$("[name='#{fkey}_fid']",window.parent.document);
+	    	var s=$("[name='demo5_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
 	    			$('#dg').datagrid("selectRecord",s[i].value);
@@ -39,62 +39,20 @@ $(function(){
 function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
-		parent.insert("#{fkey}",s);
+		parent.insert("demo5",s);
 	}else{
-		parent.clear("#{fkey}");
+		parent.clear("demo5");
 	}
 }
-<@ if(has(searchSeeds)){ @>
-function searchPage(){
-<@ for(ss in searchSeeds) {@>
-	var #{ss}=$("##{ss}").val();
-<@}@>
-	$('#dg').datagrid('load', {
-	<@ for(ss in searchSeeds) {@>
-		<@ if(ssLP.index==1){@>
-		 #{ss}:#{ss}
-		<@}@>
-	   	<@ if(ssLP.index>1){@>
-		 ,#{ss}:#{ss}
-		<@}@>
-	    <@}@>
-	});
-}
-<@ } @>
-<@ if(has(relationKeys)){ @>
-function viewFruit(value,row,index){
-	var str="";
-	if(value!=null&&value.length>0){
-		for(var i=0;i<value.length;i++){
-			if(i!=0){
-				str+=",";
-			}
-			str+=value[i].name;
-		}
-	}
-	return str;
-}
-<@ } @>
 </script>
 </head>
 <body>
-<@ if(has(searchSeeds)){ @>
-<@ for(ss in searchSeeds) { @>
-<input type="text" id="#{ss}" placeholder="#{ss}" >
-<@ } @>
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
-<@ } @>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<@ for(sk in skeys) {@>
-					<th data-options="field:'#{sk.key}',width:100,sortable:true">#{sk.key}</th>
-					<@}@>
-					<@ if(has(relationKeys)){ @>
-					<@ for(rk in relationKeys) {@>
-					<th data-options="field:'#{rk}_s',width:100,sortable:true,formatter:viewFruit">#{rk}</th>
-					<@ }} @>
+					<th data-options="field:'name',width:100,sortable:true">name</th>
+					<th data-options="field:'age',width:100,sortable:true">age</th>
 		</tr>
     </thead>
 </table>

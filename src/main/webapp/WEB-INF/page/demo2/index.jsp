@@ -4,33 +4,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>#{fkey}</title>
+<title>demo2</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<@ if(has(parentKey)){ @>
-	var #{parentKey}_fid=$("##{parentKey}_fid").val();
+	var demo1_fid=$("#demo1_fid").val();
 	$('#dg').datagrid({
-		url:'/seed/#{fkey}/page?#{parentKey}_fid='+#{parentKey}_fid,
+		url:'/seed/demo2/page?demo1_fid='+demo1_fid,
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
-	<@ }else{ @>
-	$('#dg').datagrid({
-		url:'/seed/#{fkey}/page',
-	    pagination:true,
-	    loadMsg:'请稍后...',
-	    toolbar: '#tb',
-	    remoteSort:false
-	});
-	<@ } @>
 	$('#dd').dialog({
-	    title: '#{fkey} add',
+	    title: 'demo2 add',
 	    width: $(document).width()-50,
 	    height: $(document).height()-100,
 	    closed: true,
@@ -44,17 +34,13 @@ $(function(){
 	});
 });
 function openAdd(){
-	<@ if(has(parentKey)){ @>
-	var #{parentKey}_fid=$("##{parentKey}_fid").val();
-	$("##{fkey}_add_iframe").attr("src","/seed/#{fkey}/toAdd?#{parentKey}_fid="+#{parentKey}_fid);
-	<@ }else{ @>
-	$("##{fkey}_add_iframe").attr("src","/seed/#{fkey}/toAdd");
-	<@ } @>
+	var demo1_fid=$("#demo1_fid").val();
+	$("#demo2_add_iframe").attr("src","/seed/demo2/toAdd?demo1_fid="+demo1_fid);
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("##{fkey}_add_iframe").attr("src","/seed/#{fkey}/toEdit?id="+id);
-	$('#dd').dialog({title:'#{fkey} edit'});
+	$("#demo2_add_iframe").attr("src","/seed/demo2/toEdit?id="+id);
+	$('#dd').dialog({title:'demo2 edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -63,52 +49,25 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/#{fkey}/delete',{'id':id},function(data){
+	$.post('/seed/demo2/delete',{'id':id},function(data){
 		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
 	});
 }
-<@ if(has(searchSeeds)||has(parentKey)){ @>
 function searchPage(){
-<@ if(has(parentKey)){ @>
-var #{parentKey}_fid=$("##{parentKey}_fid").val();
-<@ } @>
-<@ if(has(searchSeeds)){ @>
-<@ for(ss in searchSeeds) {@>
-	var #{ss}=$("##{ss}").val();
-<@ }} @>
+var demo1_fid=$("#demo1_fid").val();
+	var name=$("#name").val();
 
-<@ if(has(parentKey)&&has(searchSeeds)){ @>
 	$('#dg').datagrid('load', {
-		#{parentKey}_fid:#{parentKey}_fid
-		<@ for(ss in searchSeeds) {@>
-		 ,#{ss}:#{ss}
-	    <@}@>
+		demo1_fid:demo1_fid
+		 ,name:name
 	});
-<@}@>
 
-<@ if(has(parentKey)&&!has(searchSeeds)){ @>
-	$('#dg').datagrid('load', {#{parentKey}_fid:#{parentKey}_fid});
-<@}@>
 
-<@ if(!has(parentKey)&&has(searchSeeds)){ @>
-	$('#dg').datagrid('load', {
-		<@ for(ss in searchSeeds) {@>
-		<@ if(ssLP.index==1){@>
-		 #{ss}:#{ss}
-		<@}@>
-	   	<@ if(ssLP.index>1){@>
-		 ,#{ss}:#{ss}
-		<@}@>
-	    <@}@>
-	});
-<@}@>
 
 }
-<@ } @>
-<@ if(has(relationKeys)){ @>
 function viewFruit(value,row,index){
 	var str="";
 	if(value!=null&&value.length>0){
@@ -121,19 +80,12 @@ function viewFruit(value,row,index){
 	}
 	return str;
 }
-<@ } @>
 </script>
 </head>
 <body>
-<@ if(has(parentKey)){ @>
-<input type="hidden" id="#{parentKey}_fid" value="${#{parentKey}_fid}">
-<@ }@>
-<@ if(has(searchSeeds)){ @>
-<@ for(ss in searchSeeds) {@>
-<input type="text" id="#{ss}"  placeholder="#{ss}" >
-<@}@>
+<input type="hidden" id="demo1_fid" value="${demo1_fid}">
+<input type="text" id="name"  placeholder="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
-<@}@>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
@@ -141,19 +93,17 @@ function viewFruit(value,row,index){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-			<@ for(sk in skeys) {@>
-					<th data-options="field:'#{sk.key}',width:100,sortable:true">#{sk.key}</th>
-			<@}@>
-			<@ if(has(relationKeys)){ @>
-			<@ for(rk in relationKeys) {@>
-				<th data-options="field:'#{rk}_s',width:100,sortable:true,formatter:viewFruit">#{rk}</th>
-			<@ }} @>
+					<th data-options="field:'name',width:100,sortable:true">name</th>
+					<th data-options="field:'age',width:100,sortable:true">age</th>
+				<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">teacher</th>
+				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
+				<th data-options="field:'demo5_s',width:100,sortable:true,formatter:viewFruit">demo5</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="#{fkey}_add_iframe" src="" width="100%" height="100%"></iframe>
+<iframe id="demo2_add_iframe" src="" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

@@ -31,7 +31,8 @@
 			validType : 'repeat[4,"lesson","name"]',
 			invalidMessage : '不能重复,且不能超过4个字'
 		});
-
+		
+		openSub('price');
 	});
 	function ok() {
 		$('#lesson_form').form('submit', {
@@ -44,16 +45,18 @@
 			}
 		});
 	}
-	function openSub() {
+	function openSub(key) {
 		var id = $("#id").val();
 		$('#select').html(
-				'<iframe id="select_iframe" src="/seed/price?lesson_fid=' + id
+				'<iframe id="select_iframe" src="/seed/'+key+'?lesson_fid=' + id
 						+ '" width="100%" height="100%"></iframe>');
+		$('#select').panel('setTitle','edit '+key);
 	}
 	function openSelect(key) {
 		$('#select').html(
 				'<iframe id="select_iframe" src="/seed/' + key
 						+ '/toSelect" width="100%" height="100%"></iframe>');
+			$('#select').panel('setTitle','select '+key);
 	}
 	function insert(key, s) {
 		var str = "";
@@ -127,21 +130,19 @@
 
 					<th colspan="2"><a href="javascript:void(0);"
 						class="easyui-linkbutton"
-						data-options="iconCls:'icon-add',plain:true" onclick="openSub();">打开子表</a></th>
+						data-options="iconCls:'icon-add',plain:true" onclick="openSub('price');">open price</a></th>
 				</tr>
 				<tr>
 					<th colspan="2"><a href="javascript:void(0);"
 						class="easyui-linkbutton"
-						data-options="iconCls:'icon-save',plain:true" onclick="ok();">提交</></th>
+						data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</></th>
 				</tr>
 			</table>
 		</form>
 
 	</div>
-	<div id="select" data-options="region:'east',split:true,title:'附属窗口'"
+	<div id="select" data-options="region:'east',split:true,title:' '"
 		style="width: 600px; padding: 10px;">
-		<iframe id="price_iframe" src="/seed/price?lesson_fid=${id }"
-			width="100%" height="100%"></iframe>
 	</div>
 </body>
 </html>
