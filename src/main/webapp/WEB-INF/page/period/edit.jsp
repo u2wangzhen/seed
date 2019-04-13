@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>price edit</title>
+<title>period edit</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
@@ -13,10 +13,25 @@
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 $(function(){
-		$('#price').validatebox({
+		$('#pdate').validatebox({
 		    required: false,
 		    validType: 'length[0,16]',
 		    invalidMessage:'不超过16个字'
+		});
+		$('#phour').validatebox({
+		    required: false,
+		    validType: 'length[0,4]',
+		    invalidMessage:'不超过4个字'
+		});
+		$('#startTime').validatebox({
+		    required: false,
+		    validType: 'length[0,24]',
+		    invalidMessage:'不超过24个字'
+		});
+		$('#endTime').validatebox({
+		    required: false,
+		    validType: 'length[0,24]',
+		    invalidMessage:'不超过24个字'
 		});
 		$('#remark').validatebox({
 		    required: false,
@@ -33,7 +48,7 @@ $(function(){
 
 function ok() {
 	$.messager.progress();
-	$('#price_form').form('submit', {
+	$('#period_form').form('submit', {
 		onSubmit: function(){
 				var isValid = $(this).form('validate');
 				if (!isValid){
@@ -45,7 +60,7 @@ function ok() {
 			var data = eval('(' + data + ')');
 			if (data.success) {
 				$.messager.alert("操作提示", data.message);
-				$('#price_form').form('clear');
+				$('#period_form').form('clear');
 			}
 			$.messager.progress('close');
 		}
@@ -74,21 +89,41 @@ function ok() {
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
-<form id="price_form" action="/seed/price/update" method="post">
+<form id="period_form" action="/seed/period/update" method="post">
 <input type="hidden" id="id" name="id" value="${id}">
-	<c:forEach items="${lesson}" var="obj">
-		<input type="hidden" name="lesson_fid" value="${obj.id}" />
-	</c:forEach>
 <table>
 <tr>
-<th>price:</th>
-<td><input type="text" id="price" name="price" value="${price}" maxlength="16"></td>
+<th>pdate:</th>
+<td><input type="text" id="pdate" name="pdate" value="${pdate}" maxlength="16"></td>
+</tr>
+<tr>
+<th>phour:</th>
+<td><input type="text" id="phour" name="phour" value="${phour}" maxlength="4"></td>
+</tr>
+<tr>
+<th>startTime:</th>
+<td><input type="text" id="startTime" name="startTime" value="${startTime}" maxlength="24"></td>
+</tr>
+<tr>
+<th>endTime:</th>
+<td><input type="text" id="endTime" name="endTime" value="${endTime}" maxlength="24"></td>
 </tr>
 <tr>
 <th>remark:</th>
 <td><input type="text" id="remark" name="remark" value="${remark}" maxlength="255"></td>
 </tr>
 
+<tr>
+					<th>lesson:</th>
+					<td><div id="lesson" class="selectOther">
+							<c:forEach items="${lesson}" var="obj">
+								<div>
+									<input type="hidden" name="lesson_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
+							</c:forEach>
+						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="openSelect('lesson');"></a></td>
+				</tr>
 <tr>
 					<th>student:</th>
 					<td><div id="student" class="selectOther">

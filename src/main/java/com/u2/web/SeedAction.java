@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
@@ -19,6 +18,7 @@ import com.u2.handler.GetAllHandler;
 import com.u2.handler.GetOneHandler;
 import com.u2.handler.PageHandler;
 import com.u2.handler.UpdateHandler;
+import com.u2.model.Seed;
 
 public abstract class SeedAction {
 
@@ -82,48 +82,68 @@ public abstract class SeedAction {
 	}
 
 	void exec() {
-		if (key == null) {
+		boolean b = intercept();
+		if (b) {
 			new Route("/WEB-INF/page/index.jsp", request, response).render();
 		} else {
-			Object account = request.getSession().getAttribute("user_account");
-			if (account == null&&!"maintoMain".equals((key+method))) {
-				new Route("/WEB-INF/page/index.jsp", request, response).render();
-			}else{
-				switch (type) {
-				case add:
-					returnJsonStr = new AddHandler(param, key).exec();
-					break;
-				case update:
-					returnJsonStr = new UpdateHandler(param, key).exec();
-					break;
-				case delete:
-					returnJsonStr = new DeleteHandler(param, key).exec();
-					break;
-				case page:
-					returnJsonStr = new PageHandler(param, key).exec();
-					break;
-				case getAll:
-					returnJsonStr = new GetAllHandler(param, key).exec();
-					break;
-				case getOne:
-					returnJsonStr = new GetOneHandler(param, key).exec();
-					break;
-				default:
-					String str = execMethod();
-					if (str.endsWith(".jsp")) {
-						routeStr = str;
-					} else {
-						returnJsonStr = str;
-					}
-					break;
-				}
-				if (returnJsonStr != null && !"".equals(returnJsonStr)) {
-					outJson();
+			switch (type) {
+			case add:
+				returnJsonStr = new AddHandler(param, key,this).exec();
+				break;
+			case update:
+				returnJsonStr = new UpdateHandler(param, key,this).exec();
+				break;
+			case delete:
+				returnJsonStr = new DeleteHandler(param, key,this).exec();
+				break;
+			case page:
+				returnJsonStr = new PageHandler(param, key).exec();
+				break;
+			case getAll:
+				returnJsonStr = new GetAllHandler(param, key).exec();
+				break;
+			case getOne:
+				returnJsonStr = new GetOneHandler(param, key).exec();
+				break;
+			default:
+				String str = execMethod();
+				if (str.endsWith(".jsp")) {
+					routeStr = str;
 				} else {
-
-					new Route(routeStr, request, response).render();
+					returnJsonStr = str;
 				}
-			}			
+				break;
+			}
+			if (returnJsonStr != null && !"".equals(returnJsonStr)) {
+				outJson();
+			} else {
+
+				new Route(routeStr, request, response).render();
+			}
+		}
+	}
+
+	public void beforeAdd(List<Seed> seeds){}
+	public void afterAdd(Object obj){}
+	
+	public void beforeUpdate(Object... obj){}
+	public void afterUpdate(Object... obj){}
+	
+	public void beforeDelete(Object... obj){}
+	public void afterDelete(Object... obj){}
+	
+	private boolean intercept() {
+		// TODO Auto-generated method stub
+		if(key==null){return true;}
+		
+		Object account = request.getSession().getAttribute("user_account");
+		if (account == null) {
+			if("maintoMain".equals((key+method))){
+				return false;
+			}
+			return true;
+		}else{
+			return false;
 		}
 	}
 

@@ -33,39 +33,44 @@ public class TableManager implements TableManagerI{
 				);
 		
 		
-		map.put("student", new FruitTemplate()
-												.add(new SeedTemplate("name", 16,true))
-												.add(new SeedTemplate("sex", 2,true))
-												.add(new SeedTemplate("school", 64))
-												.add(new SeedTemplate("remark", 255))
-												.add(new SeedTemplate("createTime", 16)));
+		map.put("student", new FruitTemplate().add("name", 16,true)
+												.add("sex", 2,true)
+												.add("school", 64)
+												.add("birthday",16)
+												.add("remark", 255)
+												.add("createTime", 16));
 		
-		map.put("lesson", new FruitTemplate().add(new SeedTemplate("name", 64,true))
-												.add(new SeedTemplate("subject", 8,true))
-												.add(new SeedTemplate("grade", 4,true))
-												.add(new SeedTemplate("createTime", 16))
+		map.put("lesson", new FruitTemplate().add("name", 64,true)
+												.add("subject", 8,true)
+												.add("grade", 4,true)
+												.add("createTime", 16)
+												.add("tprice",16)
+												.add("bprice",16)
+												.addRelationKey("teacher")
+												.addRelationKey("student")
+												.addSubKey("price")
 												);
 		
-		map.put("teacher", new FruitTemplate().add(new SeedTemplate("name", 16))
-										.add(new SeedTemplate("subject", 8))
-										.add(new SeedTemplate("remark", 255)));
-		map.put("price", new FruitTemplate().add(new SeedTemplate("price", 16))
-				.add(new SeedTemplate("remark", 255)));
+		map.put("teacher", new FruitTemplate().add("name", 16,true)
+										.add("sex", 2,true)
+										.add("subject", 8,true)
+										.add("birthday",16)
+										.add("remark", 255)
+										);
 		
+		map.put("price", new FruitTemplate().add("price", 16)
+				.add("remark", 255)
+				.addParentKey("lesson")
+				.addRelationKey("student")
+				);
 		
-		map.put("demo1", new FruitTemplate().add("name", 16,true).add("age",4)
-				.addSubKey("demo2").addSubKey("demo3")
-				.addRelationKey("teacher").addRelationKey("student").addRelationKey("demo5")
-				.addParentKey("demo4"));
-		map.put("demo2", new FruitTemplate().add("name", 16, true).add("age", 4)
-				.addParentKey("demo1")
-				.addRelationKey("teacher").addRelationKey("student").addRelationKey("demo5"));
-		map.put("demo3", new FruitTemplate().add("name", 16, true).add("age", 4)
-				.addParentKey("demo1")
-				.addRelationKey("teacher").addRelationKey("student").addRelationKey("demo5"));
-		map.put("demo4", new FruitTemplate().add("name", 16,true).add("age", 4,true)
-				.addSubKey("demo1"));
-		map.put("demo5", new FruitTemplate().add("name", 16).add("age", 4));
+		map.put("period", new FruitTemplate().add("pdate",16,true)
+				.add("phour",4)
+				.add("startTime",24)
+				.add("endTime",24)
+				.addRelationKey("lesson")
+				.addRelationKey("student")
+				.add("remark",255));
 		
 	}
 	private void initRelation(){

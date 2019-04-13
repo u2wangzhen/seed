@@ -11,12 +11,13 @@
 <link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/seed/js/validate_repeat.js"></script>
 <script type="text/javascript">
 $(function(){
 		$('#name').validatebox({
-		    required: false,
-		    validType: 'length[0,8]',
-		    invalidMessage:'不超过8个字'
+	    	required: true,
+	   	 	validType: 'repeat[8,"account","name"]',
+	    	invalidMessage:'不超过8个字,不能重复'
 		});
 		$('#account').validatebox({
 		    required: false,

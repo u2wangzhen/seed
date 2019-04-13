@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>role</title>
+<title>period</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -12,14 +12,14 @@
 <script type="text/javascript">
 $(function(){
 	$('#dg').datagrid({
-		url:'/seed/role/page',
+		url:'/seed/period/page',
 	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
-	    title: 'role add',
+	    title: 'period add',
 	    width: $(document).width()-50,
 	    height: $(document).height()-100,
 	    closed: true,
@@ -33,12 +33,12 @@ $(function(){
 	});
 });
 function openAdd(){
-	$("#role_add_iframe").attr("src","/seed/role/toAdd");
+	$("#period_add_iframe").attr("src","/seed/period/toAdd");
 	$('#dd').dialog('open');
 }
 function openEdit(id){
-	$("#role_add_iframe").attr("src","/seed/role/toEdit?id="+id);
-	$('#dd').dialog({title:'role edit'});
+	$("#period_add_iframe").attr("src","/seed/period/toEdit?id="+id);
+	$('#dd').dialog({title:'period edit'});
 	$('#dd').dialog('open');
 }
 function buildButton(value,row,index){
@@ -47,12 +47,22 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
-	$.post('/seed/role/delete',{'id':id},function(data){
+	$.post('/seed/period/delete',{'id':id},function(data){
 		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
 	});
+}
+function searchPage(){
+	var pdate=$("#pdate").val();
+
+
+
+	$('#dg').datagrid('load', {
+		 pdate:pdate
+	});
+
 }
 function viewFruit(value,row,index){
 	var str="";
@@ -69,6 +79,8 @@ function viewFruit(value,row,index){
 </script>
 </head>
 <body>
+<input type="text" id="pdate"  placeholder="pdate" >
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
@@ -76,14 +88,19 @@ function viewFruit(value,row,index){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<th data-options="field:'name',width:100,sortable:true">name</th>
-				<th data-options="field:'model_s',width:400,sortable:true,formatter:viewFruit">model</th>
+					<th data-options="field:'pdate',width:100,sortable:true">pdate</th>
+					<th data-options="field:'phour',width:100,sortable:true">phour</th>
+					<th data-options="field:'startTime',width:100,sortable:true">startTime</th>
+					<th data-options="field:'endTime',width:100,sortable:true">endTime</th>
+					<th data-options="field:'remark',width:100,sortable:true">remark</th>
+				<th data-options="field:'lesson_s',width:100,sortable:true,formatter:viewFruit">lesson</th>
+				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="role_add_iframe" src="" width="100%" height="100%"></iframe>
+<iframe id="period_add_iframe" src="" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

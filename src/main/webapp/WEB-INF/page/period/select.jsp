@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>student</title>
+<title>period</title>
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
@@ -13,12 +13,12 @@
 $(function(){
 	
 	$('#dg').datagrid({
-		url:'/seed/student/getAll',
+		url:'/seed/period/getAll',
 	    loadMsg:'请稍后...',
 	    idField:'id',
 	    remoteSort:false,
 	    onLoadSuccess:function(){
-	    	var s=$("[name='student_fid']",window.parent.document);
+	    	var s=$("[name='period_fid']",window.parent.document);
 	    	if(s!=null&&s.length>0){
 	    		for(var i=0;i<s.length;i++){
 	    			$('#dg').datagrid("selectRecord",s[i].value);
@@ -39,39 +39,45 @@ $(function(){
 function getSelections(){
 	var s=$('#dg').datagrid("getSelections");
 	if(s!=null&&s.length>0){
-		parent.insert("student",s);
+		parent.insert("period",s);
 	}else{
-		parent.clear("student");
+		parent.clear("period");
 	}
 }
 function searchPage(){
-	var sex=$("#sex").val();
-	var name=$("#name").val();
+	var pdate=$("#pdate").val();
 	$('#dg').datagrid('load', {
-		 sex:sex
-		 ,name_l:name
+		 pdate:pdate
 	});
+}
+function viewFruit(value,row,index){
+	var str="";
+	if(value!=null&&value.length>0){
+		for(var i=0;i<value.length;i++){
+			if(i!=0){
+				str+=",";
+			}
+			str+=value[i].name;
+		}
+	}
+	return str;
 }
 </script>
 </head>
 <body>
-<input type="text" id="name"  placeholder="姓名" >
-性别：<select id="sex">
-		<option value="">--</option>
-		<option value="男">男</option>
-		<option value="女">女</option>
-	</select>
+<input type="text" id="pdate" placeholder="pdate" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<th data-options="field:'name',width:100,sortable:true">姓名</th>
-					<th data-options="field:'sex',width:50,sortable:true">性别</th>
-					<th data-options="field:'school',width:150,sortable:true">学校</th>
-					<th data-options="field:'birthday',width:100,sortable:true">生日</th>
-					<th data-options="field:'createTime',width:100,sortable:true">登记日期</th>
-					<th data-options="field:'remark',width:100,sortable:true">备注</th>
+					<th data-options="field:'pdate',width:100,sortable:true">pdate</th>
+					<th data-options="field:'phour',width:100,sortable:true">phour</th>
+					<th data-options="field:'startTime',width:100,sortable:true">startTime</th>
+					<th data-options="field:'endTime',width:100,sortable:true">endTime</th>
+					<th data-options="field:'remark',width:100,sortable:true">remark</th>
+					<th data-options="field:'lesson_s',width:100,sortable:true,formatter:viewFruit">lesson</th>
+					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
 		</tr>
     </thead>
 </table>

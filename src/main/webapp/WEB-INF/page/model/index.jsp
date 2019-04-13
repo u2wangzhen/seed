@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -75,7 +76,9 @@ var menu_fid=$("#menu_fid").val();
 <input type="text" id="name"  placeholder="name" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
+<c:if test="${not empty menu_fid}">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
+</c:if>
 </div>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
@@ -83,7 +86,9 @@ var menu_fid=$("#menu_fid").val();
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'name',width:100,sortable:true">name</th>
 					<th data-options="field:'path',width:100,sortable:true">path</th>
-			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
+					<c:if test="${not empty menu_fid}">
+					<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
+					</c:if>
 		</tr>
     </thead>
 </table>

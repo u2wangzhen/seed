@@ -1,6 +1,5 @@
 package com.u2.web.action;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +17,9 @@ public class MainAction extends SeedAction{
 		
 		String u = param("user");
 		String p = param("password");
+		if(u==null||"".equals(u)||p==null||"".equals(p)){
+			return "/WEB-INF/page/index.jsp";
+		}
 		List<Fruit_> list = MainCache.me().getFruitList("account");
 		if(list!=null&&!list.isEmpty()){
 			Fruit_ ff=null;
@@ -48,6 +50,60 @@ public class MainAction extends SeedAction{
 			}
 		}
 		request.getSession().setAttribute("user_role", ml);
+	}
+	
+	public String toOut(){
+		request.getSession().invalidate();
+		return "/WEB-INF/page/index.jsp";
+	}
+	public String getMenu(){
+		List<Fruit_> set = MainCache.me().getFruitList("menu");
+		if(set!=null&&!set.isEmpty()){
+			JSONArray array=new JSONArray();
+			for (Fruit_ f : set) {
+				if(f.getOtherFruits("menu")==null){
+					JSONObject y=new JSONObject();
+					y.put("text", f.getSeed("name").getValue());
+					y.put("iconCls", "icon-more");
+					y.put("state", "open");
+					build(y,f);	
+					array.add(y);
+				}
+			}
+			String str=array.toJSONString();
+			///System.out.println(str);
+			return str;
+		}
+		return "[]";
+	}
+	private void build(JSONObject y, Fruit_ f) {
+		// TODO Auto-generated method stub
+		Set<Fruit_> menus = f.getCitedFruits("menu");
+		Set<Fruit_> models = f.getCitedFruits("model");
+		if(menus!=null&&!menus.isEmpty()){
+			JSONArray array=new JSONArray();
+			for (Fruit_ ff : menus) {
+				JSONObject obj=new JSONObject();
+				obj.put("text", ff.getSeed("name").getValue());
+				build(obj, ff);
+				array.add(obj);
+			}
+			y.put("children", array);
+		}
+		if(models!=null&&!models.isEmpty()){
+			JSONArray array=new JSONArray();
+			Set<Fruit_> role = (Set<Fruit_>) request.getSession().getAttribute("user_role");
+			for (Fruit_ ff : models) {
+				if(role.contains(ff)){
+					JSONObject obj=new JSONObject();
+					String n=ff.getSeed("name").getValue();
+					String p=ff.getSeed("path").getValue();
+					obj.put("text", "<div onclick=\"addTab('"+p+"','"+n+"');\">"+n+"</div>");
+					array.add(obj);
+				}
+			}
+			y.put("children", array);
+		}
 	}
 	public String home(){
 		

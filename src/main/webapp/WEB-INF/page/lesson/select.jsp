@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8" isELIgnored="false"%>
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,66 +13,49 @@
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+
 		$('#dg').datagrid({
-			url : '/seed/lesson/page',
-			pagination : true,
+			url : '/seed/lesson/getAll',
 			loadMsg : '请稍后...',
-			toolbar : '#tb',
-			remoteSort : false
-		});
-		$('#dd').dialog({
-			title : '课程新增',
-			width : $(document).width() - 50,
-			height : $(document).height() - 100,
-			closed : true,
-			maximizable : true,
-			maximizabd : true,
-			cache : false,
-			modal : true,
-			onClose : function() {
-				$('#dg').datagrid('reload');
+			idField : 'id',
+			remoteSort : false,
+			singleSelect : true,
+			onLoadSuccess : function() {
+				var s = $("[name='lesson_fid']", window.parent.document);
+				if (s != null && s.length > 0) {
+					for (var i = 0; i < s.length; i++) {
+						$('#dg').datagrid("selectRecord", s[i].value);
+					}
+
+				}
+			},
+			onSelect : function() {
+				getSelections();
+			},
+			onUnselect : function() {
+				getSelections();
 			}
 		});
+
 	});
-	function openAdd() {
-		$("#lesson_add_iframe").attr("src", "/seed/lesson/toAdd");
-		$('#dd').dialog('open');
-	}
-	function openEdit(id) {
-		$("#lesson_add_iframe").attr("src", "/seed/lesson/toEdit?id=" + id);
-		$('#dd').dialog({
-			title : '课程编辑'
-		});
-		$('#dd').dialog('open');
-	}
-	function buildButton(value, row, index) {
-		var str = '<a href="javascript:void(0);" onclick="openEdit(\'' + row.id
-				+ '\');">编辑</a>';
-		str += '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne(\''
-				+ row.id + '\');">删除</a>'
-		return str;
-	}
-	function deleteOne(id) {
-		$.post('/seed/lesson/delete', {
-			'id' : id
-		}, function(data) {
-			$.messager.alert("操作提示", data.message);
-			if (data.success) {
-				$('#dg').datagrid('reload');
-			}
-		});
+
+	function getSelections() {
+		var s = $('#dg').datagrid("getSelections");
+		if (s != null && s.length > 0) {
+			parent.insert("lesson", s);
+		} else {
+			parent.clear("lesson");
+		}
 	}
 	function searchPage() {
 		var subject = $("#subject").val();
 		var grade = $("#grade").val();
 		var name = $("#name").val();
-
 		$('#dg').datagrid('load', {
 			subject : subject,
 			grade : grade,
-			name_l : name
+			name : name
 		});
-
 	}
 	function viewFruit(value, row, index) {
 		var str = "";
@@ -114,10 +97,6 @@
 	<a href="javascript:void(0);" class="easyui-linkbutton"
 		data-options="iconCls:'icon-search',plain:true"
 		onclick="searchPage();"></a>
-	<div id="tb">
-		<a href="javascript:void(0);" class="easyui-linkbutton"
-			data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
-	</div>
 	<table id="dg" class="easyui-datagrid"
 		style="width: 100%; height: auto">
 		<thead>
@@ -126,17 +105,11 @@
 				<th data-options="field:'name',width:150,sortable:true">名称</th>
 				<th data-options="field:'subject',width:50,sortable:true">科目</th>
 				<th data-options="field:'grade',width:50,sortable:true">年级</th>
-				<th
-					data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">老师</th>
-				<th
-					data-options="field:'student_s',width:150,sortable:true,formatter:viewFruit">学生</th>
+				<th data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">老师</th>
+				<th data-options="field:'student_s',width:150,sortable:true,formatter:viewFruit">学生</th>
 				<th data-options="field:'createTime',width:100,sortable:true">创建时间</th>
-				<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 			</tr>
 		</thead>
 	</table>
-	<div id="dd">
-		<iframe id="lesson_add_iframe" src="" width="100%" height="100%"></iframe>
-	</div>
 </body>
 </html>

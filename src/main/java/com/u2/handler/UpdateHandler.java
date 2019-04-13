@@ -10,11 +10,12 @@ import com.u2.db.cache.MainCache;
 import com.u2.db.cache.Seed_;
 import com.u2.db.manager.TransactionManager;
 import com.u2.model.Seed;
+import com.u2.web.SeedAction;
 
 public class UpdateHandler extends Handler{
 
-	public UpdateHandler(Map<String, String[]> param, String key) {
-		super(param, key);
+	public UpdateHandler(Map<String, String[]> param, String key, SeedAction action) {
+		super(param, key,action);
 		// TODO Auto-generated constructor stub
 	}
 

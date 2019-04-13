@@ -1,9 +1,15 @@
 package com.u2.db.cache;
 
+import java.io.Serializable;
+
 import com.u2.model.Seed;
 
-public class Seed_ extends Seed{
+public class Seed_ extends Seed implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Fruit_ fruit;
 
 	public Seed_(Seed s) {

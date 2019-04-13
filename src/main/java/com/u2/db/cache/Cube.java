@@ -100,14 +100,18 @@ public class Cube implements CubeI {
 					key_map.put(key, ss);
 					ss[0] = this;
 				}else{
-					if (ss[1] != null) {
-						this.previous = ss[1];
-						ss[1].next = this;
-						ss[1]=this;
+					if(ss[0]==null){
+						ss[0] = this;
 					}else{
-						ss[0].next=this;
-						this.previous=ss[0];
-						ss[1] = this;
+						if (ss[1] != null) {
+							this.previous = ss[1];
+							ss[1].next = this;
+							ss[1]=this;
+						}else{
+							ss[0].next=this;
+							this.previous=ss[0];
+							ss[1] = this;
+						}
 					}
 				}
 			} else {

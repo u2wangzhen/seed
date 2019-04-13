@@ -7,11 +7,15 @@ import java.util.Set;
 import com.u2.db.manager.TransactionManager;
 import com.u2.model.Fruit;
 import com.u2.model.Seed;
+import com.u2.web.SeedAction;
 
 public class AddHandler extends Handler{
 
-	public AddHandler(Map<String, String[]> param, String key) {
-		super(param, key);
+	
+
+	public AddHandler(Map<String, String[]> param, String key, SeedAction action) {
+		// TODO Auto-generated constructor stub
+		super(param, key,action);
 	}
 
 	@Override
@@ -38,6 +42,7 @@ public class AddHandler extends Handler{
 			try {
 				TransactionManager.get().open();
 				Fruit f = new Fruit(key);
+				action.beforeAdd(seeds);
 				FruitHandler.me().insertFruit(f, seeds,other);
 				TransactionManager.get().commit();
 			} catch (Exception e) {

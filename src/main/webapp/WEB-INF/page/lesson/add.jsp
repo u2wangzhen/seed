@@ -1,56 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>lesson add</title>
+<title>添加课程</title>
 <link rel="stylesheet" type="text/css"
 	href="/seed/js/ui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
 	href="/seed/js/ui/themes/icon.css">
-<link rel="stylesheet" type="text/css"
-	href="/seed/css/select_div.css">
+<link rel="stylesheet" type="text/css" href="/seed/css/select_div.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/seed/js/validate_repeat.js"></script>
 <script type="text/javascript">
-
-	$(function(){
-		
-		$('#subject').validatebox({
-		    required: false,
-		    validType: 'length[0,4]',
-		    invalidMessage:'不超过4个字'
-		});
-		
+	$(function() {
 		$('#name').validatebox({
-		    required: true,
-		    validType: 'repeat[4,"lesson","name"]',
-		    invalidMessage:'不能重复,且不能超过4个字'
+			required : true,
+			validType : 'repeat[64,"lesson","name"]',
+			invalidMessage : '不超过64个字,不能重复'
 		});
 		
-		$('#select').panel('resize',{
-			width: $(document).width()*0.7
+		$('#selectWindow').panel('resize', {
+			width : $(document).width() * 0.7
 		});
 		$('body').layout('resize');
-		
 	});
-	
 	function ok() {
 		$.messager.progress();
 		$('#lesson_form').form('submit', {
-			onSubmit: function(){
+			onSubmit : function() {
 				var isValid = $(this).form('validate');
-				if (!isValid){
-					$.messager.progress('close');	// hide progress bar while the form is invalid
+				if (!isValid) {
+					$.messager.progress('close');
 				}
-				return isValid;	// return false will stop the form submission
+				return isValid;
 			},
 			success : function(data) {
-				var data = eval('(' + data + ')'); // change the JSON string to javascript object
+				var data = eval('(' + data + ')');
 				if (data.success) {
-					//alert(data.message);
 					$.messager.alert("操作提示", data.message);
 					$('#lesson_form').form('clear');
 				}
@@ -60,8 +48,10 @@
 		});
 	}
 	function openSelect(key) {
-		$('#select').html('<iframe id="select_iframe" src="/seed/'+key+'/toSelect" width="100%" height="100%"></iframe>');
-		$('#select').panel('setTitle','select '+key);
+		$('#selectWindow').html(
+				'<iframe id="select_iframe" src="/seed/' + key
+						+ '/toSelect" width="100%" height="100%"></iframe>');
+		$('#selectWindow').panel('setTitle', 'select ' + key);
 	}
 	function insert(key, s) {
 		var str = "";
@@ -83,46 +73,69 @@
 <body class="easyui-layout">
 	<div data-options="region:'center'">
 		<form id="lesson_form" action="/seed/lesson/add" method="post">
+		<input type="hidden" name="tprice" value="0">
+		<input type="hidden" name="bprice" value="0">
 			<table>
 				<tr>
-					<th>name:</th>
-					<td><input type="text" id="name" name="name"  value=""></td>
+					<th>名称:</th>
+					<td><input type="text" id="name" name="name" value=""
+						maxlength="64"></td>
+				</tr>
+				<tr>
+					<th>科目:</th>
+					<td><select id="subject" name="subject">
+							<option value="数学">数学</option>
+							<option value="物理">物理</option>
+							<option value="化学">化学</option>
+							<option value="英语">英语</option>
+							<option value="语文">语文</option>
+							<option value="地理">地理</option>
+							<option value="生物">生物</option>
+							<option value="历史">历史</option>
+							<option value="政治">政治</option>
+					</select></td>
+				</tr>
+				<tr>
+					<th>年级:</th>
+					<td><select id="grade" name="grade">
+							<option value="高三">高三</option>
+							<option value="高二">高二</option>
+							<option value="高一">高一</option>
+							<option value="初三">初三</option>
+							<option value="初二">初二</option>
+							<option value="初一">初一</option>
+					</select></td>
 				</tr>
 
 				<tr>
-					<th>subject:</th>
-					<td><input type="text" id="subject" name="subject"  value=""></td>
-				</tr>
-
-				<tr>
-					<th>grade:</th>
-					<td><input type="text" name="grade"  value=""></td>
-				</tr>
-
-				<tr>
-					<th>createTime:</th>
-					<td><input type="text" name="createTime" value=""></td>
-				</tr>
-
-				<tr>
-					<th>students:</th>
-					<td><div id="student" class="selectOther"></div>
-						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('student');"></a>
-						</td>
-				</tr>
-
-				<tr>
-					<th>teacher:</th>
-					<td><div id="teacher" class="selectOther"></div>
-					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openSelect('teacher');"></a>
+					<th>老师:</th>
+					<td>
+						<div id="teacher" class="selectOther"></div> <a
+						href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="openSelect('teacher');"></a>
 					</td>
 				</tr>
 				<tr>
-					<th colspan="2"><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ok();">提交</a></th>
+					<th>学生:</th>
+					<td>
+						<div id="student" class="selectOther"></div> <a
+						href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="openSelect('student');"></a>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="2"><a href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</a>
+					</th>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div id="select" data-options="region:'east',split:true,title:'附属窗口'" style="width: 600px; padding: 10px;"></div>
+	<div id="selectWindow"
+		data-options="region:'east',split:true,title:' '"
+		style="width: 600px; padding: 10px;"></div>
 </body>
 </html>

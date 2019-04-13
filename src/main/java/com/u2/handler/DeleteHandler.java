@@ -5,11 +5,12 @@ import java.util.Map;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.manager.TransactionManager;
+import com.u2.web.SeedAction;
 
 public class DeleteHandler extends Handler {
 
-	public DeleteHandler(Map<String, String[]> param, String key) {
-		super(param, key);
+	public DeleteHandler(Map<String, String[]> param, String key, SeedAction action) {
+		super(param, key,action);
 		// TODO Auto-generated constructor stub
 	}
 

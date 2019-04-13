@@ -13,17 +13,19 @@
 $(function(){
 	var lesson_fid=$("#lesson_fid").val();
 	$('#dg').datagrid({
-		url:'/seed/price/getAll?lesson_fid='+lesson_fid,
-	   // pagination:true,
+		url:'/seed/price/page?lesson_fid='+lesson_fid,
+	    pagination:true,
 	    loadMsg:'请稍后...',
 	    toolbar: '#tb',
 	    remoteSort:false
 	});
 	$('#dd').dialog({
 	    title: 'price add',
-	    width: 400,
-	    height: 300,
+	    width: $(document).width()-50,
+	    height: $(document).height()-100,
 	    closed: true,
+	    maximizable:true,
+	    maximizabd:true,
 	    cache: false,
 	    modal: true,
 	    onClose:function(){
@@ -48,36 +50,52 @@ function buildButton(value,row,index){
 }
 function deleteOne(id){
 	$.post('/seed/price/delete',{'id':id},function(data){
-		alert(data.message);
+		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
 	});
 }
 function searchPage(){
-	var lesson_fid=$("#lesson_fid").val();
+var lesson_fid=$("#lesson_fid").val();
+
+
 	$('#dg').datagrid('load', {lesson_fid:lesson_fid});
+
+
+}
+function viewFruit(value,row,index){
+	var str="";
+	if(value!=null&&value.length>0){
+		for(var i=0;i<value.length;i++){
+			if(i!=0){
+				str+=",";
+			}
+			str+=value[i].name;
+		}
+	}
+	return str;
 }
 </script>
 </head>
 <body>
 <input type="hidden" id="lesson_fid" value="${lesson_fid}">
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
 </div>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
-			<th data-options="field:'id',width:100,sortable:true" >ID</th>
+			<th data-options="field:'id',width:50,sortable:true" >ID</th>
 					<th data-options="field:'price',width:100,sortable:true">price</th>
 					<th data-options="field:'remark',width:100,sortable:true">remark</th>
+				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
 </table>
 <div id="dd">
-<iframe id="price_add_iframe" src="/seed/price/toAdd" width="100%" height="100%"></iframe>
+<iframe id="price_add_iframe" src="" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

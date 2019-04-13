@@ -1,5 +1,6 @@
 package com.u2.db.cache;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,7 +9,12 @@ import java.util.Set;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.model.Fruit;
 
-public class Fruit_ extends Fruit {
+public class Fruit_ extends Fruit implements Serializable,Comparable<Fruit_>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public Fruit_(Fruit f) {
 		setId(f.getId());
@@ -153,6 +159,11 @@ public class Fruit_ extends Fruit {
 				}
 			}
 		}
+	}
+
+	public int compareTo(Fruit_ o) {
+		// TODO Auto-generated method stub
+		return this.getId()-o.getId()>0?1:-1;
 	}
 
 }
