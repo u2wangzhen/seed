@@ -16,12 +16,17 @@
 <script type="text/javascript">
 	$(function() {
 		laydate.render({
-			elem : '#pdate' //指定元素
+			elem : '#pdate', //指定元素
+			value:new Date()
 		});
 		
 		laydate.render({
 			elem : '#startTime' //指定元素
-			,type: 'time'
+			,type: 'time',
+			change: function(value, date, endDate){
+			    $("#startTime").val(value);
+			    setEndTime();
+			  }
 		});
 		
 		laydate.render({
@@ -125,11 +130,36 @@
 				+ obj.name + '</div>';
 		return str;
 	}
+	function setEndTime(){
+		var s=$("#startTime").val();
+		var h=$("#phour").val();
+		if(s!=null&&s!=''&&h!=null&&h!=''){
+			if(h.indexOf('.5')<0){
+				var s1=s.substring(0,s.indexOf(':'));
+				var s2=s.substring(s.indexOf(':'));
+				var hh=parseInt(h)+parseInt(s1);
+				var str=hh+s2;
+				$("#endTime").val(str);
+			}else{
+				var hh=s.substring(0,s.indexOf(':'));
+				var mm=s.substring(s.indexOf(':')+1).substring(0,s.indexOf(':'));
+				var mmm=parseInt(mm)+30;
+				var i=0;
+				if(mmm>=60){
+					mmm=mmm-60;
+					i++;
+				}
+				var hhh=parseInt(hh)+parseInt(h)+i;
+				var str=hhh+":"+mmm+":00";
+				$("#endTime").val(str);
+			}
+		}
+	}
 </script>
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'center'">
-		<form id="period_form" action="/seed/period/add" method="post">
+		<form id="period_form" action="/seed/period/add" method="post"  autocomplete="off">
 			<table>
 				<tr>
 					<th>课程:</th>
@@ -152,17 +182,17 @@
 				<tr>
 					<th>日期:</th>
 					<td><input type="text" id="pdate" name="pdate" value=""
-						maxlength="16"></td>
+						maxlength="16" size="8"></td>
 				</tr>
 				<tr>
 					<th>开始时间:</th>
 					<td><input type="text" id="startTime" name="startTime"
-						value="" maxlength="24"></td>
+						value="" maxlength="24" size="8"></td>
 				</tr>
 				<tr>
-					<th>课时:</th>
+					<th>课时（h）:</th>
 					<td>
-						<select id="phour" name="phour">
+						<select id="phour" name="phour" onchange="setEndTime();">
 							<option value="">-</option>
 							<option value="2">2</option>
 							<option value="1.5">1.5</option>
@@ -174,12 +204,11 @@
 				<tr>
 					<th>结束时间:</th>
 					<td><input type="text" id="endTime" name="endTime" value=""
-						maxlength="24"></td>
+						maxlength="24" size="8"></td>
 				</tr>
 				<tr>
 					<th>备注:</th>
-					<td><input type="text" id="remark" name="remark" value=""
-						maxlength="255"></td>
+					<td><textarea rows="3" cols="25" id="remark" name="remark"></textarea></td>
 				</tr>
 
 

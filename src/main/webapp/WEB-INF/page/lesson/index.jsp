@@ -129,7 +129,7 @@
 				<th
 					data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">老师</th>
 				<th
-					data-options="field:'student_s',width:150,sortable:true,formatter:viewFruit">学生</th>
+					data-options="field:'student_s',formatter:viewFruit">学生</th>
 				<th data-options="field:'createTime',width:100,sortable:true">创建时间</th>
 				<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 			</tr>
