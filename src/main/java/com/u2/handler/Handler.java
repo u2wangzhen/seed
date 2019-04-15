@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.u2.web.SeedAction;
 
-abstract class Handler {
+public abstract class Handler {
 
 	protected Map<String,String[]> param;
 	protected String key;

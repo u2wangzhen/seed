@@ -153,9 +153,9 @@
 								<div>
 									<input type="hidden" name="teacher_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
 							</c:forEach>
-						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
+						</div> <!-- <a href="javascript:void(0);" class="easyui-linkbutton"
 						data-options="iconCls:'icon-search',plain:true"
-						onclick="openSelect('teacher');"></a></td>
+						onclick="openSelect('teacher');"></a> --></td>
 				</tr>
 				<tr>
 					<th>学生:</th>
@@ -164,20 +164,20 @@
 								<div>
 									<input type="hidden" name="student_fid" value="${obj.id}" />${obj.jsonObj.name }</div>
 							</c:forEach>
-						</div> <a href="javascript:void(0);" class="easyui-linkbutton"
+						</div> <!-- <a href="javascript:void(0);" class="easyui-linkbutton"
 						data-options="iconCls:'icon-search',plain:true"
-						onclick="openSelect('student');"></a></td>
+						onclick="openSelect('student');"></a> --></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th colspan="2"><a href="javascript:void(0);"
 						class="easyui-linkbutton"
 						data-options="iconCls:'icon-add',plain:true"
-						onclick="openSub('price');">open price</a></th>
-				</tr>
+						onclick="openSub('price');">编辑价格</a></th>
+				</tr> -->
 				<tr>
 					<th colspan="2"><a href="javascript:void(0);"
 						class="easyui-linkbutton"
-						data-options="iconCls:'icon-save',plain:true" onclick="ok();">save</a>
+						data-options="iconCls:'icon-save',plain:true" onclick="ok();">保存</a>
 					</th>
 				</tr>
 			</table>
