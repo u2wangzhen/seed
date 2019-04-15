@@ -17,27 +17,31 @@ public class MainAction extends SeedAction{
 		
 		String u = param("user");
 		String p = param("password");
-		if(u==null||"".equals(u)||p==null||"".equals(p)){
-			return "/WEB-INF/page/index.jsp";
-		}
-		List<Fruit_> list = MainCache.me().getFruitList("account");
-		if(list!=null&&!list.isEmpty()){
-			Fruit_ ff=null;
-			for (Fruit_ f : list) {
-				if(u.equals(f.getSeed("account").getValue())){
-					ff=f;break;
+		Object account = request.getSession().getAttribute("user_account");
+		if(account==null){
+			if(u==null||"".equals(u)||p==null||"".equals(p)){
+				return "/WEB-INF/page/index.jsp";
+			}else{
+				List<Fruit_> list = MainCache.me().getFruitList("account");
+				if(list!=null&&!list.isEmpty()){
+					Fruit_ ff=null;
+					for (Fruit_ f : list) {
+						if(u.equals(f.getSeed("account").getValue())){
+							ff=f;break;
+						}
+					}
+					if(ff!=null){
+						if(ff.getSeed("password").getValue().equals(p)){
+							request.getSession().setAttribute("user_name", ff.getSeed("name").getValue());
+							request.getSession().setAttribute("user_account", ff.getSeed("account").getValue());
+							setRole(ff);
+							
+						}
+					}
 				}
 			}
-			if(ff!=null){
-				if(ff.getSeed("password").getValue().equals(p)){
-					request.getSession().setAttribute("user_name", ff.getSeed("name").getValue());
-					request.getSession().setAttribute("user_account", ff.getSeed("account").getValue());
-					setRole(ff);
-					return "/WEB-INF/page/main/main.jsp";
-				}
-			}
 		}
-		return "/WEB-INF/page/index.jsp";
+		return "/WEB-INF/page/main/main.jsp";
 	}
 	private void setRole(Fruit_ ff) {
 		// TODO Auto-generated method stub

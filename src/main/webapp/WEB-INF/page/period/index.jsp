@@ -56,11 +56,8 @@ function deleteOne(id){
 }
 function searchPage(){
 	var pdate=$("#pdate").val();
-
-
-
 	$('#dg').datagrid('load', {
-		 pdate:pdate
+		 pdate_l:pdate
 	});
 
 }
@@ -79,7 +76,7 @@ function viewFruit(value,row,index){
 </script>
 </head>
 <body>
-<input type="text" id="pdate"  placeholder="pdate" >
+<input type="text" id="pdate"  placeholder="日期" >
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchPage();"></a>
 <div id="tb">
 <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
@@ -88,13 +85,14 @@ function viewFruit(value,row,index){
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<th data-options="field:'pdate',width:100,sortable:true">pdate</th>
-					<th data-options="field:'phour',width:100,sortable:true">phour</th>
-					<th data-options="field:'startTime',width:100,sortable:true">startTime</th>
-					<th data-options="field:'endTime',width:100,sortable:true">endTime</th>
-					<th data-options="field:'remark',width:100,sortable:true">remark</th>
-				<th data-options="field:'lesson_s',width:100,sortable:true,formatter:viewFruit">lesson</th>
-				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
+					<th data-options="field:'lesson_s',width:150,sortable:true,formatter:viewFruit">课程</th>
+					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">上课学生</th>
+					<th data-options="field:'pdate',width:100,sortable:true">日期</th>
+					<th data-options="field:'phour',width:50,sortable:true">课时</th>
+					<th data-options="field:'startTime',width:100,sortable:true">开始时间</th>
+					<th data-options="field:'endTime',width:100,sortable:true">结束时间</th>
+					<th data-options="field:'remark'">备注</th>
+				
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>

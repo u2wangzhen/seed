@@ -41,7 +41,7 @@ public class FruitHandler {
 				BaseDao.me().insertRelation(new Relation(f.getId(), oid));
 			}
 		}
-		TransactionManager.getFruitlistlocal().push(f);
+		TransactionManager.getFruitlistlocal().add(f);
 		return b;
 	}
 

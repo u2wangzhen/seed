@@ -1,6 +1,8 @@
 package com.u2.db.manager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import com.alibaba.druid.pool.DruidPooledConnection;
@@ -13,7 +15,7 @@ import com.u2.model.Fruit;
 public class TransactionManager {
 	
 	private static ThreadLocal<TransactionManager> local=new ThreadLocal<TransactionManager>();
-	private static ThreadLocal<Stack<Fruit>> fruit_local=new ThreadLocal<Stack<Fruit>>();
+	private static ThreadLocal<List<Fruit>> fruit_local=new ThreadLocal<List<Fruit>>();
 	private static ThreadLocal<Stack<SeedUpdate>> seed_local=new ThreadLocal<Stack<SeedUpdate>>();
 	private static ThreadLocal<Stack<Fruit_>> del_local=new ThreadLocal<Stack<Fruit_>>();
 	private static ThreadLocal<Stack<Fruit_>> relation_local=new ThreadLocal<Stack<Fruit_>>();
@@ -53,10 +55,10 @@ public class TransactionManager {
 		return list;
 	}
 	
-	public static Stack<Fruit> getFruitlistlocal(){
-		Stack<Fruit> list = fruit_local.get();
+	public static List<Fruit> getFruitlistlocal(){
+		List<Fruit> list = fruit_local.get();
 		if(list==null){
-			list=new Stack<Fruit>();
+			list=new ArrayList<Fruit>();
 			fruit_local.set(list);
 		}
 		return list;
@@ -97,11 +99,12 @@ public class TransactionManager {
 	public void commit(){
 		try {
 			conn.commit();
-			Stack<Fruit> list = fruit_local.get();
+			List<Fruit> list = fruit_local.get();
 			while(list!=null&&!list.isEmpty()){
-				Fruit f = list.pop();
-				MainCache.me().addFruit(f);
-				
+				for (Fruit f : list) {
+					MainCache.me().addFruit(f);
+				}
+				list.clear();
 			}
 			Stack<Fruit_> rl = relation_local.get();
 			while(rl!=null&&!rl.isEmpty()){

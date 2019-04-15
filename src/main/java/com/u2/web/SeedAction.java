@@ -12,12 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
-import com.u2.handler.AddHandler;
-import com.u2.handler.DeleteHandler;
-import com.u2.handler.GetAllHandler;
-import com.u2.handler.GetOneHandler;
-import com.u2.handler.PageHandler;
-import com.u2.handler.UpdateHandler;
+import com.u2.handler.HandlerFactory;
 import com.u2.model.Seed;
 
 public abstract class SeedAction {
@@ -84,35 +79,22 @@ public abstract class SeedAction {
 	void exec() {
 		boolean b = intercept();
 		if (b) {
-			new Route("/WEB-INF/page/index.jsp", request, response).render();
+			if(key==null){
+				new Route("/WEB-INF/page/index.jsp", request, response).render();
+			}else{
+				outLogin();
+			}
 		} else {
-			switch (type) {
-			case add:
-				returnJsonStr = new AddHandler(param, key,this).exec();
-				break;
-			case update:
-				returnJsonStr = new UpdateHandler(param, key,this).exec();
-				break;
-			case delete:
-				returnJsonStr = new DeleteHandler(param, key,this).exec();
-				break;
-			case page:
-				returnJsonStr = new PageHandler(param, key).exec();
-				break;
-			case getAll:
-				returnJsonStr = new GetAllHandler(param, key).exec();
-				break;
-			case getOne:
-				returnJsonStr = new GetOneHandler(param, key).exec();
-				break;
-			default:
+			
+			if(type!=ActionType.other){
+				returnJsonStr=HandlerFactory.me().createHandler(type, key, param, this).exec();
+			}else{
 				String str = execMethod();
 				if (str.endsWith(".jsp")) {
 					routeStr = str;
 				} else {
 					returnJsonStr = str;
 				}
-				break;
 			}
 			if (returnJsonStr != null && !"".equals(returnJsonStr)) {
 				outJson();
@@ -123,26 +105,56 @@ public abstract class SeedAction {
 		}
 	}
 
-	public void beforeAdd(List<Seed> seeds){}
-	public void afterAdd(Object obj){}
-	
-	public void beforeUpdate(Object... obj){}
-	public void afterUpdate(Object... obj){}
-	
-	public void beforeDelete(Object... obj){}
-	public void afterDelete(Object... obj){}
-	
+	private void outLogin() {
+		// TODO Auto-generated method stub
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println("<html>");
+			out.println("<script>");
+			out.println("window.open ('/"+root+"','_top')");
+			out.println("</script>");
+			out.println("</html>");
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void beforeAdd(List<Seed> seeds) {
+	}
+
+	public void afterAdd(Object obj) {
+	}
+
+	public void beforeUpdate(Object... obj) {
+	}
+
+	public void afterUpdate(Object... obj) {
+	}
+
+	public void beforeDelete(Object... obj) {
+	}
+
+	public void afterDelete(Object... obj) {
+	}
+
 	private boolean intercept() {
 		// TODO Auto-generated method stub
-		if(key==null){return true;}
-		
+		if (key == null) {
+			return true;
+		}
+
 		Object account = request.getSession().getAttribute("user_account");
 		if (account == null) {
-			if("maintoMain".equals((key+method))){
+			if ("maintoMain".equals((key + method))) {
 				return false;
 			}
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -197,13 +209,18 @@ public abstract class SeedAction {
 	}
 
 	public String toSelect() {
+		Set<String> ks = param.keySet();
+		if (ks != null && !ks.isEmpty()) {
+			for (String k : ks) {
+				request.setAttribute(k, param.get(k)[0]);
+			}
+		}
 		return "/WEB-INF/page/" + key + "/select.jsp";
 	}
 
 	public String toEdit() {
 		String id = param("id");
 		if (id != null && !"".equals(id)) {
-			// Fruit_ f = MainCache.me().getFruit(key,Long.valueOf(id));
 			Fruit_ f = MainCache.me().getFruit(Long.valueOf(id));
 			JSONObject obj = f.getJsonObj();
 			Set<String> set = obj.keySet();

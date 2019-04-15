@@ -73,6 +73,16 @@ abstract class SearchHandler extends Handler{
 							}
 						}
 					}
+				}else if(factor.isCited){
+					Set<Fruit_> s = f.getCitedFruits(factor.seedKey);
+					if(s!=null&&!s.isEmpty()){
+						for (Fruit_ fruit_ : s) {
+							if(fruit_.getId()==Long.valueOf(factor.value)){
+								b=true;
+								break;
+							}
+						}
+					}
 				}else{
 					Seed_ seed = f.getSeeds().get(factor.seedKey);
 					if(seed!=null){
@@ -97,6 +107,7 @@ abstract class SearchHandler extends Handler{
 		String value;
 		boolean isLike=false;
 		boolean isRelation=false;
+		boolean isCited=false;
 		public Factor(String searchKey, String value) {
 			if(searchKey.endsWith("_l")){
 				this.isLike = true;
@@ -104,6 +115,9 @@ abstract class SearchHandler extends Handler{
 			}else if(searchKey.endsWith("_fid")){
 				this.isRelation = true;
 				this.seedKey=searchKey.split("_fid")[0];
+			}else if(searchKey.endsWith("_cited")){
+				this.isCited=true;
+				this.seedKey=searchKey.split("_cited")[0];
 			}else{
 				this.seedKey=searchKey;
 			}

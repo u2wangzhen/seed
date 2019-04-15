@@ -3,7 +3,7 @@ package com.u2.sys;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.u2.other.LessonAction;
+import com.u2.other.action.LessonAction;
 import com.u2.web.action.MainAction;
 public class ActionMapping{
 

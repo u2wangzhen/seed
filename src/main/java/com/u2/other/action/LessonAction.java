@@ -1,4 +1,4 @@
-package com.u2.other;
+package com.u2.other.action;
 
 import java.util.List;
 

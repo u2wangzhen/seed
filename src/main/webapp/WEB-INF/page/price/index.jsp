@@ -45,7 +45,7 @@ function openEdit(id){
 }
 function buildButton(value,row,index){
 	var str='<a href="javascript:void(0);" onclick="openEdit(\''+row.id+'\');">编辑</a>';
-	str+='&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne(\''+row.id+'\');">删除</a>'
+	//str+='&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne(\''+row.id+'\');">删除</a>'
 	return str;
 }
 function deleteOne(id){
@@ -81,15 +81,15 @@ function viewFruit(value,row,index){
 <body>
 <input type="hidden" id="lesson_fid" value="${lesson_fid}">
 <div id="tb">
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
-</div>
+<!-- <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openAdd();"></a>
+ --></div>
 <table id="dg" class="easyui-datagrid" style="width:100%;height:auto">
     <thead>
 		<tr>
 			<th data-options="field:'id',width:50,sortable:true" >ID</th>
-					<th data-options="field:'price',width:100,sortable:true">price</th>
-					<th data-options="field:'remark',width:100,sortable:true">remark</th>
-				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">student</th>
+					<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">学生</th>
+					<th data-options="field:'price',width:100,sortable:true">价格</th>
+					<th data-options="field:'remark'">备注</th>
 			<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 		</tr>
     </thead>
