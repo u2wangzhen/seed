@@ -6,17 +6,22 @@ import java.util.List;
 import java.util.Set;
 
 import com.u2.db.cache.Fruit_;
+import com.u2.db.cache.MainCache;
 import com.u2.util.DateUtil;
 
 public class Search {
 
 	private Query query;
 	private Fruit_[] fs=new Fruit_[1];
-	public Search(String sql){///{{name_l=aaaa}and{id=123}and{{student_fid=in(1,2,3,4)}{}}}
+	private String fkey;
+	public Search(String fkey,String sql){///{{name_l=aaaa}and{id=123}and{{student_fid=in(1,2,3,4)}{}}}
+		this.fkey=fkey;
+		this.query=new Query(sql);
 		query.set(fs[0]);
-		
-		
-		
+	}
+	
+	public List<Fruit_> filterFruit(){
+		return filterFruit(MainCache.me().getFruitList(fkey));
 	}
 	
 	public List<Fruit_> filterFruit(List<Fruit_> list){
@@ -41,22 +46,115 @@ public class Search {
 		boolean filter();
 		Filter set(Fruit_ f_);
 	}
-	
+	public static void main(String[] args) {
+		String sql="{{a=1{}{{}{}}}{b=1{{}}{}}{c=1{}}{{}}{{{}{}}}}";
+		System.out.println(sql.split(";").length);
+		//System.out.println(sql.substring(2));
+		/*sql=sql.substring(1, sql.length()-1);
+		String aa = sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
+		sql=sql.substring("and".length());
+		sql=sql.substring(aa.length());
+		
+		String bb = sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
+		
+		sql=sql.substring(bb.length());
+		
+		//String cc = sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
+		
+		System.out.println(sql.indexOf("{", 1));
+		System.out.println(sql.indexOf("}", 1));*/
+		
+		//System.out.println(sql);
+		/*List<String> list = decompose(sql);
+		for (String str : list) {
+			System.out.println(str);
+		}*/
+	}
+	public static List<String> decompose(String sql) {
+		// TODO Auto-generated method stub
+		List<String> list=null;
+		String s=sql;
+		String str=decomposeStr(s);		
+		if(str.equals(s)){
+			if(list==null){list=new ArrayList<String>();}
+			list.add(str);
+		}else{
+			if(list==null){list=new ArrayList<String>();}
+			list.add(str);
+			while(!str.equals(s)){
+				s=s.substring(str.length());
+				str=decomposeStr(s);
+				list.add(str);
+			}
+		}
+		return list;
+	}
+	private static String decomposeStr(String sql) {
+		// TODO Auto-generated method stub
+		if(sql.indexOf("{")==0&&sql.indexOf("}")>0){
+			int s=sql.indexOf("{",1);
+			int end=sql.indexOf("}",1);
+			if(s>0&&end<s||s<0){
+				return sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
+			}else{
+				
+				int x=1;
+				
+				while(x>0){
+					
+					if(s<end&&s>0){
+						x++;
+						s=sql.indexOf("{", s+1);
+					}else{
+						x--;
+						if(x==0){break;}
+						end=sql.indexOf("}",end+1);
+					}
+				}
+				return sql.substring(0, end+1);
+			}
+		}
+		return null;
+	}
+
+
 	private class Query implements Filter{
 		Fruit_ f_;
+		
+		Query(String sql) {///{and{name_l=aaaa}{id=123}{or{student_fid=in,1,2,3,4)}{bbb=ccc}}}
+			// TODO Auto-generated constructor stub
+			filters=new ArrayList<Search.Filter>();
+			sql=sql.substring(1, sql.length()-1);
+			if(sql.startsWith("or")){
+				and=false;
+				sql=sql.substring(2);
+			}
+			if(sql.startsWith("and")){
+				sql=sql.substring(2);
+			}
+			
+			List<String> ss=decompose(sql);
+			for (String s : ss) {
+				if(s.startsWith("{and{")||s.startsWith("{or{")){
+					filters.add(new Query(s));
+				}else{
+					filters.add(new Condition(sql));
+				}
+			}
+		}
 		
 		public Filter set(Fruit_ f_) {
 			this.f_ = f_;
 			return this;
 		}
 		
-		boolean add=true;//or false;
+		boolean and=true;//or false;
 		List<Filter> filters;
 		
 		public boolean filter(){
 			if(filters!=null&&!filters.isEmpty()){
 				for (Filter f : filters) {
-					if(add){
+					if(and){
 						if(!f.filter()){
 							return false;
 						}
@@ -74,7 +172,7 @@ public class Search {
 			filters.add(f.set(f_));
 		}
 		void orCondition(Filter f){
-			add=false;
+			and=false;
 			if(filters==null){filters=new ArrayList<Search.Filter>();}
 			filters.add(f.set(f_));
 		}
@@ -88,7 +186,7 @@ public class Search {
 		List<String> values;
 		Type type;
 		Converter converter;
-		private Condition(Fruit_ f_,String key, KeyType keyType, String value, List<String> values, Type type,
+		/*private Condition(Fruit_ f_,String key, KeyType keyType, String value, List<String> values, Type type,
 				Converter converter) {
 			this.f_=f_;
 			this.key = key;
@@ -97,13 +195,85 @@ public class Search {
 			this.values = values;
 			this.type = type;
 			this.converter = converter;
-		}
-		Condition(Fruit_ f_,String key, KeyType keyType, String value,Type type,Converter converter ){
+		}*/
+		/*Condition(Fruit_ f_,String key, KeyType keyType, String value,Type type,Converter converter ){
 			this(f_,key,keyType,value,null,type,converter);
 		}
 		
 		Condition(Fruit_ f_,String key, KeyType keyType, List<String> values,Converter converter ){
 			this(f_,key,keyType,null,values,Type.IN,converter);
+		}*/
+		Condition(String sql) {
+			// TODO Auto-generated constructor stub
+			sql=sql.substring(1, sql.length()-1);
+			String[] s = sql.split("=");
+			String k=s[0];
+			String v=s[1];
+			
+			if(k.startsWith("_id")){
+				this.key=k.split("_id")[0];
+				this.keyType=KeyType.id;
+			}else if(k.endsWith("_fid")){
+				this.key=k.split("_fid")[0];
+				this.keyType=KeyType.other;
+			}else if(k.endsWith("_cited")){
+				this.key=k.split("_cited")[0];
+				this.keyType=KeyType.cited;
+			}else if(k.indexOf(".")>0){
+				this.key=k;
+				this.keyType=KeyType.relation;
+			}else if(k.endsWith("_l")){
+				this.key=k.split("_l")[0];
+				this.keyType=KeyType.seed;
+				this.type=Type.LIKE;
+			}
+			
+			String[] vs = v.split(",");
+			if(vs.length==1){
+				value=v;
+				type=Type.EQ;
+			}else{
+				if(vs[vs.length-1].endsWith("_c")){
+					if(vs[vs.length-1].startsWith("number")){
+						converter=Converter.number;
+					}
+					if(vs[vs.length-1].startsWith("date")){
+						converter=Converter.date_;
+					}
+					if(vs[vs.length-1].startsWith("datetime")){
+						converter=Converter.datetime_;
+					}
+					vs[vs.length-1]="";
+				}
+				
+				if(vs[0].equals("IN")){
+					type=Type.IN;
+					values=new ArrayList<String>();
+					for (int i = 1; i < vs.length; i++) {
+						if(!"".equals(s[i])){
+							values.add(s[i]);
+						}
+					}
+				}else if(vs[0].equals("LIKE")){
+					type=Type.LIKE;
+					value=vs[1];
+				}else if(vs[0].equals("GT")){
+					type=Type.GT;
+					value=vs[1];
+				}else if(vs[0].equals("GTEQ")){
+					type=Type.GTEQ;
+					value=vs[1];
+				}else if(vs[0].equals("LT")){
+					type=Type.LT;
+					value=vs[1];
+				}else if(vs[0].equals("LTEQ")){
+					type=Type.LTEQ;
+					value=vs[1];
+				}else{
+					type=Type.EQ;
+					value=vs[0];
+				}
+			}			
 		}
 		public boolean filter(){
 			boolean b=false;
