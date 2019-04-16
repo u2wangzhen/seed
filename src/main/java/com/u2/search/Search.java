@@ -17,7 +17,6 @@ public class Search {
 	public Search(String fkey,String sql){///{{name_l=aaaa}and{id=123}and{{student_fid=in(1,2,3,4)}{}}}
 		this.fkey=fkey;
 		this.query=new Query(sql);
-		query.set(fs[0]);
 	}
 	
 	public List<Fruit_> filterFruit(){
@@ -44,32 +43,8 @@ public class Search {
 	
 	private interface Filter{
 		boolean filter();
-		Filter set(Fruit_ f_);
 	}
-	public static void main(String[] args) {
-		String sql="{{a=1{}{{}{}}}{b=1{{}}{}}{c=1{}}{{}}{{{}{}}}}";
-		System.out.println(sql.split(";").length);
-		//System.out.println(sql.substring(2));
-		/*sql=sql.substring(1, sql.length()-1);
-		String aa = sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
-		sql=sql.substring("and".length());
-		sql=sql.substring(aa.length());
-		
-		String bb = sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
-		
-		sql=sql.substring(bb.length());
-		
-		//String cc = sql.substring(sql.indexOf("{"), sql.indexOf("}")+1);
-		
-		System.out.println(sql.indexOf("{", 1));
-		System.out.println(sql.indexOf("}", 1));*/
-		
-		//System.out.println(sql);
-		/*List<String> list = decompose(sql);
-		for (String str : list) {
-			System.out.println(str);
-		}*/
-	}
+	
 	public static List<String> decompose(String sql) {
 		// TODO Auto-generated method stub
 		List<String> list=null;
@@ -119,7 +94,7 @@ public class Search {
 
 
 	private class Query implements Filter{
-		Fruit_ f_;
+		
 		
 		Query(String sql) {///{and{name_l=aaaa}{id=123}{or{student_fid=in,1,2,3,4)}{bbb=ccc}}}
 			// TODO Auto-generated constructor stub
@@ -130,7 +105,7 @@ public class Search {
 				sql=sql.substring(2);
 			}
 			if(sql.startsWith("and")){
-				sql=sql.substring(2);
+				sql=sql.substring(3);
 			}
 			
 			List<String> ss=decompose(sql);
@@ -141,11 +116,6 @@ public class Search {
 					filters.add(new Condition(sql));
 				}
 			}
-		}
-		
-		public Filter set(Fruit_ f_) {
-			this.f_ = f_;
-			return this;
 		}
 		
 		boolean and=true;//or false;
@@ -167,19 +137,11 @@ public class Search {
 			}			
 			return true;
 		}
-		void addConditon(Filter f){
-			if(filters==null){filters=new ArrayList<Search.Filter>();}
-			filters.add(f.set(f_));
-		}
-		void orCondition(Filter f){
-			and=false;
-			if(filters==null){filters=new ArrayList<Search.Filter>();}
-			filters.add(f.set(f_));
-		}
+		
 	}
 	
 	private class Condition implements Filter{
-		Fruit_ f_;
+		
 		String key="";
 		KeyType keyType;
 		String value;
@@ -226,6 +188,9 @@ public class Search {
 				this.key=k.split("_l")[0];
 				this.keyType=KeyType.seed;
 				this.type=Type.LIKE;
+			}else{
+				this.key=k;
+				this.keyType=KeyType.seed;
 			}
 			
 			String[] vs = v.split(",");
@@ -395,10 +360,10 @@ public class Search {
 			if(l==null){
 				Set<Fruit_> set=null;
 				if(k.endsWith("_o")){
-					set = f_.getOtherFruits(k.split("_o")[0]);
+					set = fs[0].getOtherFruits(k.split("_o")[0]);
 				}
 				if(k.endsWith("_c")){
-					set = f_.getCitedFruits(k.split("_c")[0]);
+					set = fs[0].getCitedFruits(k.split("_c")[0]);
 				}
 				if(set!=null&&!set.isEmpty()){
 					List<Fruit_> list=new ArrayList<Fruit_>();
@@ -436,7 +401,7 @@ public class Search {
 		}
 		private boolean filterId() {
 			// TODO Auto-generated method stub
-			Long id=f_.getId();
+			Long id=fs[0].getId();
 			return filterId(id);
 		}
 		private boolean filterInIdValues(Long id) {
@@ -452,7 +417,7 @@ public class Search {
 		}
 		private boolean filterCited() {
 			// TODO Auto-generated method stub
-			Set<Fruit_> set = f_.getCitedFruits(key);
+			Set<Fruit_> set = fs[0].getCitedFruits(key);
 			if(set!=null&&!set.isEmpty()){
 				for (Fruit_ f : set) {
 					if(f.getId()==Long.valueOf(value)){
@@ -464,7 +429,7 @@ public class Search {
 		}
 		private boolean filterOther() {
 			// TODO Auto-generated method stub
-			Set<Fruit_> set = f_.getOtherFruits(key);
+			Set<Fruit_> set = fs[0].getOtherFruits(key);
 			if(set!=null&&!set.isEmpty()){
 				for (Fruit_ f : set) {
 					if(f.getId()==Long.valueOf(value)){
@@ -476,7 +441,7 @@ public class Search {
 		}
 		private boolean filterSeed() {
 			// TODO Auto-generated method stub
-			String v = f_.getSeed(key).getValue();
+			String v = fs[0].getSeed(key).getValue();
 			return filterSeed(v);
 		}
 		
@@ -556,12 +521,6 @@ public class Search {
 			}
 			return false;
 		}
-		public Filter set(Fruit_ f_) {
-			// TODO Auto-generated method stub
-			this.f_=f_;
-			return this;
-		}
-		
 	}
 	private enum Type{
 		IN,LIKE,EQ,GTEQ,LTEQ,GT,LT

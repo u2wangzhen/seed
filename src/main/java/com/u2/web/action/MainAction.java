@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.manager.TableManager;
+import com.u2.search.Search;
 import com.u2.web.SeedAction;
 
 public class MainAction extends SeedAction{
@@ -110,6 +111,10 @@ public class MainAction extends SeedAction{
 		}
 	}
 	public String home(){
+		/*System.out.println("hello!");
+		List<Fruit_> list = new Search("student","{and{name=LIKE,佳}}").filterFruit();
+		
+		request.setAttribute("student", list);*/
 		
 		return "/WEB-INF/page/main/home.jsp";
 	}
