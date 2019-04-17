@@ -112,7 +112,7 @@ public class MainAction extends SeedAction{
 	}
 	public String home(){
 		/*System.out.println("hello!");
-		List<Fruit_> list = new Search("student","{and{name=LIKE,佳}}").filterFruit();
+		List<Fruit_> list = new Search("student","{and{birthday=GTEQ,2000-01-01,date_c}}").filterFruit();
 		
 		request.setAttribute("student", list);*/
 		

@@ -67,7 +67,7 @@
 		var name = $("#name").val();
 		$('#dg').datagrid('load', {
 			sex : sex,
-			name : name
+			name_l : name
 		});
 
 	}

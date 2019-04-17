@@ -11,8 +11,15 @@
 	href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/seed/js/laydate/laydate.js"></script>
 <script type="text/javascript">
 	$(function() {
+		laydate.render({
+			elem : '#starttime'
+		});
+		laydate.render({
+			elem : '#endtime'
+		});
 		$('#dg').datagrid({
 			url : '/seed/period/page',
 			pagination : true,
@@ -64,8 +71,34 @@
 	}
 	function searchPage() {
 		var pdate = $("#pdate").val();
+		var sta=$("#starttime").val();
+		var end=$("#endtime").val();
+		if(sta!=''||end!=''){
+			if(sta!=''){
+				sta='GTEQ,'+sta+",date_c";
+			}
+			if(end!=''){
+				end='LTEQ,'+end+",date_c";
+			}
+		}else{
+			if(pdate!=''){
+				pdate="LIKE,"+pdate;
+			}
+		}
+		var student=$("#student").val();
+		if(student!=''){
+			student="LIKE,"+student;
+		}
+		var teacher=$("#teacher").val();
+		if(teacher!=''){
+			teacher="LIKE,"+teacher;
+		}
 		$('#dg').datagrid('load', {
-			pdate_l : pdate
+			pdate : pdate,
+			'student_o@name_s':student,
+			'lesson_o@teacher_o@name_s':teacher,
+			pdate_1_index:sta,
+			pdate_2_index:end,
 		});
 
 	}
@@ -84,7 +117,11 @@
 </script>
 </head>
 <body>
+	<input type="text" id="student" placeholder="学生姓名">
+	<input type="text" id="teacher" placeholder="老师姓名">
 	<input type="text" id="pdate" placeholder="日期">
+	<input type="text" id="starttime" placeholder="开始日期">
+	<input type="text" id="endtime" placeholder="结束日期">
 	<a href="javascript:void(0);" class="easyui-linkbutton"
 		data-options="iconCls:'icon-search',plain:true"
 		onclick="searchPage();"></a>

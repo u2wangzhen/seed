@@ -11,8 +11,15 @@
 	href="/seed/js/ui/themes/icon.css">
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/seed/js/laydate/laydate.js"></script>
 <script type="text/javascript">
 	$(function() {
+		laydate.render({
+			elem : '#starttime'
+		});
+		laydate.render({
+			elem : '#endtime'
+		});
 		$('#dg').datagrid({
 			url : '/seed/lesson/page',
 			pagination : true,
@@ -66,11 +73,41 @@
 		var subject = $("#subject").val();
 		var grade = $("#grade").val();
 		var name = $("#name").val();
-
+		if(name!=''){
+			name="LIKE,"+name;
+		}
+		var student=$("#student").val();
+		if(student!=''){
+			student="LIKE,"+student;
+		}
+		var teacher=$("#teacher").val();
+		if(teacher!=''){
+			teacher="LIKE,"+teacher;
+		}
+		var createTime = $("#createTime").val();
+		var sta=$("#starttime").val();
+		var end=$("#endtime").val();
+		if(sta!=''||end!=''){
+			if(sta!=''){
+				sta='GTEQ,'+sta+",date_c";
+			}
+			if(end!=''){
+				end='LTEQ,'+end+",date_c";
+			}
+		}else{
+			if(createTime!=''){
+				createTime="LIKE,"+createTime;
+			}
+		}
 		$('#dg').datagrid('load', {
 			subject : subject,
 			grade : grade,
-			name_l : name
+			name: name,
+			'teacher_o@name_s':teacher,
+			'student_o@name_s':student,
+			createTime:createTime,
+			createTime_1_index:sta,
+			createTime_2_index:end
 		});
 
 	}
@@ -111,6 +148,11 @@
 		<option value="初二">初二</option>
 		<option value="初一">初一</option>
 	</select>
+	<input type="text" id="student" placeholder="学生姓名">
+	<input type="text" id="teacher" placeholder="老师姓名">
+	<input type="text" id="createTime" placeholder="日期">
+	<input type="text" id="starttime" placeholder="开始日期">
+	<input type="text" id="endtime" placeholder="结束日期">
 	<a href="javascript:void(0);" class="easyui-linkbutton"
 		data-options="iconCls:'icon-search',plain:true"
 		onclick="searchPage();"></a>

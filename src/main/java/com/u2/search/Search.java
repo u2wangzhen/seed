@@ -18,9 +18,18 @@ public class Search {
 		this.fkey=fkey;
 		this.query=new Query(sql);
 	}
+	public Search(String sql){///{{name_l=aaaa}and{id=123}and{{student_fid=in(1,2,3,4)}{}}}
+		//this.fkey=fkey;
+		System.out.println(sql);
+		this.query=new Query(sql);
+	}
 	
 	public List<Fruit_> filterFruit(){
-		return filterFruit(MainCache.me().getFruitList(fkey));
+		if(fkey!=null){
+			return filterFruit(MainCache.me().getFruitList(fkey));
+		}else{
+			return null;
+		}
 	}
 	
 	public List<Fruit_> filterFruit(List<Fruit_> list){
@@ -113,7 +122,7 @@ public class Search {
 				if(s.startsWith("{and{")||s.startsWith("{or{")){
 					filters.add(new Query(s));
 				}else{
-					filters.add(new Condition(sql));
+					filters.add(new Condition(s));
 				}
 			}
 		}
@@ -181,7 +190,7 @@ public class Search {
 			}else if(k.endsWith("_cited")){
 				this.key=k.split("_cited")[0];
 				this.keyType=KeyType.cited;
-			}else if(k.indexOf(".")>0){
+			}else if(k.indexOf("@")>0){
 				this.key=k;
 				this.keyType=KeyType.relation;
 			}else if(k.endsWith("_l")){
@@ -196,7 +205,9 @@ public class Search {
 			String[] vs = v.split(",");
 			if(vs.length==1){
 				value=v;
-				type=Type.EQ;
+				if(type==null){
+					type=Type.EQ;
+				}
 			}else{
 				if(vs[vs.length-1].endsWith("_c")){
 					if(vs[vs.length-1].startsWith("number")){
@@ -235,7 +246,9 @@ public class Search {
 					type=Type.LTEQ;
 					value=vs[1];
 				}else{
-					type=Type.EQ;
+					if(type==null){
+						type=Type.EQ;
+					}
 					value=vs[0];
 				}
 			}			
@@ -341,7 +354,7 @@ public class Search {
 		}
 		private List<String> findValueStr() {
 			// TODO Auto-generated method stub
-			String[] ks = key.split(".");
+			String[] ks = key.split("@");
 			List<Fruit_> l=null;
 			for (String k : ks) {
 				l=findValue(l,k);				
@@ -350,7 +363,7 @@ public class Search {
 			if(l!=null){
 				list=new ArrayList<String>();
 				for (Fruit_ f : l) {
-					list.add(f.getSeed(ks[ks.length].split("_s")[0]).getValue());
+					list.add(f.getSeed(ks[ks.length-1].split("_s")[0]).getValue());
 				}
 			}
 			return list;
@@ -367,7 +380,7 @@ public class Search {
 				}
 				if(set!=null&&!set.isEmpty()){
 					List<Fruit_> list=new ArrayList<Fruit_>();
-					list.containsAll(set);
+					list.addAll(set);
 					return list;
 				}
 			}else{
@@ -387,7 +400,7 @@ public class Search {
 							if(list==null){
 								list=new ArrayList<Fruit_>();
 							}
-							list.containsAll(set);
+							list.addAll(set);
 						}
 					}
 					if(list!=null){

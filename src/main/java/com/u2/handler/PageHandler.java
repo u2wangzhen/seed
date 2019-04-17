@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 
-public class PageHandler extends SearchHandler {
+public class PageHandler extends NewSearchHandler {
 
 	public PageHandler(Map<String, String[]> param, String key) {
 		super(param, key);

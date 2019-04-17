@@ -166,7 +166,7 @@ public abstract class SeedAction {
 			str = (String) this.getClass().getMethod(method, null).invoke(this, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			if (key != null && !"".equals(key)) {
 				Set<String> ks = param.keySet();
 				if (ks != null && !ks.isEmpty()) {
