@@ -23,7 +23,7 @@ public class PageHandler extends NewSearchHandler {
 		int page=Integer.valueOf(param("page")==null?"1":param("page"));
 		int rows=Integer.valueOf(param("rows")==null?"10":param("rows"));
 		
-		List<Fruit_> list = MainCache.me().getFruitList(key);
+		List<Fruit_> list = MainCache.me().getFruitListDesc(key);
 		
 		if(search!=null){
 			list=filterFruit(list);

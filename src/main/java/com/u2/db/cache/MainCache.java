@@ -106,7 +106,7 @@ public class MainCache implements MainCacheI {
 	
 	public List<Fruit_> getFruitListDesc(String key) {
 		// TODO Auto-generated method stub
-		return cubel.getFruitsAsc(key);
+		return cubel.getFruitsDesc(key);
 	}
 
 	public Fruit_ getFruit(Long id) {

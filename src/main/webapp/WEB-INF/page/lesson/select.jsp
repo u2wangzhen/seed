@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,9 +13,9 @@
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-
+		var student_fid = $("#student_fid").val();
 		$('#dg').datagrid({
-			url : '/seed/lesson/getAll',
+			url : '/seed/lesson/getAll?student_fid='+student_fid,
 			loadMsg : '请稍后...',
 			idField : 'id',
 			remoteSort : false,
@@ -51,10 +51,12 @@
 		var subject = $("#subject").val();
 		var grade = $("#grade").val();
 		var name = $("#name").val();
+		var student_fid = $("#student_fid").val();
 		$('#dg').datagrid('load', {
 			subject : subject,
 			grade : grade,
-			name : name
+			name : name,
+			student_fid:student_fid
 		});
 	}
 	function viewFruit(value, row, index) {
@@ -72,6 +74,7 @@
 </script>
 </head>
 <body>
+	<input type="hidden" id="student_fid" value="${student_fid }">
 	<input type="text" id="name" placeholder="名称"> 科目：
 	<select id="subject">
 		<option value="">----</option>

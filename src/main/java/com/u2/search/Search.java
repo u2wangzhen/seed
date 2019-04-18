@@ -421,7 +421,7 @@ public class Search {
 			// TODO Auto-generated method stub
 			if(values!=null&&!values.isEmpty()){
 				for (String s : values) {
-					if(id==Long.valueOf(s)){
+					if((id-Long.valueOf(s))==0){
 						return true;
 					}
 				}
@@ -433,7 +433,7 @@ public class Search {
 			Set<Fruit_> set = fs[0].getCitedFruits(key);
 			if(set!=null&&!set.isEmpty()){
 				for (Fruit_ f : set) {
-					if(f.getId()==Long.valueOf(value)){
+					if((f.getId()-Long.valueOf(value))==0){
 						return true;
 					}
 				}
@@ -445,7 +445,7 @@ public class Search {
 			Set<Fruit_> set = fs[0].getOtherFruits(key);
 			if(set!=null&&!set.isEmpty()){
 				for (Fruit_ f : set) {
-					if(f.getId()==Long.valueOf(value)){
+					if((f.getId()-Long.valueOf(value))==0){
 						return true;
 					}
 				}

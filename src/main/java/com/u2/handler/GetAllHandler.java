@@ -19,7 +19,7 @@ public class GetAllHandler extends NewSearchHandler {
 	public String exec() {
 		// TODO Auto-generated method stub
 		JSONArray array=new JSONArray();
-		List<Fruit_> list = MainCache.me().getFruitList(key);
+		List<Fruit_> list = MainCache.me().getFruitListDesc(key);
 		
 		if(search!=null){
 			list=filterFruit(list);

@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.manager.TableManager;
-import com.u2.search.Search;
 import com.u2.web.SeedAction;
 
 public class MainAction extends SeedAction{

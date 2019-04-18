@@ -71,6 +71,16 @@ public class TableManager implements TableManagerI{
 				.addRelationKey("lesson")
 				.addRelationKey("student")
 				.add("remark",255));
+		map.put("classaccount", new FruitTemplate().add("name",64,true)
+				.addRelationKey("student")
+				.addRelationKey("lesson")
+				.addSubKey("recharge")
+				);
+		map.put("recharge", new FruitTemplate().add("times",4)
+				.add("date", 16, true)
+				.add("remark", 255)
+				.addParentKey("classaccount")
+				);
 		
 	}
 	/*private void initRelation(){
