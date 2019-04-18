@@ -16,8 +16,8 @@ import com.u2.db.manager.TableManager;
 
 public class Generator {
 
-	private static String root="G:/git/seed";//交大
-	//private static String root="D:/work/workspace/seed";//公司
+	//private static String root="G:/git/seed";//交大
+	private static String root="D:/work/workspace/seed";//公司
 	//private static String root="F:/work/git/seed";//家
 	private static String path="/src/main/webapp/WEB-INF/page/";
 	public void generatorIndex(String fkey) throws IOException{

@@ -19,6 +19,7 @@
 			loadMsg : '请稍后...',
 			idField : 'id',
 			remoteSort : false,
+			singleSelect : ${empty singleSelect?'false':singleSelect},
 			onLoadSuccess : function() {
 				var s = $("[name='student_fid']", window.parent.document);
 				if (s != null && s.length > 0) {

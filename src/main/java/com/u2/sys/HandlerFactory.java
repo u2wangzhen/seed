@@ -1,10 +1,17 @@
-package com.u2.handler;
+package com.u2.sys;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.u2.handler.AddHandler;
+import com.u2.handler.DeleteHandler;
+import com.u2.handler.GetAllHandler;
+import com.u2.handler.GetOneHandler;
+import com.u2.handler.Handler;
+import com.u2.handler.PageHandler;
+import com.u2.handler.UpdateHandler;
 import com.u2.other.handler.LessonAddHandler;
 import com.u2.other.handler.LessonGetAllHandler;
 import com.u2.web.ActionType;
@@ -17,7 +24,7 @@ public class HandlerFactory {
 
 	private HandlerFactory() {
 		map.put("lesson_add", LessonAddHandler.class);
-		map.put("lesson_getAll", LessonGetAllHandler.class);
+		//map.put("lesson_getAll", LessonGetAllHandler.class);
 	}
 
 	public static HandlerFactory me() {

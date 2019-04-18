@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.u2.converter.Converter;
+import com.u2.converter.ConverterFactory;
 import com.u2.db.manager.TransactionManager;
 import com.u2.handler.AddHandler;
 import com.u2.handler.FruitHandler;
@@ -24,7 +26,7 @@ public class LessonAddHandler extends AddHandler{
 		// TODO Auto-generated method stub
 		Set<String> names = param.keySet();
 		if(names!=null&&!names.isEmpty()){
-			List<Seed> seeds=new ArrayList<Seed>();
+			/*List<Seed> seeds=new ArrayList<Seed>();
 			List<Long> other=null;
 			List<Long> stu=null;
 			for (String n : names) {
@@ -51,12 +53,12 @@ public class LessonAddHandler extends AddHandler{
 					Seed s = new Seed(n,param.get(n));
 					seeds.add(s);
 				}
-			}
+			}*/
 			try {
 				TransactionManager.get().open();
-				Fruit f = new Fruit(key);
-				action.beforeAdd(seeds);
-				FruitHandler.me().insertFruit(f, seeds,other);
+				Converter c = ConverterFactory.me().converter(key).form2Fruit(param);
+				FruitHandler.me().insertFruit(c.getFruit(), c.getSeeds(),c.getOthers());
+				List<Long> stu = c.getOthersBykey("student");
 				if(stu!=null){
 					for (Long sid : stu) {
 						Fruit pf = new Fruit("price");
@@ -64,7 +66,7 @@ public class LessonAddHandler extends AddHandler{
 						List<Seed> ps=new ArrayList<Seed>();
 						ps.add(new Seed("price", "0"));
 						ps.add(new Seed("remark", ""));
-						oth.add(f.getId());
+						oth.add(c.getFruit().getId());
 						oth.add(sid);
 						FruitHandler.me().insertFruit(pf, ps, oth);
 					}

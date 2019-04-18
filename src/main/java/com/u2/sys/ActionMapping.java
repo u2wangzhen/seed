@@ -18,6 +18,6 @@ public class ActionMapping{
 	private void init() {
 		// TODO Auto-generated method stub
 		map.put("main", MainAction.class);
-		map.put("lesson", LessonAction.class);
+		//map.put("lesson", LessonAction.class);
 	}
 }

@@ -73,10 +73,10 @@ public class TableManager implements TableManagerI{
 				.add("remark",255));
 		
 	}
-	private void initRelation(){
+	/*private void initRelation(){
 		
-		buildRelation("user","student");
-	}
+		//buildRelation("user","student");
+	}*/
 
 	private static TableManagerI tableManager = new TableManager();
 
@@ -87,14 +87,14 @@ public class TableManager implements TableManagerI{
 	}
 
 	private Map<String, FruitTemplate> map = new HashMap<String, FruitTemplate>();
-	private Map<String,Set<String>> relation_map=new HashMap<String, Set<String>>();
+	//private Map<String,Set<String>> relation_map=new HashMap<String, Set<String>>();
 	private Set<Integer> exist = new HashSet<Integer>();
 	
-	private void buildRelation(String mainKey, String otherKey){
+	/*private void buildRelation(String mainKey, String otherKey){
 		Set<String> set = relation_map.get(mainKey);
 		if(set==null){set=new HashSet<String>();relation_map.put(mainKey, set);}
 		set.add(otherKey);
-	}
+	}*/
 
 	public int findLength(String fkey, String skey) {
 		
@@ -165,7 +165,7 @@ public class TableManager implements TableManagerI{
 			initFruitTable();
 			initRelationTable();
 			initFruitTemplate();
-			initRelation();
+			//initRelation();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

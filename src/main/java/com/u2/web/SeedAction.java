@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
-import com.u2.handler.HandlerFactory;
 import com.u2.model.Seed;
+import com.u2.sys.HandlerFactory;
 
 public abstract class SeedAction {
 
@@ -122,24 +122,6 @@ public abstract class SeedAction {
 			e.printStackTrace();
 		}
 
-	}
-
-	public void beforeAdd(List<Seed> seeds) {
-	}
-
-	public void afterAdd(Object obj) {
-	}
-
-	public void beforeUpdate(Object... obj) {
-	}
-
-	public void afterUpdate(Object... obj) {
-	}
-
-	public void beforeDelete(Object... obj) {
-	}
-
-	public void afterDelete(Object... obj) {
 	}
 
 	private boolean intercept() {

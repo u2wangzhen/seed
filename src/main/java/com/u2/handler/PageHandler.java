@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.u2.converter.ConverterFactory;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 
@@ -37,7 +38,7 @@ public class PageHandler extends NewSearchHandler {
 					break;
 				}
 				Fruit_ fruit = list.get(i);
-				JSONObject obj = (JSONObject) (fruit.getJsonObj()).clone();
+				/*JSONObject obj = (JSONObject) (fruit.getJsonObj()).clone();
 				
 				Map<String, Set<Fruit_>> ofm = fruit.getOtherFruits();
 				if(ofm!=null&&!ofm.isEmpty()){
@@ -52,8 +53,8 @@ public class PageHandler extends NewSearchHandler {
 							obj.put(key+"_s", l);
 						}
 					}
-				}
-				array.add(obj);
+				}*/
+				array.add(ConverterFactory.me().converter(key).fruit2Form(fruit));
 			}
 		}
 		JSONObject obj=new JSONObject();

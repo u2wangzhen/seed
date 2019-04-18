@@ -76,7 +76,9 @@ public class FruitHandler {
 		// TODO Auto-generated method stub
 		BaseDao.me().deleteRelation(f.getId());
 		for (Long otherId : other) {
-			BaseDao.me().insertRelation(new Relation(f.getId(), otherId));
+			if(otherId>0){
+				BaseDao.me().insertRelation(new Relation(f.getId(), otherId));
+			}
 		}
 		TransactionManager.getRelationlocal().push(f);
 	}

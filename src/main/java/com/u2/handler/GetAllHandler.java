@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
+import com.u2.converter.ConverterFactory;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 
-public class GetAllHandler extends SearchHandler {
+public class GetAllHandler extends NewSearchHandler {
 
 	public GetAllHandler(Map<String, String[]> param, String key) {
 		super(param, key);
@@ -25,7 +26,7 @@ public class GetAllHandler extends SearchHandler {
 		}
 		if(list!=null&&!list.isEmpty()){
 			for (Fruit_ f : list) {
-				array.add(f.getJsonObj());
+				array.add(ConverterFactory.me().converter(key).fruit2Form(f));
 			}
 		}
 		
