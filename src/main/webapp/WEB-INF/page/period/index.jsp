@@ -60,45 +60,50 @@
 		return str;
 	}
 	function deleteOne(id) {
-		$.post('/seed/period/delete', {
-			'id' : id
-		}, function(data) {
-			$.messager.alert("操作提示", data.message);
-			if (data.success) {
-				$('#dg').datagrid('reload');
+		$.messager.confirm("提醒", "确定删除?", function(r) {
+			if (r) {
+				$.post('/seed/period/delete', {
+					'id' : id
+				}, function(data) {
+					$.messager.alert("操作提示", data.message);
+					if (data.success) {
+						$('#dg').datagrid('reload');
+					}
+				});
 			}
 		});
+
 	}
 	function searchPage() {
 		var pdate = $("#pdate").val();
-		var sta=$("#starttime").val();
-		var end=$("#endtime").val();
-		if(sta!=''||end!=''){
-			if(sta!=''){
-				sta='GTEQ,'+sta+",date_c";
+		var sta = $("#starttime").val();
+		var end = $("#endtime").val();
+		if (sta != '' || end != '') {
+			if (sta != '') {
+				sta = 'GTEQ,' + sta + ",date_c";
 			}
-			if(end!=''){
-				end='LTEQ,'+end+",date_c";
+			if (end != '') {
+				end = 'LTEQ,' + end + ",date_c";
 			}
-		}else{
-			if(pdate!=''){
-				pdate="LIKE,"+pdate;
+		} else {
+			if (pdate != '') {
+				pdate = "LIKE," + pdate;
 			}
 		}
-		var student=$("#student").val();
-		if(student!=''){
-			student="LIKE,"+student;
+		var student = $("#student").val();
+		if (student != '') {
+			student = "LIKE," + student;
 		}
-		var teacher=$("#teacher").val();
-		if(teacher!=''){
-			teacher="LIKE,"+teacher;
+		var teacher = $("#teacher").val();
+		if (teacher != '') {
+			teacher = "LIKE," + teacher;
 		}
 		$('#dg').datagrid('load', {
 			pdate : pdate,
-			'student_o@name_s':student,
-			'lesson_o@teacher_o@name_s':teacher,
-			pdate_1_index:sta,
-			pdate_2_index:end,
+			'student_o@name_s' : student,
+			'lesson_o@teacher_o@name_s' : teacher,
+			pdate_1_index : sta,
+			pdate_2_index : end,
 		});
 
 	}

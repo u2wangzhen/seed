@@ -60,54 +60,60 @@
 		return str;
 	}
 	function deleteOne(id) {
-		$.post('/seed/lesson/delete', {
-			'id' : id
-		}, function(data) {
-			$.messager.alert("操作提示", data.message);
-			if (data.success) {
-				$('#dg').datagrid('reload');
+
+		$.messager.confirm("提醒", "确定删除?", function(r) {
+			if (r) {
+				$.post('/seed/lesson/delete', {
+					'id' : id
+				}, function(data) {
+					$.messager.alert("操作提示", data.message);
+					if (data.success) {
+						$('#dg').datagrid('reload');
+					}
+				});
 			}
 		});
+
 	}
 	function searchPage() {
 		var subject = $("#subject").val();
 		var grade = $("#grade").val();
 		var name = $("#name").val();
-		if(name!=''){
-			name="LIKE,"+name;
+		if (name != '') {
+			name = "LIKE," + name;
 		}
-		var student=$("#student").val();
-		if(student!=''){
-			student="LIKE,"+student;
+		var student = $("#student").val();
+		if (student != '') {
+			student = "LIKE," + student;
 		}
-		var teacher=$("#teacher").val();
-		if(teacher!=''){
-			teacher="LIKE,"+teacher;
+		var teacher = $("#teacher").val();
+		if (teacher != '') {
+			teacher = "LIKE," + teacher;
 		}
 		var createTime = $("#createTime").val();
-		var sta=$("#starttime").val();
-		var end=$("#endtime").val();
-		if(sta!=''||end!=''){
-			if(sta!=''){
-				sta='GTEQ,'+sta+",date_c";
+		var sta = $("#starttime").val();
+		var end = $("#endtime").val();
+		if (sta != '' || end != '') {
+			if (sta != '') {
+				sta = 'GTEQ,' + sta + ",date_c";
 			}
-			if(end!=''){
-				end='LTEQ,'+end+",date_c";
+			if (end != '') {
+				end = 'LTEQ,' + end + ",date_c";
 			}
-		}else{
-			if(createTime!=''){
-				createTime="LIKE,"+createTime;
+		} else {
+			if (createTime != '') {
+				createTime = "LIKE," + createTime;
 			}
 		}
 		$('#dg').datagrid('load', {
 			subject : subject,
 			grade : grade,
-			name: name,
-			'teacher_o@name_s':teacher,
-			'student_o@name_s':student,
-			createTime:createTime,
-			createTime_1_index:sta,
-			createTime_2_index:end
+			name : name,
+			'teacher_o@name_s' : teacher,
+			'student_o@name_s' : student,
+			createTime : createTime,
+			createTime_1_index : sta,
+			createTime_2_index : end
 		});
 
 	}
@@ -170,8 +176,7 @@
 				<th data-options="field:'grade',width:50,sortable:true">年级</th>
 				<th
 					data-options="field:'teacher_s',width:100,sortable:true,formatter:viewFruit">老师</th>
-				<th
-					data-options="field:'student_s',formatter:viewFruit">学生</th>
+				<th data-options="field:'student_s',formatter:viewFruit">学生</th>
 				<th data-options="field:'createTime',width:100,sortable:true">创建时间</th>
 				<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
 			</tr>

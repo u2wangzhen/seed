@@ -63,12 +63,16 @@ function buildButton(value,row,index){
 	return str;
 }
 function deleteOne(id){
+ $.messager.confirm("提醒", "确定删除?",function (r) {  
+	if (r) {  
 	$.post('/seed/#{fkey}/delete',{'id':id},function(data){
 		$.messager.alert("操作提示", data.message);
 		if (data.success) {
 			$('#dg').datagrid('reload'); 
 		}
 	});
+	}  
+});  
 }
 <@ if(has(searchSeeds)||has(parentKey)){ @>
 function searchPage(){

@@ -53,14 +53,19 @@
 		return str;
 	}
 	function deleteOne(id) {
-		$.post('/seed/student/delete', {
-			'id' : id
-		}, function(data) {
-			$.messager.alert("操作提示", data.message);
-			if (data.success) {
-				$('#dg').datagrid('reload');
+		$.messager.confirm("提醒", "确定删除?", function(r) {
+			if (r) {
+				$.post('/seed/student/delete', {
+					'id' : id
+				}, function(data) {
+					$.messager.alert("操作提示", data.message);
+					if (data.success) {
+						$('#dg').datagrid('reload');
+					}
+				});
 			}
 		});
+
 	}
 	function searchPage() {
 		var sex = $("#sex").val();
