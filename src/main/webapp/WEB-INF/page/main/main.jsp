@@ -11,6 +11,9 @@
 <script type="text/javascript" src="/seed/js/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#home_frame").attr('src', "/seed/main/home");
+});
 function addTab(path,name){
 	var obj=$("#main_tab").tabs('getTab',name);//path+'_tab'
 	var p=path.substring(1);
@@ -50,7 +53,7 @@ var data=function(){
 	<div data-options="region:'center'">
 	<div id="main_tab" class="easyui-tabs" style="height:100%">
 		<div title="home" style="padding:10px">
-		 <iframe id="home_frame" src="/seed/main/home" style="width: 100%;height: 100%;"></iframe>
+		 <iframe id="home_frame" src="" style="width: 100%;height: 100%;"></iframe>
 		</div>
 	</div>
 	</div>

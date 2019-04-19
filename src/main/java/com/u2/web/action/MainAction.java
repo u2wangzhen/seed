@@ -1,5 +1,7 @@
 package com.u2.web.action;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,6 +69,7 @@ public class MainAction extends SeedAction{
 			for (Fruit_ f : set) {
 				if(f.getOtherFruits("menu")==null){
 					JSONObject y=new JSONObject();
+					y.put("id", f.getId());
 					y.put("text", f.getSeed("name").getValue());
 					y.put("iconCls", "icon-more");
 					y.put("state", "open");
@@ -74,6 +77,7 @@ public class MainAction extends SeedAction{
 					array.add(y);
 				}
 			}
+			Collections.sort(array,new MenuComparator());
 			String str=array.toJSONString();
 			///System.out.println(str);
 			return str;
@@ -88,10 +92,12 @@ public class MainAction extends SeedAction{
 			JSONArray array=new JSONArray();
 			for (Fruit_ ff : menus) {
 				JSONObject obj=new JSONObject();
+				obj.put("id", ff.getId());
 				obj.put("text", ff.getSeed("name").getValue());
 				build(obj, ff);
 				array.add(obj);
 			}
+			Collections.sort(array,new MenuComparator());
 			y.put("children", array);
 		}
 		if(models!=null&&!models.isEmpty()){
@@ -100,12 +106,15 @@ public class MainAction extends SeedAction{
 			for (Fruit_ ff : models) {
 				if(role.contains(ff)){
 					JSONObject obj=new JSONObject();
+					
 					String n=ff.getSeed("name").getValue();
 					String p=ff.getSeed("path").getValue();
 					obj.put("text", "<div onclick=\"addTab('"+p+"','"+n+"');\">"+n+"</div>");
+					obj.put("id", ff.getId());
 					array.add(obj);
 				}
 			}
+			Collections.sort(array,new MenuComparator());
 			y.put("children", array);
 		}
 	}
@@ -136,5 +145,17 @@ public class MainAction extends SeedAction{
 	
 		
 		return array.toJSONString();
+	}
+	private class MenuComparator implements Comparator{
+
+		public int compare(Object o1, Object o2) {
+			// TODO Auto-generated method stub
+			Long l1=(Long) ((JSONObject)o1).get("id");
+			Long l2=(Long) ((JSONObject)o2).get("id");
+			if(l1-l2>0){return 1;}else{
+				return -1;
+			}
+		}
+		
 	}
 }
