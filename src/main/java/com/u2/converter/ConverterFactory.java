@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.u2.other.conveter.AccountConveter;
 import com.u2.other.conveter.ClassAccountConveter;
 import com.u2.other.conveter.LessonConverter;
 
@@ -15,6 +16,7 @@ public class ConverterFactory {
 	private ConverterFactory(){
 		map.put("lesson", LessonConverter.class);
 		map.put("classaccount", ClassAccountConveter.class);
+		map.put("account", AccountConveter.class);
 	}
 	public static ConverterFactory me(){
 		return cf;
@@ -24,7 +26,7 @@ public class ConverterFactory {
 		Converter ccc=null;
 		Class<?> c = map.get(key);
 		if(c==null){
-			ccc=new DefultConverter(key);
+			ccc=new DefaultConverter(key);
 		}else{
 			
 			try {

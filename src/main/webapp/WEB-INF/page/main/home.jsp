@@ -45,7 +45,13 @@
 </script>
 </head>
 <body>
-	<div id="rl1"></div><div id="rl2"></div>
+	<div style="width: 100%;height: 100%;background-color: #fafafa;float:left;border:1px solid #ccc">
+	<div id="rl1" style="float:left;margin:5px"></div><div id="rl2" style="float:left;margin:5px"></div>
+	<h1>自律即自由</h1>
+	<h3>未来不迎，当下不杂，过往不恋。</h3>
+	<h2>人是某种应该被克服的东西！</h2>
+	<h4>不要对自己怜悯，那是懦夫的行为！</h4>
+	<h2>万物流变，无物常在！</h2>
 	<!-- <div id="p" class="easyui-panel" title="My Panel"
     style="width:350px;height:400px;padding:10px;background:#fafafa;"
     data-options="iconCls:'icon-save',closable:true,

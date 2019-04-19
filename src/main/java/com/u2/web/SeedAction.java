@@ -128,6 +128,10 @@ public abstract class SeedAction {
 		if (key == null) {
 			return true;
 		}
+		if(key.equals("toOut")){
+			request.getSession().invalidate();
+			return true;
+		}
 
 		Object account = request.getSession().getAttribute("user_account");
 		if (account == null) {

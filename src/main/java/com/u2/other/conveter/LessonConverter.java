@@ -1,11 +1,11 @@
 package com.u2.other.conveter;
 
 
-import com.u2.converter.DefultConverter;
+import com.u2.converter.DefaultConverter;
 import com.u2.model.Seed;
 import com.u2.util.DateUtil;
 
-public class LessonConverter extends DefultConverter{
+public class LessonConverter extends DefaultConverter{
 
 	public LessonConverter(String key) {
 		super(key);

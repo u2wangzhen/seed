@@ -18,27 +18,8 @@ public class AddHandler extends Handler{
 	@Override
 	public String exec() {
 		// TODO Auto-generated method stub
-		/*Set<String> names = param.keySet();
-		if(names!=null&&!names.isEmpty()){
-			List<Seed> seeds=new ArrayList<Seed>();
-			List<Long> other=null;
-			for (String n : names) {
-				if(n.endsWith("_fid")){
-					 String[] ss = param.get(n);
-					 for (String k : ss) {
-						if(k!=null&&!"".equals(k)){
-							if(other==null){other=new ArrayList<Long>();}
-							other.add(Long.valueOf(k));
-						}
-					}
-				}else{
-					Seed s = new Seed(n,param.get(n));
-					seeds.add(s);
-				}
-			}*/
 			try {
 				TransactionManager.get().open();
-				//Fruit f = new Fruit(key);
 				Converter c = ConverterFactory.me().converter(key).form2Fruit(param);
 				FruitHandler.me().insertFruit(c.getFruit(), c.getSeeds(),c.getOthers());
 				TransactionManager.get().commit();

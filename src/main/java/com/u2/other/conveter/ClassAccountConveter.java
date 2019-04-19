@@ -3,10 +3,10 @@ package com.u2.other.conveter;
 import java.util.Set;
 
 import com.alibaba.fastjson.JSONObject;
-import com.u2.converter.DefultConverter;
+import com.u2.converter.DefaultConverter;
 import com.u2.db.cache.Fruit_;
 
-public class ClassAccountConveter extends DefultConverter{
+public class ClassAccountConveter extends DefaultConverter{
 
 	public ClassAccountConveter(String key) {
 		super(key);

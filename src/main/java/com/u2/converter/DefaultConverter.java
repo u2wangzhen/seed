@@ -13,9 +13,9 @@ import com.u2.db.cache.MainCache;
 import com.u2.model.Fruit;
 import com.u2.model.Seed;
 
-public class DefultConverter extends Converter{
+public class DefaultConverter extends Converter{
 
-	public DefultConverter(String key) {
+	public DefaultConverter(String key) {
 		super(key);
 		// TODO Auto-generated constructor stub
 	}
