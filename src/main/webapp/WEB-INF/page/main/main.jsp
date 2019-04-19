@@ -16,7 +16,10 @@ $(function(){
 });
 function addTab(path,name){
 	var obj=$("#main_tab").tabs('getTab',name);//path+'_tab'
-	var p=path.substring(1);
+	var p=path.replace('/','_');
+	while(p.indexOf('/')>0){
+		p=p.replace('/','_');
+	}
 	if(obj==null){
 		$("#main_tab").tabs('add',{
 			id:path+"_tab",

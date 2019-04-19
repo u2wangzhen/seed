@@ -3,7 +3,7 @@ package com.u2.sys;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.u2.other.action.LessonAction;
+import com.u2.other.action.TotalAction;
 import com.u2.web.action.MainAction;
 public class ActionMapping{
 
@@ -18,6 +18,6 @@ public class ActionMapping{
 	private void init() {
 		// TODO Auto-generated method stub
 		map.put("main", MainAction.class);
-		//map.put("lesson", LessonAction.class);
+		map.put("total", TotalAction.class);
 	}
 }
