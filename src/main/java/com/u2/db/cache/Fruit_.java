@@ -9,7 +9,7 @@ import java.util.Set;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.model.Fruit;
 
-public class Fruit_ extends Fruit implements Serializable,Comparable<Fruit_>{
+public class Fruit_ extends Fruit implements Serializable{
 
 	/**
 	 * 
@@ -159,11 +159,6 @@ public class Fruit_ extends Fruit implements Serializable,Comparable<Fruit_>{
 				}
 			}
 		}
-	}
-
-	public int compareTo(Fruit_ o) {
-		// TODO Auto-generated method stub
-		return this.getId()-o.getId()>0?1:-1;
 	}
 
 }

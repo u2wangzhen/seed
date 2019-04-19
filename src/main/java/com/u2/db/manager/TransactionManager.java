@@ -132,7 +132,8 @@ public class TransactionManager {
 	
 	public void rollback(){
 		try {
-			conn.rollback();
+			if(conn!=null){
+			conn.rollback();}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,7 +145,9 @@ public class TransactionManager {
 		fruit_local.remove();
 		seed_local.remove();
 		try {
-			conn.close();
+			if(conn!=null){
+				conn.close();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

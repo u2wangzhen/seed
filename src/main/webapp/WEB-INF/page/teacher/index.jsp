@@ -22,8 +22,8 @@
 		});
 		$('#dd').dialog({
 			title : '添加老师信息',
-			width : $(document).width()/2,
-			height : $(document).height()/2,
+			width : $(document).width() / 2,
+			height : $(document).height() / 2,
 			closed : true,
 			maximizable : true,
 			maximizabd : true,
@@ -53,14 +53,19 @@
 		return str;
 	}
 	function deleteOne(id) {
-		$.post('/seed/teacher/delete', {
-			'id' : id
-		}, function(data) {
-			$.messager.alert("操作提示", data.message);
-			if (data.success) {
-				$('#dg').datagrid('reload');
+		$.messager.confirm("提醒", "确定删除?", function(r) {
+			if (r) {
+				$.post('/seed/teacher/delete', {
+					'id' : id
+				}, function(data) {
+					$.messager.alert("操作提示", data.message);
+					if (data.success) {
+						$('#dg').datagrid('reload');
+					}
+				});
 			}
 		});
+
 	}
 	function searchPage() {
 		var subject = $("#subject").val();
@@ -77,13 +82,13 @@
 </script>
 </head>
 <body>
-	<input type="text" id="name" placeholder="姓名">
-	性别：<select id="sex">
+	<input type="text" id="name" placeholder="姓名"> 性别：
+	<select id="sex">
 		<option value="">--</option>
 		<option value="男">男</option>
 		<option value="女">女</option>
-	</select>
-	科目：<select id="subject">
+	</select> 科目：
+	<select id="subject">
 		<option value="">--</option>
 		<option value="数学">数学</option>
 		<option value="物理">物理</option>

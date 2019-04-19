@@ -51,19 +51,24 @@
 	function buildButton(value, row, index) {
 		var str = '<a href="javascript:void(0);" onclick="openEdit(\'' + row.id
 				+ '\');">编辑</a>';
-		str += '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne(\''
-				+ row.id + '\');">删除</a>'
+		/* str += '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne(\''
+				+ row.id + '\');">删除</a>' */
 		return str;
 	}
 	function deleteOne(id) {
-		$.post('/seed/recharge/delete', {
-			'id' : id
-		}, function(data) {
-			$.messager.alert("操作提示", data.message);
-			if (data.success) {
-				$('#dg').datagrid('reload');
+		$.messager.confirm("提醒", "确定删除?", function(r) {
+			if (r) {
+				$.post('/seed/recharge/delete', {
+					'id' : id
+				}, function(data) {
+					$.messager.alert("操作提示", data.message);
+					if (data.success) {
+						$('#dg').datagrid('reload');
+					}
+				});
 			}
 		});
+
 	}
 	function searchPage() {
 		var classaccount_fid = $("#classaccount_fid").val();
