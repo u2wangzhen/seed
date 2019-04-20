@@ -48,6 +48,9 @@
 		});
 		$('#dd').dialog('open');
 	}
+	function closeDialog(){
+		$('#dd').dialog('close');
+	}
 	function buildButton(value, row, index) {
 		var str = '<a href="javascript:void(0);" onclick="openEdit(\'' + row.id
 				+ '\');">编辑</a>';
@@ -102,11 +105,10 @@
 		<thead>
 			<tr>
 				<th data-options="field:'id',width:50,sortable:true">ID</th>
-				<th
-					data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">学生</th>
+				<th data-options="field:'student_s',width:100,sortable:true,formatter:viewFruit">学生</th>
 				<th data-options="field:'price',width:100,sortable:true">价格</th>
-				<th data-options="field:'remark'">备注</th>
 				<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
+				<th data-options="field:'remark'">备注</th>
 			</tr>
 		</thead>
 	</table>

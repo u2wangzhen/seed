@@ -11,10 +11,35 @@ import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
 import com.u2.db.manager.TableManager;
+import com.u2.search.Search;
 import com.u2.util.MD5;
 import com.u2.web.SeedAction;
 
 public class MainAction extends SeedAction{
+	
+	public String identity(){
+		String p=param("pw");
+		if(p!=null&&!p.equals("")){
+			Object account=request.getSession().getAttribute("user_account");
+			if(account!=null){
+				String acc=account.toString();
+				if(acc.equals("lucy")){
+					if("23f95478ed81e13a3d982d705a673e33".equals(MD5.encrypt(p))){
+						return "true";
+					}
+				}else{
+					List<Fruit_> list = new Search("account", "{and{account="+acc+"}}").filterFruit();
+					if(list!=null&&!list.isEmpty()){
+						String pw=list.get(0).getSeed("password").getValue();
+						if(pw.equals(MD5.encrypt(p))){
+							return "true";
+						}
+					}
+				}
+			}
+		}
+		return "false";
+	}
 
 	public String toMain(){
 		
@@ -84,13 +109,17 @@ public class MainAction extends SeedAction{
 		List<Fruit_> set = MainCache.me().getFruitList("menu");
 		if(set!=null&&!set.isEmpty()){
 			JSONArray array=new JSONArray();
+			boolean b=true;
 			for (Fruit_ f : set) {
 				if(f.getOtherFruits("menu")==null){
 					JSONObject y=new JSONObject();
 					y.put("id", f.getId());
 					y.put("text", f.getSeed("name").getValue());
 					y.put("iconCls", "icon-more");
-					y.put("state", "open");
+					if(b){
+						y.put("state", "open");b=false;
+					}
+					
 					build(y,f);	
 					array.add(y);
 				}

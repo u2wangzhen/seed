@@ -43,8 +43,9 @@
 			success : function(data) {
 				var data = eval('(' + data + ')');
 				if (data.success) {
-					$.messager.alert("操作提示", data.message);
-					$('#classaccount_form').form('clear');
+					$.messager.alert("操作提示", data.message,'info',function(){
+						window.parent.closeDialog();
+					});
 				}
 				$.messager.progress('close');
 			}

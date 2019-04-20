@@ -22,7 +22,7 @@
 			remoteSort : false
 		});
 		$('#dd').dialog({
-			title : 'recharge add',
+			title : '课时充值',
 			width : $(document).width() - 50,
 			height : $(document).height() - 100,
 			closed : true,
@@ -44,9 +44,12 @@
 	function openEdit(id) {
 		$("#recharge_add_iframe").attr("src", "/seed/recharge/toEdit?id=" + id);
 		$('#dd').dialog({
-			title : 'recharge edit'
+			title : '课时充值'
 		});
 		$('#dd').dialog('open');
+	}
+	function closeDialog(){
+		$('#dd').dialog('close');
 	}
 	function buildButton(value, row, index) {
 		var str = '<a href="javascript:void(0);" onclick="openEdit(\'' + row.id

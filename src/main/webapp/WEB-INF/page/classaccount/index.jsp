@@ -46,6 +46,9 @@
 		});
 		$('#dd').dialog('open');
 	}
+	function closeDialog(){
+		$('#dd').dialog('close');
+	}
 	function buildButton(value, row, index) {
 		var str = '<a href="javascript:void(0);" onclick="openEdit(\'' + row.id
 				+ '\');">编辑</a>';

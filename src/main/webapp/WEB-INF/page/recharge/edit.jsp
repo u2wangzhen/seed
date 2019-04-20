@@ -19,10 +19,11 @@
 			elem : '#date', //指定元素
 			value : new Date()
 		});
-		$('#times').validatebox({
+		$('#times').numberbox({
 			required : true,
-			validType : 'length[0,4]',
-			invalidMessage : '不超过4个字'
+		    min:0,
+		    max:100,
+		    precision:0
 		});
 		$('#remark').validatebox({
 			required : false,
@@ -49,8 +50,9 @@
 			success : function(data) {
 				var data = eval('(' + data + ')');
 				if (data.success) {
-					$.messager.alert("操作提示", data.message);
-					$('#recharge_form').form('clear');
+					$.messager.alert("操作提示", data.message,'info',function(){
+						window.parent.closeDialog();
+					});
 				}
 				$.messager.progress('close');
 			}

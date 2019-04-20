@@ -45,6 +45,9 @@
 		});
 		$('#dd').dialog('open');
 	}
+	function closeDialog(){
+		$('#dd').dialog('close');
+	}
 	function buildButton(value, row, index) {
 		var str = '<a href="javascript:void(0);" onclick="openEdit(\'' + row.id
 				+ '\');">编辑</a>';
@@ -99,11 +102,11 @@
 				<th data-options="field:'id',width:50,sortable:true">ID</th>
 				<th data-options="field:'name',width:100,sortable:true">姓名</th>
 				<th data-options="field:'sex',width:50,sortable:true">性别</th>
-				<th data-options="field:'school',width:150,sortable:true">学校</th>
+				<th data-options="field:'school',width:200,sortable:true">学校</th>
 				<th data-options="field:'birthday',width:100,sortable:true">生日</th>
 				<th data-options="field:'createTime',width:100,sortable:true">登记日期</th>
-				<th data-options="field:'remark',width:100,sortable:true">备注</th>
 				<th data-options="field:'c',align:'center',formatter:buildButton">操作</th>
+				<th data-options="field:'remark'">备注</th>
 			</tr>
 		</thead>
 	</table>

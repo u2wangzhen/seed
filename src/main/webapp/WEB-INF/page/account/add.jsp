@@ -21,9 +21,9 @@
 			invalidMessage : '不超过8个字,不能重复'
 		});
 		$('#account').validatebox({
-			required : false,
-			validType : 'length[0,16]',
-			invalidMessage : '不超过16个字'
+			required : true,
+			validType : 'repeat[16,"account","account"]',
+			invalidMessage : '不超过16个字,不能重复'
 		});
 		$('#password').validatebox({
 			required : false,

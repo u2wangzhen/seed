@@ -15,10 +15,11 @@
 <script type="text/javascript" src="/seed/js/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#price').validatebox({
-			required : false,
-			validType : 'length[0,16]',
-			invalidMessage : '不超过16个字'
+		$('#price').numberbox({
+			required : true,
+		    min:0,
+		    max:1000,
+		    precision:0
 		});
 		$('#remark').validatebox({
 			required : false,
@@ -46,8 +47,9 @@
 			success : function(data) {
 				var data = eval('(' + data + ')');
 				if (data.success) {
-					$.messager.alert("操作提示", data.message);
-					$('#price_form').form('clear');
+					$.messager.alert("操作提示", data.message,'info',function(){
+						window.parent.closeDialog();
+					});
 				}
 				$.messager.progress('close');
 			}

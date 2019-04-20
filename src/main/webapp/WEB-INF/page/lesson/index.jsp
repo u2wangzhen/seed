@@ -46,11 +46,22 @@
 		$('#dd').dialog('open');
 	}
 	function openEdit(id) {
-		$("#lesson_add_iframe").attr("src", "/seed/lesson/toEdit?id=" + id);
-		$('#dd').dialog({
-			title : '课程编辑'
+		
+		$.messager.prompt('身份验证', '请输入密码:', function(pw){
+			if (pw){
+				$.ajax({url:'/seed/main/identity?pw='+pw,async:false,success:function(d){
+					if(d){
+						$("#lesson_add_iframe").attr("src", "/seed/lesson/toEdit?id=" + id);
+						$('#dd').dialog({
+							title : '课程编辑'
+						});
+						$('#dd').dialog('open');
+					}
+				}});
+				
+			}
 		});
-		$('#dd').dialog('open');
+		 $('.messager-input').attr('type','password');
 	}
 	function closeDialog(){
 		$('#dd').dialog('close');
@@ -159,7 +170,7 @@
 		<option value="初一">初一</option>
 	</select>
 	<input type="text" id="student" placeholder="学生姓名">
-	<input type="text" id="teacher" placeholder="老师姓名">
+	<input type="text" id="teacher" placeholder="老师姓名"><br>
 	<input type="text" id="createTime" placeholder="日期">
 	<input type="text" id="starttime" placeholder="开始日期">
 	<input type="text" id="endtime" placeholder="结束日期">

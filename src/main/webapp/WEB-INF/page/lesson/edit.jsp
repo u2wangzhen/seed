@@ -22,16 +22,29 @@
 			invalidMessage : '不超过64个字,不能重复'
 		});
 		
-		$('#tprice').validatebox({
+		/* $('#tprice').validatebox({
 			required : true,
 			validType : 'digits',
 			invalidMessage : '只能输入数字'
+		}); */
+		
+		$('#tprice').numberbox({
+			required : true,
+		    min:0,
+		    max:1000,
+		    precision:0
 		});
-		$('#bprice').validatebox({
+		$('#bprice').numberbox({
+			required : true,
+		    min:0,
+		    max:1000,
+		    precision:0
+		});
+		/* $('#bprice').validatebox({
 			required : true,
 			validType : 'digits',
 			invalidMessage : '只能输入数字'
-		});
+		}); */
 
 		$('#selectWindow').panel('resize', {
 			width : $(document).width() * 0.7

@@ -13,11 +13,12 @@
 <script type="text/javascript">
 
 $(function(){
-		$('#price').validatebox({
-		    required: false,
-		    validType: 'length[0,16]',
-		    invalidMessage:'不超过16个字'
-		});
+	$('#price').numberbox({
+		required : true,
+	    min:0,
+	    max:1000,
+	    precision:0
+	});
 		$('#remark').validatebox({
 		    required: false,
 		    validType: 'length[0,255]',

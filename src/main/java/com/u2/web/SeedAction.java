@@ -234,7 +234,7 @@ public abstract class SeedAction {
 			List<Fruit_> list = MainCache.me().getFruitList(key);
 			for (Fruit_ f : list) {
 				if (!"n".equals(id)) {
-					if (f.getId() == Long.valueOf(id)) {
+					if (f.getId() -Long.valueOf(id)==0) {
 						continue;
 					}
 				}

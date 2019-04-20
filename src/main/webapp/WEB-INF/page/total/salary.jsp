@@ -18,12 +18,19 @@ $(function() {
 		  ,type: 'month'
 		  ,position: 'static'
 		  ,change: function(value, date){ //监听日期被切换
-			  $.messager.prompt('身份验证', '请输入密码:', function(r){
-					if (r){
-						$("#salary_iframe").attr("src", "/seed/total/toSalaryTotal?month="+value);
-						$('#dd').dialog('open');
+			  
+			  $.messager.prompt('身份验证', '请输入密码:', function(pw){
+					if (pw){
+						$.ajax({url:'/seed/main/identity?pw='+pw,async:false,success:function(d){
+							if(d){
+								$("#salary_iframe").attr("src", "/seed/total/toSalaryTotal?month="+value);
+								$('#dd').dialog('open');
+							}
+						}});
+						
 					}
 				});
+			  $('.messager-input').attr('type','password');
 		  }
 	 		,showBottom: false
 		}); 
@@ -37,6 +44,7 @@ $(function() {
 			cache : false,
 			modal : true
 		});
+	
 });
 </script>
 </head>
