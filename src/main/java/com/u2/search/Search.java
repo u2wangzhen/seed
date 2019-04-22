@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
+import com.u2.db.cache.Seed_;
 import com.u2.util.DateUtil;
 
 public class Search {
@@ -205,9 +206,18 @@ public class Search {
 			
 			String[] vs = v.split(",");
 			if(vs.length==1){
+				
+				
+				
 				value=v;
-				if(type==null){
-					type=Type.EQ;
+				if(v.equals("NOTNULL")){
+					type=Type.NOTNULL;
+				}else if(v.equals("NULL")){
+					type=Type.NULL;
+				}else{
+					if((type==null)){
+						type=Type.EQ;
+					}
 				}
 			}else{
 				if(vs[vs.length-1].endsWith("_c")){
@@ -364,7 +374,12 @@ public class Search {
 			if(l!=null){
 				list=new ArrayList<String>();
 				for (Fruit_ f : l) {
-					list.add(f.getSeed(ks[ks.length-1].split("_s")[0]).getValue());
+					String v="";
+					Seed_ s = f.getSeed(ks[ks.length-1].split("_s")[0]);
+					if(s!=null){
+						v=s.getValue();
+					}
+					list.add(v);
 				}
 			}
 			return list;
@@ -455,7 +470,11 @@ public class Search {
 		}
 		private boolean filterSeed() {
 			// TODO Auto-generated method stub
-			String v = fs[0].getSeed(key).getValue();
+			String v="";
+			Seed_ seed = fs[0].getSeed(key);
+			if(seed!=null){
+				v = fs[0].getSeed(key).getValue();
+			}
 			return filterSeed(v);
 		}
 		
@@ -517,12 +536,19 @@ public class Search {
 			case IN:
 				b=filterInValues(v);
 				break;
+			case NULL:
+				b=v.equals("");
+				break;
+			case NOTNULL:
+				b=!v.equals("");
+				break;
 			default:
 				b=v.equals(value);
 				break;
 			}
 			return b;
 		}
+		
 		private boolean filterInValues(String v) {
 			// TODO Auto-generated method stub
 			
@@ -537,7 +563,7 @@ public class Search {
 		}
 	}
 	private enum Type{
-		IN,LIKE,EQ,GTEQ,LTEQ,GT,LT
+		IN,LIKE,EQ,GTEQ,LTEQ,GT,LT,NULL,NOTNULL
 	}
 	private enum KeyType{
 		seed,id,other,cited,relation

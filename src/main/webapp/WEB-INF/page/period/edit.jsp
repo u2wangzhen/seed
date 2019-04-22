@@ -115,7 +115,7 @@
 		}else{
 			$('#selectWindow').html(
 					'<iframe id="select_iframe" src="/seed/' + key
-							+ '/toSelect" width="100%" height="100%"></iframe>');
+							+ '/toSelect?singleSelect=true" width="100%" height="100%"></iframe>');
 		}
 		$('#selectWindow').panel('setTitle', 'select ' + key);
 	}

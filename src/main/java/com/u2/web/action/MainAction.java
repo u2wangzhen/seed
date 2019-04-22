@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.alibaba.fastjson.JSONArray;
@@ -174,24 +175,96 @@ public class MainAction extends SeedAction{
 		return "/WEB-INF/page/main/home.jsp";
 	}
 	public String getAllFruit(){
-		Set<String> set = TableManager.me().findAllFruitKey();
+		
 		JSONArray array=new JSONArray();
-		for(String k:set){
-			
-			List<Fruit_> list = MainCache.me().getFruitList(k);
-			if(list!=null&&!list.isEmpty()){
-				for (Fruit_ f : list) {
-					JSONObject obj=new JSONObject();
-					obj.put("id", f.getId());
-					obj.put("key", f.getKey());
-					obj.put("jsonStr", f.getJsonObj().toJSONString());		
-					array.add(obj);
+		String fkey=param("fkey");
+		String id=param("id");
+		String sql=param("sql");
+		if(id!=null&&!id.equals("")){
+			Fruit_ f = MainCache.me().getFruit(Long.valueOf(id));
+			JSONObject obj=new JSONObject();
+			obj.put("id", f.getId());
+			obj.put("key", f.getKey());
+			obj.put("jsonStr", f.getJsonObj().toJSONString());
+			bulidOther(f,obj);
+			bulidCited(f,obj);
+			array.add(obj);
+		}else{
+			if(fkey!=null&&!fkey.equals("")){
+				List<Fruit_> list = null;
+				if(sql!=null&&!sql.equals("")){
+					list =new Search(fkey,sql).filterFruit();
+				}else{
+					list= MainCache.me().getFruitList(fkey);
+				}
+				if(list!=null&&!list.isEmpty()){
+					for (Fruit_ f : list) {
+						JSONObject obj=new JSONObject();
+						obj.put("id", f.getId());
+						obj.put("key", f.getKey());
+						obj.put("jsonStr", f.getJsonObj().toJSONString());
+						bulidOther(f,obj);
+						bulidCited(f,obj);
+						array.add(obj);
+					}
 				}
 			}
 		}
-	
-		
 		return array.toJSONString();
+	}
+	private void bulidOther(Fruit_ f, JSONObject obj) {
+		// TODO Auto-generated method stub
+		Map<String, Set<Fruit_>> m = f.getOtherFruits();
+		if(m!=null&&!m.isEmpty()){
+		
+			Set<String> ks = m.keySet();
+			String str="[";
+			for (String k : ks) {
+				str+=k+":{";
+				Set<Fruit_> fs = m.get(k);
+				boolean b=true;
+				for (Fruit_ f_ : fs) {
+					
+					Long id = f_.getId();
+					if(b){
+						str+=id;
+						b=false;
+					}else{
+						str+=","+id;
+					}
+				}
+				str+="}";
+			}
+			str+="]";
+			obj.put("other", str);
+		}
+	}
+	private void bulidCited(Fruit_ f, JSONObject obj) {
+		// TODO Auto-generated method stub
+		Map<String, Set<Fruit_>> m = f.getCitedFruits();
+		if(m!=null&&!m.isEmpty()){
+		
+			Set<String> ks = m.keySet();
+			String str="[";
+			for (String k : ks) {
+				str+=k+":{";
+				Set<Fruit_> fs = m.get(k);
+				boolean b=true;
+				for (Fruit_ f_ : fs) {
+					
+					Long id = f_.getId();
+					if(b){
+						str+=id;
+						b=false;
+					}else{
+						str+=","+id;
+					}
+				}
+				str+="}";
+			}
+			str+="]";
+			obj.put("cited", str);
+		}
 	}
 	private class MenuComparator implements Comparator{
 

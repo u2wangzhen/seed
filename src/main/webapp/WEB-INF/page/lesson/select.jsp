@@ -19,7 +19,7 @@
 			loadMsg : '请稍后...',
 			idField : 'id',
 			remoteSort : false,
-			singleSelect : true,
+			singleSelect : ${empty singleSelect?'false':singleSelect},
 			onLoadSuccess : function() {
 				var s = $("[name='lesson_fid']", window.parent.document);
 				if (s != null && s.length > 0) {

@@ -34,14 +34,16 @@ public class ClassAccountConveter extends DefaultConverter{
 		}
 		
 		Set<Fruit_> ts = f.getOtherFruits("lesson");
-		Fruit_ les=null;
-		for (Fruit_ s : ts) {
-			les=s;
-		}
+		
 		
 		Set<Fruit_> ps = stu.getCitedFruits("period");
 		for (Fruit_ p : ps) {
-			if(p.getOtherFruits("lesson").contains(les)){
+			Set<Fruit_> pl = p.getOtherFruits("lesson");
+			Fruit_ les=null;
+			for (Fruit_ s : pl) {
+				les=s;
+			}
+			if(ts.contains(les)){
 				j+=Double.valueOf(p.getSeed("phour").getValue());
 			}
 		}

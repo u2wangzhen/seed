@@ -85,7 +85,8 @@
 			if (data) {
 				var str = '';
 				if (data.times) {
-					str = '<h1>' + data.month + ",上了" + data.times + '次课，总计：'
+					var mm=data.month==nowMonth?"本月":data.month;
+					str = '<h1>' + mm + ",上了" + data.times + '次课，总计：'
 							+ data.hour + '小时。</h1>';
 				}
 				if(data.birthdays){

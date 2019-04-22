@@ -158,14 +158,18 @@ public class TotalAction extends SeedAction {
 		
 		List<Fruit_> l3 = MainCache.me().getFruitListDesc("classaccount");
 		if(l3!=null&&!l3.isEmpty()){
-			List<String> restClas = new ArrayList<String>();
+			List<String> restClas =null;
 			for (Fruit_ acc : l3) {
 				double r=rest(acc);
 				if(r<0){
+					if(restClas==null){restClas= new ArrayList<String>();}
 					restClas.add(acc.getSeed("name").getValue()+"("+r+")");
 				}
 			}
-			obj.put("restClas", restClas);
+			if(restClas!=null){
+				obj.put("restClas", restClas);
+			}
+			
 		}
 		
 		obj.put("month", m);
@@ -190,14 +194,16 @@ public class TotalAction extends SeedAction {
 		}
 		
 		Set<Fruit_> ts = f.getOtherFruits("lesson");
-		Fruit_ les=null;
-		for (Fruit_ s : ts) {
-			les=s;
-		}
+		
 		
 		Set<Fruit_> ps = stu.getCitedFruits("period");
 		for (Fruit_ p : ps) {
-			if(p.getOtherFruits("lesson").contains(les)){
+			Set<Fruit_> pl = p.getOtherFruits("lesson");
+			Fruit_ les=null;
+			for (Fruit_ s : pl) {
+				les=s;
+			}
+			if(ts.contains(les)){
 				j+=Double.valueOf(p.getSeed("phour").getValue());
 			}
 		}
