@@ -2,7 +2,7 @@ package com.u2.model;
 
 public class Relation {
 
-	private Long id;
+	private String id;
 	private Long mainId;
 	private Long otherId;
 	public Relation(){}
@@ -11,10 +11,10 @@ public class Relation {
 		this.mainId = mainId;
 		this.otherId = otherId;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Long getMainId() {

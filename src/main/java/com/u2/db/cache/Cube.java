@@ -65,6 +65,7 @@ public class Cube implements CubeI {
 			Square[] s = key_map.get(key);
 			if (s != null && s.length == 2) {
 				Square square = s[1];
+				
 				if (square != null) {
 					List<Fruit_> list = new ArrayList<Fruit_>();
 					list.add(square.get());
@@ -76,6 +77,10 @@ public class Cube implements CubeI {
 							list.add(f);
 						}
 					}
+					return list;
+				}else{
+					List<Fruit_> list = new ArrayList<Fruit_>();
+					list.add(s[0].get());
 					return list;
 				}
 			}

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.u2.db.manager.TransactionManager;
@@ -38,7 +39,7 @@ public class BaseDao {
 
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
-		boolean i = s.execute("INSERT INTO T_RELATION (MAIN_ID,OTHER_ID) VALUES (" + r.getMainId() + ","+ r.getOtherId() + ")");
+		boolean i = s.execute("INSERT INTO T_RELATION (ID,MAIN_ID,OTHER_ID) VALUES ('"+UUID.randomUUID().toString()+"'," + r.getMainId() + ","+ r.getOtherId() + ")");
 		s.close();
 		return i;
 	}
@@ -72,7 +73,7 @@ public class BaseDao {
 		ResultSet rs = s.executeQuery("select * from T_RELATION where main_id="+mid);
 		while (rs.next()) {
 			Relation r = new Relation();
-			Long id = rs.getLong(1);
+			String id = rs.getString(1);
 			Long mainId = rs.getLong(2);
 			Long otherId = rs.getLong(3);
 			r.setId(id);
