@@ -1,9 +1,10 @@
 package com.u2.model;
 
+import java.util.UUID;
 
 public class Seed {
 
-	private Long id;
+	private String id;
 	private String key;
 	private String value;
 	private Long fid;
@@ -27,11 +28,13 @@ public class Seed {
 		}
 		
 		this.key=key;
+		this.id=UUID.randomUUID().toString();
 	}
-	public Long getId() {
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getKey() {
@@ -53,6 +56,8 @@ public class Seed {
 		this.fid = fid;
 	}
 	
-	
+	public static void main(String[] args) {
+		System.out.println(UUID.randomUUID().toString().length());
+	}
 	
 }

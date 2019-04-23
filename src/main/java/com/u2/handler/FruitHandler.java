@@ -83,4 +83,11 @@ public class FruitHandler {
 		TransactionManager.getRelationlocal().push(f);
 	}
 
+	public void insertSeed(Seed s,Fruit f) throws SQLException {
+		// TODO Auto-generated method stub
+		s.setFid(f.getId());
+		int l = TableManager.me().findLength(f.getKey(), s.getKey());
+		BaseDao.me().insertSeed(s, l);
+	}
+
 }

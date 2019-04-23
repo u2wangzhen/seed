@@ -14,4 +14,17 @@ public class FruitUtil {
 		}
 		return null;
 	}
+	public static String outMassage(boolean b){
+		String m="";
+		if(b){
+			m="操作成功!";
+		}else{
+			m="操作失败!";
+		}
+		return outMassage(b,m);
+	}
+	public static String outMassage(boolean b,String m){
+		String msg="{\"success\":"+b+",\"message\":\""+m+"\"}";;
+		return msg;
+	}
 }

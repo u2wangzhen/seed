@@ -28,7 +28,7 @@ public class BaseDao {
 
 		Statement s = c.createStatement();
 
-		boolean i = s.execute("INSERT INTO T_SEED_" + l + " (S_KEY,S_VALUE,S_FID) VALUES ('" + seed.getKey() + "','"
+		boolean i = s.execute("INSERT INTO T_SEED_" + l + " (ID,S_KEY,S_VALUE,S_FID) VALUES ('"+seed.getId()+"','" + seed.getKey() + "','"
 				+ seed.getValue() + "'," + seed.getFid() + ")");
 		s.close();
 		return i;
@@ -105,12 +105,12 @@ public class BaseDao {
 		List<Seed> list = null;
 		ResultSet rs = s.executeQuery("select * from T_SEED_" + i + " where s_fid=" + fid);
 		while (rs.next()) {
-			long id = rs.getLong(1);
+			String id = rs.getString(1);
 			String key = rs.getString(2);
 			String value = rs.getString(3);
 			Seed seed = new Seed();
-			seed.setFid(fid);
 			seed.setId(id);
+			seed.setFid(fid);
 			seed.setKey(key);
 			seed.setValue(value);
 			if (list == null) {
@@ -151,14 +151,14 @@ public class BaseDao {
 	 * 
 	 * }
 	 */
-	public synchronized void updateSeed(Long id, String newValue, int l) throws SQLException {
+	public synchronized void updateSeed(String id, String newValue, int l) throws SQLException {
 		// TODO Auto-generated method stub
 		if (newValue == null) {
 			newValue = "";
 		}
 		DruidPooledConnection c = TransactionManager.get().getConn();
 		Statement s = c.createStatement();
-		String sql = "update T_SEED_" + l + " set s_value='" + newValue + "' where id=" + id;
+		String sql = "update T_SEED_" + l + " set s_value='" + newValue + "' where id='" + id+"'";
 		s.execute(sql);
 		s.close();
 	}
@@ -215,9 +215,9 @@ public class BaseDao {
 			c = DBPoolConnection.getInstance().getConnection();
 		}
 
-		Statement s = c.createStatement();
+		Statement s = c.createStatement();//`id` varchar(36) NOT NULL,
 		String tname = "t_seed_" + length;
-		String sql = " " + "CREATE TABLE `" + tname + "` (" + "`id` bigint(11) NOT NULL AUTO_INCREMENT,"
+		String sql = " " + "CREATE TABLE `" + tname + "` (" + "`id` varchar(36) NOT NULL,"
 				+ "`S_key` varchar(32) DEFAULT NULL," + "`S_value` varchar(" + length + ") DEFAULT NULL,"
 				+ "`S_fid` bigint(11) DEFAULT NULL," + " PRIMARY KEY (`id`)"
 				+ ") ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;";
@@ -247,7 +247,7 @@ public class BaseDao {
 		// TODO Auto-generated method stub
 		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
 		Statement s = c.createStatement();
-		String sql = "CREATE TABLE `t_relation` (" + "`ID` bigint(11) NOT NULL AUTO_INCREMENT,"
+		String sql = "CREATE TABLE `t_relation` (" + "`id` varchar(36) NOT NULL,"
 				+ "`main_id` bigint(20) NOT NULL,"
 				+ "`other_id` bigint(20) NOT NULL,"
 				+ "PRIMARY KEY (`ID`)"

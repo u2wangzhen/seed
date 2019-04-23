@@ -183,7 +183,7 @@ public class Search {
 			String k=s[0];
 			String v=s[1];
 			
-			if(k.startsWith("_id")){
+			if(k.endsWith("_id")){
 				this.key=k.split("_id")[0];
 				this.keyType=KeyType.id;
 			}else if(k.endsWith("_fid")){
@@ -237,8 +237,8 @@ public class Search {
 					type=Type.IN;
 					values=new ArrayList<String>();
 					for (int i = 1; i < vs.length; i++) {
-						if(!"".equals(s[i])){
-							values.add(s[i]);
+						if(!"".equals(vs[i])){
+							values.add(vs[i]);
 						}
 					}
 				}else if(vs[0].equals("LIKE")){

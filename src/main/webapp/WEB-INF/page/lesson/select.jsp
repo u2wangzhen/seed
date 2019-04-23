@@ -15,7 +15,7 @@
 	$(function() {
 		var student_fid = $("#student_fid").val();
 		$('#dg').datagrid({
-			url : '/seed/lesson/getAll?student_fid='+student_fid,
+			url : '/seed/lesson/getAll?end=NULL&student_fid='+student_fid,
 			loadMsg : '请稍后...',
 			idField : 'id',
 			remoteSort : false,

@@ -43,7 +43,7 @@ public class TableManager implements TableManagerI{
 		map.put("lesson", new FruitTemplate().add("name", 64,true)
 												.add("subject", 8,true)
 												.add("grade", 4,true)
-												.add("createTime", 16)
+												.add("createTime", 16).add("end", 2)
 												.add("tprice",16)
 												.add("bprice",16)
 												.addRelationKey("teacher")
