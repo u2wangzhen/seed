@@ -197,17 +197,18 @@ public class TotalAction extends SeedAction {
 		
 		
 		Set<Fruit_> ps = stu.getCitedFruits("period");
-		for (Fruit_ p : ps) {
-			Set<Fruit_> pl = p.getOtherFruits("lesson");
-			Fruit_ les=null;
-			for (Fruit_ s : pl) {
-				les=s;
+		if(ps!=null&&!ps.isEmpty()){
+			for (Fruit_ p : ps) {
+				Set<Fruit_> pl = p.getOtherFruits("lesson");
+				Fruit_ les=null;
+				for (Fruit_ s : pl) {
+					les=s;
+				}
+				if(ts.contains(les)){
+					j+=Double.valueOf(p.getSeed("phour").getValue());
+				}
 			}
-			if(ts.contains(les)){
-				j+=Double.valueOf(p.getSeed("phour").getValue());
-			}
-		}
-		
+		}		
 		return i-j;
 	}
 

@@ -18,11 +18,12 @@
 	var nowDate='';
 	var nowMonth='';
 	$(function() {
+		htm = $("#dateTotal").html();
 		laydate.render({
 			elem : '#rl1',
 			position : 'static',
 			ready : function(d){
-				nowDate=d.year+'-'+(d.month<10?'0'+d.month:d.month)+"-"+d.date;
+				nowDate=d.year+'-'+(d.month<10?'0'+d.month:d.month)+"-"+(d.date<10?'0'+d.date:d.date);
 				buildDate(nowDate);
 			},
 			change : function(value, date) { //监听日期被切换
@@ -43,7 +44,7 @@
 			},
 			showBottom : false
 		});
-		htm = $("#dateTotal").html();
+		
 		
 		
 	});
