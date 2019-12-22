@@ -14,4 +14,5 @@ public interface TableManagerI {
 	public String findParentKeys(String fkey);
 	public List<String> findRelationKeys(String fkey);
 	public List<String> findSubKeys(String fkey);
+	public boolean isFirst();
 }

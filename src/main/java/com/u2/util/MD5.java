@@ -30,4 +30,9 @@ public class MD5 {
 
 		return "";
 	}
+	public static void main(String[] args) {
+		
+		System.out.println(encrypt("superman"));
+		
+	}
 }

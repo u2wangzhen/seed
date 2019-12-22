@@ -13,6 +13,8 @@ import com.u2.db.data.BaseDao;
 
 public class TableManager implements TableManagerI{
 	
+	private static boolean isFirst=false;
+	
 	
 	private void initFruitTemplate() {
 		// TODO Auto-generated method stub
@@ -175,7 +177,6 @@ public class TableManager implements TableManagerI{
 			initFruitTable();
 			initRelationTable();
 			initFruitTemplate();
-			
 			initFruitView();
 			//initRelation();
 		} catch (SQLException e) {
@@ -188,7 +189,7 @@ public class TableManager implements TableManagerI{
 
 	private void initFruitView() throws SQLException {
 		// TODO Auto-generated method stub
-		if (!BaseDao.me().isExist("_view")) {
+		if (!BaseDao.me().isExist("%_view%")) {
 			Map<String ,String > sqls=getViewSql();
 			for (String  key : sqls.keySet()) {
 				String sql=sqls.get(key);
@@ -198,12 +199,8 @@ public class TableManager implements TableManagerI{
 						BaseDao.me().createView(ss[i]);
 					}
 				}
-				
 			}
-			
 		}
-		
-		
 	}
 
 	
@@ -218,6 +215,7 @@ public class TableManager implements TableManagerI{
 		// TODO Auto-generated method stub
 		if (!BaseDao.me().isExist("t_fruit")) {
 			BaseDao.me().createFruitTable();
+			isFirst=true;
 		}
 	}
 	private synchronized void isExist(int length) throws SQLException {
@@ -474,5 +472,10 @@ public class TableManager implements TableManagerI{
 			mm.put(t, str);
 		}
 		return mm;
+	}
+
+	public boolean isFirst() {
+		// TODO Auto-generated method stub
+		return isFirst;
 	}
 }

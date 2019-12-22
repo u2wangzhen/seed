@@ -1,6 +1,7 @@
 package com.u2.web;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.u2.db.cache.MainCache;
+import com.u2.db.init.InitData;
 import com.u2.db.manager.TableManager;
 import com.u2.sys.ActionMapping;
 import com.u2.web.action.DefaultAction;
@@ -80,8 +82,17 @@ public class SeedFilter  implements Filter{
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
 		actionMapping=ActionMapping.me();
-		((TableManager)TableManager.me()).init();
+		TableManager tm = ((TableManager)TableManager.me());
+		tm.init();
 		((MainCache)MainCache.me()).init();
+		if(tm.isFirst()){
+			try {
+				InitData.me().init();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

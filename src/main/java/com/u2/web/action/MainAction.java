@@ -82,12 +82,16 @@ public class MainAction extends SeedAction{
 		Set<Fruit_> ml=new HashSet<Fruit_>();
 		
 		if(ff==null){
-			List<Fruit_> rs=MainCache.me().getFruitList("role");
-			for (Fruit_ f : rs) {
-				Set<Fruit_> ms = f.getOtherFruits("model");
-				for (Fruit_ m : ms) {
-					ml.add(m);
-				}
+//			List<Fruit_> rs=MainCache.me().getFruitList("role");
+//			for (Fruit_ f : rs) {
+//				Set<Fruit_> ms = f.getOtherFruits("model");
+//				for (Fruit_ m : ms) {
+//					ml.add(m);
+//				}
+//			}
+			List<Fruit_> rs=MainCache.me().getFruitList("model");
+			for (Fruit_ m : rs) {
+				ml.add(m);
 			}
 		}else{
 			Set<Fruit_> rs = ff.getOtherFruits("role");

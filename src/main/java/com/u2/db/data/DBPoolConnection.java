@@ -24,7 +24,7 @@ public class DBPoolConnection {
 		
 		Map<String,String> map=new HashMap<String, String>();
 		map.put("driverClassName", "com.mysql.jdbc.Driver");
-		map.put("url", "jdbc:mysql://127.0.0.1:3306/seed_hx?characterEncoding=utf-8");
+		map.put("url", "jdbc:mysql://127.0.0.1:3306/seed_test?characterEncoding=utf-8");
 		map.put("username", "root");
 		map.put("password", "123456");
 		map.put("filters", "stat");
