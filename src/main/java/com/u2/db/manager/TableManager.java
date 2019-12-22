@@ -96,7 +96,7 @@ public class TableManager implements TableManagerI{
 		return tableManager;
 	}
 
-	private Map<String, FruitTemplate> map = new HashMap<String, FruitTemplate>();
+	public Map<String, FruitTemplate> map = new HashMap<String, FruitTemplate>();
 	//private Map<String,Set<String>> relation_map=new HashMap<String, Set<String>>();
 	private Set<Integer> exist = new HashSet<Integer>();
 	
@@ -175,11 +175,35 @@ public class TableManager implements TableManagerI{
 			initFruitTable();
 			initRelationTable();
 			initFruitTemplate();
+			
+			initFruitView();
 			//initRelation();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	
+
+	private void initFruitView() throws SQLException {
+		// TODO Auto-generated method stub
+		if (!BaseDao.me().isExist("_view")) {
+			Map<String ,String > sqls=getViewSql();
+			for (String  key : sqls.keySet()) {
+				String sql=sqls.get(key);
+				String[] ss = sql.split(";");
+				for (int i = 0; i < ss.length; i++) {
+					if(ss[i]!=""){
+						BaseDao.me().createView(ss[i]);
+					}
+				}
+				
+			}
+			
+		}
+		
+		
 	}
 
 	
@@ -296,5 +320,159 @@ public class TableManager implements TableManagerI{
 		return map.keySet();
 	}
 	
+//	public static void main(String[] args) {
+//		
+//		TableManager tm = (TableManager)TableManager.me();
+//		tm.init();
+//		Set<String> ts = tm.findAllFruitKey();
+//		
+//		Map<String ,String > mm=new HashMap<String, String>();	
+//		
+//		
+//		
+//		
+//		for (String t : ts) {
+//			FruitTemplate ft = tm.map.get(t);
+//			Set<SeedTemplate> sts = ft.seeds;
+//			
+//			String str="";
+//			
+//			
+//			for (SeedTemplate st : sts) {
+//				
+//				
+//				String key=st.key;
+//				int l = st.length;
+//				
+//				 str+="create view "+t+"_"+key+"_view as select * from t_seed_"+l+" where s_key='"+key+"';";
+//			}
+//			
+//			
+//			str+=" create view "+t+"_view as select f.id ";
+//			//System.out.println(t);
+//			
+//			
+//			
+//			//String pk=ft.parentKey;
+//			
+//			
+//			
+//			for (SeedTemplate st : sts) {
+//				
+//				
+//				String key=st.key;
+//				int l = st.length;
+//				
+//				str+=", seed"+key+"_"+l+".s_value as "+key+" ";
+//			}
+//			mm.put(t, str);
+//		}
+//		
+//		for (String t : ts) {
+//			
+//			String str=mm.get(t);
+//			str+=" from t_fruit f ";
+//			//System.out.println(t);
+//			
+//			FruitTemplate ft = tm.map.get(t);
+//			
+//			//String pk=ft.parentKey;
+//			
+//			Set<SeedTemplate> sts = ft.seeds;
+//			
+//			for (SeedTemplate st : sts) {
+//				
+//				str+=" LEFT JOIN ";
+//				
+//				String key=st.key;
+//				int l = st.length;
+//				
+//				str+=t+"_"+key+"_view";
+//				
+//				str+=" seed"+key+"_"+l;
+//				
+//				str+=" on seed"+key+"_"+l+".S_fid=f.ID";
+//			}
+//			mm.put(t, str);
+//		}
+//		
+//		for (String t : ts) {
+//			
+//			String str=mm.get(t);
+//			str+=" where f_key='"+t+"';";
+//			System.out.println(str);
+//		}
+//		
+//	}
+	private Map<String, String> getViewSql() {
+		// TODO Auto-generated method stub
+		Set<String> ts = this.findAllFruitKey();
+		
+		Map<String ,String > mm=new HashMap<String, String>();	
+		
+		for (String t : ts) {
+			FruitTemplate ft = map.get(t);
+			Set<SeedTemplate> sts = ft.seeds;
+			
+			String str="";
+			
+			
+			for (SeedTemplate st : sts) {
+				
+				String key=st.key;
+				int l = st.length;
+				
+				 str+="create view "+t+"_"+key+"_view as select * from t_seed_"+l+" where s_key='"+key+"';";
+			}
 	
+			str+=" create view "+t+"_view as select f.id ";
+			
+			for (SeedTemplate st : sts) {
+				
+				
+				String key=st.key;
+				int l = st.length;
+				
+				str+=", seed"+key+"_"+l+".s_value as "+key+" ";
+			}
+			mm.put(t, str);
+		}
+		
+		for (String t : ts) {
+			
+			String str=mm.get(t);
+			str+=" from t_fruit f ";
+			//System.out.println(t);
+			
+			FruitTemplate ft = map.get(t);
+			
+			//String pk=ft.parentKey;
+			
+			Set<SeedTemplate> sts = ft.seeds;
+			
+			for (SeedTemplate st : sts) {
+				
+				str+=" LEFT JOIN ";
+				
+				String key=st.key;
+				int l = st.length;
+				
+				str+=t+"_"+key+"_view";
+				
+				str+=" seed"+key+"_"+l;
+				
+				str+=" on seed"+key+"_"+l+".S_fid=f.ID";
+			}
+			mm.put(t, str);
+		}
+		
+		for (String t : ts) {
+			
+			String str=mm.get(t);
+			str+=" where f_key='"+t+"';";
+			//System.out.println(str);
+			mm.put(t, str);
+		}
+		return mm;
+	}
 }

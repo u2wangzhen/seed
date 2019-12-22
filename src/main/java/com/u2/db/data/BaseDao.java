@@ -258,5 +258,20 @@ public class BaseDao {
 		s.close();
 		c.close();
 	}
+	
+	public synchronized void createView(String sql) throws SQLException {
+		// TODO Auto-generated method stub
+		DruidPooledConnection c = DBPoolConnection.getInstance().getConnection();
+		Statement s = c.createStatement();
+//		String sql = "CREATE TABLE `t_relation` (" + "`id` varchar(36) NOT NULL,"
+//				+ "`main_id` bigint(20) NOT NULL,"
+//				+ "`other_id` bigint(20) NOT NULL,"
+//				+ "PRIMARY KEY (`ID`)"
+//				+ ") ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;";
+
+		s.execute(sql);
+		s.close();
+		c.close();
+	}
 
 }
