@@ -1,5 +1,6 @@
 package com.u2.web.action;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.u2.db.cache.Fruit_;
 import com.u2.db.cache.MainCache;
+import com.u2.db.init.InitData;
 import com.u2.db.manager.TableManager;
 import com.u2.search.Search;
 import com.u2.util.MD5;
@@ -55,6 +57,20 @@ public class MainAction extends SeedAction{
 					request.getSession().setAttribute("user_name", "超级管理员");
 					request.getSession().setAttribute("user_account", "lucy");
 					setRole(null);
+					
+					new Thread(new Runnable() {
+						
+						public void run() {
+							// TODO Auto-generated method stub
+							try {
+								InitData.me().initData();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}).start();
+					
 				}else{
 					List<Fruit_> list = MainCache.me().getFruitList("account");
 					if(list!=null&&!list.isEmpty()){

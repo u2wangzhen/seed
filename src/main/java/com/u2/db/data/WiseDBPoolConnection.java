@@ -15,8 +15,8 @@ import com.alibaba.druid.pool.DruidPooledConnection;
 /**
  * 要实现单例模式，保证全局只有一个数据库连接池
  */
-public class DBPoolConnection {
-	private static DBPoolConnection dbPoolConnection = null;
+public class WiseDBPoolConnection {
+	private static WiseDBPoolConnection dbPoolConnection = null;
 	private static DruidDataSource druidDataSource = null;
 
 	static {
@@ -24,12 +24,12 @@ public class DBPoolConnection {
 		
 		Map<String,String> map=new HashMap<String, String>();
 		map.put("driverClassName", "com.mysql.jdbc.Driver");
-		map.put("url", "jdbc:mysql://127.0.0.1:3306/seed_test?characterEncoding=utf-8");
+		map.put("url", "jdbc:mysql://127.0.0.1:3306/wise_hx?characterEncoding=utf-8");
 		map.put("username", "root");
 		map.put("password", "123456");
 		map.put("filters", "stat");
 		map.put("initialSize", "2");
-		map.put("maxActive", "5000");
+		map.put("maxActive", "300");
 		map.put("maxWait", "60000");
 		map.put("timeBetweenEvictionRunsMillis", "60000");
 		map.put("minEvictableIdleTimeMillis", "300000");
@@ -52,9 +52,9 @@ public class DBPoolConnection {
 	 * 
 	 * @return
 	 */
-	public static synchronized DBPoolConnection getInstance() {
+	public static synchronized WiseDBPoolConnection getInstance() {
 		if (null == dbPoolConnection) {
-			dbPoolConnection = new DBPoolConnection();
+			dbPoolConnection = new WiseDBPoolConnection();
 		}
 		return dbPoolConnection;
 	}
@@ -79,7 +79,7 @@ public class DBPoolConnection {
 		if (null == fullFile || fullFile.equals("")) {
 			throw new IllegalArgumentException("Properties file path can not be null" + fullFile);
 		}
-		webRootPath = DBPoolConnection.class.getClassLoader().getResource("").getPath();
+		webRootPath = WiseDBPoolConnection.class.getClassLoader().getResource("").getPath();
 		webRootPath = new File(webRootPath).getParent();
 		InputStream inputStream = null;
 		Properties p = null;

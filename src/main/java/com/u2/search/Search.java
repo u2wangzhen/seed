@@ -17,12 +17,12 @@ public class Search {
 	private String fkey;
 	public Search(String fkey,String sql){///{{name_l=aaaa}and{id=123}and{{student_fid=in(1,2,3,4)}{}}}
 		this.fkey=fkey;
-		System.out.println(fkey+"--"+sql);
+		//System.out.println(fkey+"--"+sql);
 		this.query=new Query(sql);
 	}
 	public Search(String sql){///{{name_l=aaaa}and{id=123}and{{student_fid=in(1,2,3,4)}{}}}
 		//this.fkey=fkey;
-		System.out.println(sql);
+		//System.out.println(sql);
 		this.query=new Query(sql);
 	}
 	
